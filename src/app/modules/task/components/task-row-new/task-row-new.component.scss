@@ -1,0 +1,95 @@
+:host {
+  display: block;
+  min-width: 100%;
+}
+
+.mc-task-row-new__container {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  // TODO - make colours sass variables - this will be part of the theme selection
+  border: 1px solid #7b68ee;
+  //
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
+  width: 100%;
+  min-height: 38px;
+  padding-right: 5px;
+}
+
+.mc-task-row-new__left {
+  display: flex;
+  align-items: center;
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  flex-grow: 1;
+  padding-right: 50px;
+}
+
+.mc-task-row-new__close {
+  cursor: pointer;
+  padding: 4px;
+  margin: 0px 0px -4px 4px;
+}
+
+.mat-icon {
+  color: #bcc0c7;
+  stroke: 1px;
+  &:hover {
+    color: #5f48ea;
+  }
+}
+
+.mc-task-row-new__main {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  min-width: 200px;
+  order: 3;
+
+  input {
+    appearance: none;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1;
+    cursor: text;
+    color: #343434;
+    width: 100%;
+    background: 0 0;
+    box-shadow: none;
+    border: 0;
+    height: 36px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #bcc0c7;
+    }
+  }
+}
+
+.mc-task-row-new__button {
+  background: #7b68ee;
+  width: 60px;
+  height: 28px;
+  font-size: 14px;
+  border-radius: 4px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin: 0 10px;
+  flex-shrink: 0;
+
+  &:hover {
+    background: #5f48ea;
+  }
+}
