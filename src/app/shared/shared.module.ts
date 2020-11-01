@@ -8,6 +8,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const modules = [
   CommonModule,
@@ -19,6 +20,7 @@ const modules = [
   LayoutModule,
   MatIconModule,
   MatFormFieldModule,
+  MatSnackBarModule,
 ];
 const components = [];
 
