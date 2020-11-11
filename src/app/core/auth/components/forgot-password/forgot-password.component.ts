@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { AuthService } from '../../auth.service';
 
 @Component({
@@ -8,7 +10,24 @@ import { AuthService } from '../../auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForgotPasswordComponent implements OnInit {
-  constructor(public auth: AuthService) {}
+  form: FormGroup;
+  serverErrorMessage$: Observable<string>;
 
-  ngOnInit(): void {}
+  constructor(public auth: AuthService, private fb: FormBuilder) {
+    this.serverErrorMessage$ = this.auth.serverErrorMessage$;
+  }
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
+  }
+
+  async onSubmit(): Promise<void> {
+    await this.auth.forgotPassword(this.email.value);
+  }
+
+  get email() {
+    return this.form.get('email');
+  }
 }

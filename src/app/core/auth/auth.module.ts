@@ -7,6 +7,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { AuthService } from './auth.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SignUpComponent,
     VerifyEmailComponent,
   ],
-  imports: [CommonModule, AuthRoutingModule, SharedModule],
+  imports: [CommonModule, AuthRoutingModule, SharedModule, ReactiveFormsModule],
   providers: [AuthService],
 })
 export class AuthModule {}

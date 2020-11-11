@@ -1,68 +1,123 @@
-<div class="displayTable">
-  <div class="displayTableCell">
-    <div class="authBlock">
-      <h3>Sign In</h3>
-      <div class="formGroup">
-        <input
-          type="text"
-          class="formControl"
-          placeholder="Username"
-          #userName
-          required
-        />
-      </div>
-
-      <div class="formGroup">
-        <input
-          type="password"
-          class="formControl"
-          placeholder="Password"
-          #userPassword
-          required
-        />
-      </div>
-
-      <!-- Calling SignIn Api from AuthService -->
-      <div class="formGroup">
-        <input
-          type="button"
-          class="btn btnPrimary"
-          value="Log in"
-          (click)="auth.signIn(userName.value, userPassword.value)"
-        />
-      </div>
-
-      <div class="formGroup">
-        <span class="or"><span class="orInner">Or</span></span>
-      </div>
-
-      <!-- Calling GoogleAuth Api from AuthService -->
-      <div class="formGroup">
-        <button
-          type="button"
-          class="btn googleBtn"
-          (click)="auth.googleSignIn()"
-        >
-          <i class="fab fa-google-plus-g"></i>
-          Log in with Google
-        </button>
-      </div>
-
-      <div class="forgotPassword">
-        <span routerLink="/forgot-password">Forgot Password?</span>
-      </div>
-    </div>
-
-    <div class="redirectToLogin">
-      <span
-        >Don't have an account?<span
-          class="redirect"
-          routerLink="/register-user"
-        >
-          Sign Up</span
-        ></span
+<div
+  style="height: 100vh; background-color: #fafafa;"
+  fxLayoutAlign="center center"
+>
+  <div
+    style="
+      width: 360px;
+      background-color: #ffffff;
+      padding: 30px 50px 20px;
+      box-shadow: 0 25px 75px rgba(16, 30, 54, 0.25);
+      border-radius: 6px;
+    "
+  >
+    <h1 style="text-align: center;">Welcome back!</h1>
+    <div fxLayout="column" fxLayoutGap="16px">
+      <div
+        (click)="googleSignIn()"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        style="
+          cursor: pointer;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          height: 50px;
+        "
       >
+        <img
+          src="assets/buttons/google.svg"
+          alt="Google logo"
+          style="width: 30px; height: 30px; margin-right: 10px;"
+        />
+        <strong>Log in with Google</strong>
+      </div>
+
+      <span fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center center">
+        <mat-divider fxFlex style="color: #ccc;"></mat-divider>
+        <span class="mat-small" style="color: #ccc;">OR</span>
+        <mat-divider fxFlex style="color: #ccc;"></mat-divider>
+      </span>
+
+      <form
+        fxLayout="column"
+        fxLayoutGap="16px"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+      >
+        <!-- email -->
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            type="email"
+            placeholder="example@site.com"
+            autocomplete="off"
+          />
+          <mat-error *ngIf="!email.value.length && email.touched">
+            <mat-icon>warning</mat-icon> This field is required!
+          </mat-error>
+          <mat-error
+            *ngIf="email.value.length >= 1 && email.touched && email.invalid"
+          >
+            <mat-icon>warning</mat-icon> Email address invalid!
+          </mat-error>
+        </mat-form-field>
+
+        <!-- password -->
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            [type]="passwordHidden ? 'password' : 'text'"
+            autocomplete="off"
+            minlength="6"
+          />
+          <mat-icon matSuffix (click)="passwordHidden = !passwordHidden">{{
+            passwordHidden ? 'visibility_off' : 'visibility'
+          }}</mat-icon>
+          <mat-error *ngIf="password.value.length < 8 && password.dirty">
+            <mat-icon>warning</mat-icon> Password must be 8 characters or
+            longer!
+          </mat-error>
+          <mat-error *ngIf="!password.value.length && password.touched">
+            <mat-icon>warning</mat-icon> This field is required!
+          </mat-error>
+        </mat-form-field>
+
+        <button
+          type="submit"
+          style="
+            margin: 16px 0 0;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            height: 50px;
+            background: rgb(243, 35, 255);
+            background: linear-gradient(
+              90deg,
+              rgba(243, 35, 255, 1) 0%,
+              rgba(0, 140, 255, 1) 100%
+            );
+            color: #ffffff;
+            font-size: 16px;
+          "
+        >
+          <strong>Log in</strong>
+        </button>
+        <mat-error *ngIf="serverErrorMessage$ | async as err">{{
+          err
+        }}</mat-error>
+      </form>
+      <mat-divider></mat-divider>
+      <button
+        mat-button
+        style="color: rgb(170, 170, 170);"
+        routerLink="/forgot-password"
+      >
+        Forgot Password?
+      </button>
     </div>
-    <button mat-button (click)="auth.signOut()">sign out</button>
   </div>
 </div>

@@ -4,22 +4,22 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/firestore';
-import { MatSnackBar } from '@angular/material/snack-bar';
+// import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { auth } from 'firebase';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { IUser } from '../models/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user$: Observable<IUser>;
+  serverErrorMessage$ = new Subject<string>();
 
   constructor(
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private router: Router,
-    private snackBar: MatSnackBar
+    private router: Router // private snackBar: MatSnackBar
   ) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
@@ -42,19 +42,22 @@ export class AuthService {
       this.router.navigate(['tasks']);
     } catch (error) {
       console.log(error);
+      this.serverErrorMessage$.next(error.message);
     }
   }
 
-  async signUp(email, password): Promise<void> {
+  async signUp(email, password, name): Promise<void> {
     try {
       const credential = await this.afAuth.createUserWithEmailAndPassword(
         email,
         password
       );
+      const user = { ...credential.user, displayName: name };
       await this.sendVerificationEmailMail();
-      await this._updateUserData(credential.user);
+      await this._updateUserData(user);
     } catch (error) {
       console.log(error);
+      this.serverErrorMessage$.next(error.message);
     }
   }
 
@@ -65,15 +68,17 @@ export class AuthService {
       this.router.navigate(['verify-email-address']);
     } catch (error) {
       console.log(error);
+      this.serverErrorMessage$.next(error.message);
     }
   }
 
   async forgotPassword(passwordResetEmail): Promise<void> {
     try {
       await this.afAuth.sendPasswordResetEmail(passwordResetEmail);
-      this.snackBar.open('Password reset email sent, check your inbox.');
+      // this.snackBar.open('Password reset email sent, check your inbox.');
     } catch (error) {
       console.log(error);
+      this.serverErrorMessage$.next(error.message);
     }
   }
 
@@ -83,6 +88,7 @@ export class AuthService {
       const credential = await this.afAuth.signInWithPopup(provider);
       // TODO - do this on the backend with a firebase function
       await this._updateUserData(credential.user);
+      console.log('user registered');
       this.router.navigate(['tasks']);
     } catch (error) {
       console.log(error);

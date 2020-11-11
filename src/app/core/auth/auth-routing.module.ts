@@ -7,11 +7,11 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 
 const routes: Routes = [
   {
-    path: 'sign-in',
+    path: 'login',
     component: SignInComponent,
   },
   {
-    path: 'sign-up',
+    path: 'signup',
     component: SignUpComponent,
   },
   {

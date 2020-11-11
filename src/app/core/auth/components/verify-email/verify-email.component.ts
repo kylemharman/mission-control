@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IUser } from 'src/app/core/models/user';
 import { AuthService } from '../../auth.service';
 
 @Component({
@@ -7,8 +9,14 @@ import { AuthService } from '../../auth.service';
   styleUrls: ['./verify-email.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VerifyEmailComponent implements OnInit {
-  constructor(public auth: AuthService) {}
+export class VerifyEmailComponent {
+  user$: Observable<IUser>;
 
-  ngOnInit(): void {}
+  constructor(private auth: AuthService) {
+    this.user$ = this.auth.user$;
+  }
+
+  sendVerificationEmail(): void {
+    this.auth.sendVerificationEmailMail();
+  }
 }

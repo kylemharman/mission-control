@@ -9,6 +9,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const modules = [
   CommonModule,
@@ -21,6 +22,7 @@ const modules = [
   MatIconModule,
   MatFormFieldModule,
   MatSnackBarModule,
+  FlexLayoutModule,
 ];
 const components = [];
 

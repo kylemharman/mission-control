@@ -1,38 +1,60 @@
-<div class="displayTable">
-  <div class="displayTableCell">
-    <div class="authBlock">
-      <h3>Thank You for Registering</h3>
-
-      <div class="formGroup" *ngIf="auth.user$ | async as user">
-        <p class="text-center">
+<div
+  style="height: 100vh; background-color: #fafafa;"
+  fxLayoutAlign="center center"
+>
+  <div
+    style="
+      width: 360px;
+      background-color: #ffffff;
+      padding: 30px 50px 20px;
+      box-shadow: 0 25px 75px rgba(16, 30, 54, 0.25);
+      border-radius: 6px;
+    "
+  >
+    <h1 style="text-align: center;">Thanks for registering!</h1>
+    <div fxLayout="column" fxLayoutGap="16px" *ngIf="user$ | async as user">
+      <div>
+        <p style="text-align: center;">
           We have sent a confirmation email to <strong>{{ user.email }}</strong
           >.
         </p>
-        <p class="text-center">
+        <p style="text-align: center;">
           Please check your email and click on the link to verfiy your email
           address.
         </p>
       </div>
-
-      <!-- Calling SendVerificationMail() method using authService Api -->
-      <div class="formGroup">
-        <button
-          type="button"
-          class="btn btnPrimary"
-          (click)="auth.sendVerificationEmailMail()"
-        >
-          <i class="fas fa-redo-alt"></i>
-          Resend Verification Email
-        </button>
-      </div>
-    </div>
-
-    <div class="redirectToLogin">
-      <span
-        >Go back to?<span class="redirect" routerLink="/sign-in">
-          Sign in</span
-        ></span
+      <button
+        style="
+          margin: 6px 0 0;
+          cursor: pointer;
+          border: none;
+          border-radius: 4px;
+          height: 50px;
+          background: rgb(243, 35, 255);
+          background: linear-gradient(
+            90deg,
+            rgba(243, 35, 255, 1) 0%,
+            rgba(0, 140, 255, 1) 100%
+          );
+          color: #ffffff;
+          font-size: 16px;
+        "
+        routerLink="/login"
       >
+        <strong>Log in</strong>
+      </button>
+      <span fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center center">
+        <mat-divider fxFlex style="color: #ccc;"></mat-divider>
+        <span class="mat-small" style="color: #ccc;">OR</span>
+        <mat-divider fxFlex style="color: #ccc;"></mat-divider>
+      </span>
+      <button
+        mat-button
+        style="color: rgb(170, 170, 170);"
+        (click)="sendVerificationEmail()"
+      >
+        Resend verification email
+      </button>
     </div>
   </div>
 </div>
