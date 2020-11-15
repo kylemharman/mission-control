@@ -34,11 +34,7 @@ export class AuthService {
 
   async signIn(email, password): Promise<void> {
     try {
-      const credential = await this.afAuth.signInWithEmailAndPassword(
-        email,
-        password
-      );
-      await this._updateUserData(credential.user);
+      await this.afAuth.signInWithEmailAndPassword(email, password);
       this.router.navigate(['tasks']);
     } catch (error) {
       console.log(error);
@@ -85,9 +81,7 @@ export class AuthService {
   async googleSignIn(): Promise<void> {
     try {
       const provider = new auth.GoogleAuthProvider();
-      const credential = await this.afAuth.signInWithPopup(provider);
-      // TODO - do this on the backend with a firebase function
-      await this._updateUserData(credential.user);
+      await this.afAuth.signInWithPopup(provider);
       console.log('user registered');
       this.router.navigate(['tasks']);
     } catch (error) {

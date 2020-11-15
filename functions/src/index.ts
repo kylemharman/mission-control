@@ -1,2 +1,3 @@
 /* eslint-disable import/no-unresolved */
-export { helloWorld } from './image-resize';
+export { createUserRecord } from './create-user';
+

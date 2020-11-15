@@ -19,6 +19,9 @@ export default class ButtonComponent {
   @Input()
   primary = false;
 
+  @Input()
+  something = false;
+
   /**
    * What background color to use
    */
@@ -46,7 +49,9 @@ export default class ButtonComponent {
   onClick = new EventEmitter<Event>();
 
   public get classes(): string[] {
-    const mode = this.primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+    const mode = this.primary
+      ? 'storybook-button--primary'
+      : 'storybook-button--secondary';
 
     return ['storybook-button', `storybook-button--${this.size}`, mode];
   }

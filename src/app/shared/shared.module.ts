@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ButtonComponent } from './components/button/button.component';
 
 const modules = [
   CommonModule,
@@ -24,7 +25,7 @@ const modules = [
   MatSnackBarModule,
   FlexLayoutModule,
 ];
-const components = [];
+const components = [ButtonComponent];
 
 @NgModule({
   declarations: [...components],

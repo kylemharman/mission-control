@@ -1,0 +1,51 @@
+.mc-button {
+  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.mc-button--fullwidth {
+  width: 100%;
+}
+
+.mc-button--icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.mc-button--primary {
+  color: #ffffff;
+  background: rgb(0, 140, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(243, 35, 255, 1) 0%,
+    rgba(0, 140, 255, 1) 100%
+  );
+}
+
+.mc-button--secondary {
+  color: #000000;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #cccccc;
+  background-color: transparent;
+}
+
+.mc-button--small {
+  font-size: 12px;
+  padding: 8px 14px;
+}
+
+.mc-button--medium {
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+.mc-button--large {
+  font-size: 18px;
+  padding: 14px 24px;
+}

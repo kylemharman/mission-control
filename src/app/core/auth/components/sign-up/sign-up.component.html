@@ -2,131 +2,92 @@
   style="height: 100vh; background-color: #fafafa;"
   fxLayoutAlign="center center"
 >
-  <div
-    style="
-      width: 360px;
-      background-color: #ffffff;
-      padding: 30px 50px 50px;
-      box-shadow: 0 25px 75px rgba(16, 30, 54, 0.25);
-      border-radius: 6px;
-    "
-  >
-    <h1 style="text-align: center;">Let's do this!</h1>
-    <div fxLayout="column" fxLayoutGap="16px">
-      <div
-        (click)="googleSignUp()"
-        fxLayout="row"
-        fxLayoutAlign="center center"
-        style="
-          cursor: pointer;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          height: 50px;
-        "
-      >
-        <img
-          src="assets/buttons/google.svg"
-          alt="Google logo"
-          style="width: 30px; height: 30px; margin-right: 10px;"
+  <mc-auth-form-container title="Let's do this!">
+    <mc-button
+      (click)="googleSignUp()"
+      [fullWidth]="true"
+      type="submit"
+      label="Sign up with Google"
+      icon="assets/buttons/google.svg"
+    >
+    </mc-button>
+
+    <mc-word-divider label="OR"></mc-word-divider>
+
+    <form
+      fxLayout="column"
+      fxLayoutGap="16px"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+    >
+      <!-- name -->
+      <mat-form-field appearance="outline">
+        <mat-label>Full Name</mat-label>
+        <input
+          matInput
+          formControlName="fullname"
+          type="text"
+          placeholder="John Doe"
+          autocomplete="off"
         />
-        <strong>Sign up with Google</strong>
-      </div>
+        <mat-error *ngIf="!fullname.value.length && fullname.touched">
+          <mat-icon>warning</mat-icon> This field is required!
+        </mat-error>
+      </mat-form-field>
 
-      <span fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center center">
-        <mat-divider fxFlex style="color: #ccc;"></mat-divider>
-        <span class="mat-small" style="color: #ccc;">OR</span>
-        <mat-divider fxFlex style="color: #ccc;"></mat-divider>
-      </span>
-
-      <form
-        fxLayout="column"
-        fxLayoutGap="16px"
-        [formGroup]="form"
-        (ngSubmit)="onSubmit()"
-      >
-        <!-- name -->
-        <mat-form-field appearance="outline">
-          <mat-label>Full Name</mat-label>
-          <input
-            matInput
-            formControlName="fullname"
-            type="text"
-            placeholder="John Doe"
-            autocomplete="off"
-          />
-          <mat-error *ngIf="!fullname.value.length && fullname.touched">
-            <mat-icon>warning</mat-icon> This field is required!
-          </mat-error>
-        </mat-form-field>
-
-        <!-- email -->
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input
-            matInput
-            formControlName="email"
-            type="email"
-            placeholder="example@site.com"
-            autocomplete="off"
-          />
-          <mat-error *ngIf="!email.value.length && email.touched">
-            <mat-icon>warning</mat-icon> This field is required!
-          </mat-error>
-          <mat-error
-            *ngIf="email.value.length >= 1 && email.touched && email.invalid"
-          >
-            <mat-icon>warning</mat-icon> Email address invalid!
-          </mat-error>
-        </mat-form-field>
-
-        <!-- password -->
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            formControlName="password"
-            [type]="passwordHidden ? 'password' : 'text'"
-            autocomplete="off"
-            minlength="8"
-          />
-          <mat-icon matSuffix (click)="passwordHidden = !passwordHidden">{{
-            passwordHidden ? 'visibility_off' : 'visibility'
-          }}</mat-icon>
-          <mat-error *ngIf="password.value.length < 8 && password.dirty">
-            <mat-icon>warning</mat-icon> Password must be 8 characters or
-            longer!
-          </mat-error>
-          <mat-error *ngIf="!password.value.length && password.touched">
-            <mat-icon>warning</mat-icon> This field is required!
-          </mat-error>
-          <mat-hint align="end">{{ password.value.length }}/8</mat-hint>
-        </mat-form-field>
-
-        <button
-          type="submit"
-          style="
-            margin: 16px 0 0;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
-            height: 50px;
-            background: rgb(243, 35, 255);
-            background: linear-gradient(
-              90deg,
-              rgba(243, 35, 255, 1) 0%,
-              rgba(0, 140, 255, 1) 100%
-            );
-            color: #ffffff;
-            font-size: 16px;
-          "
+      <!-- email -->
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          type="email"
+          placeholder="example@site.com"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="!email.value.length && email.touched">
+          <mat-icon>warning</mat-icon> This field is required!
+        </mat-error>
+        <mat-error
+          *ngIf="email.value.length >= 1 && email.touched && email.invalid"
         >
-          <strong>Get started!</strong>
-        </button>
+          <mat-icon>warning</mat-icon> Email address invalid!
+        </mat-error>
+      </mat-form-field>
 
-        <mat-error *ngIf="serverErrorMessage$ | async as err">{{
-          err
-        }}</mat-error>
-      </form>
-    </div>
-  </div>
+      <!-- password -->
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          [type]="passwordHidden ? 'password' : 'text'"
+          autocomplete="off"
+          minlength="8"
+        />
+        <mat-icon matSuffix (click)="passwordHidden = !passwordHidden">{{
+          passwordHidden ? 'visibility_off' : 'visibility'
+        }}</mat-icon>
+        <mat-error *ngIf="password.value.length < 8 && password.dirty">
+          <mat-icon>warning</mat-icon> Password must be 8 characters or longer!
+        </mat-error>
+        <mat-error *ngIf="!password.value.length && password.touched">
+          <mat-icon>warning</mat-icon> This field is required!
+        </mat-error>
+        <mat-hint align="end">{{ password.value.length }}/8</mat-hint>
+      </mat-form-field>
+
+      <mc-button
+        [primary]="true"
+        [fullWidth]="true"
+        type="submit"
+        label="Get started!"
+        size="large"
+      ></mc-button>
+
+      <mat-error *ngIf="serverErrorMessage$ | async as err">
+        {{ err }}
+      </mat-error>
+    </form>
+  </mc-auth-form-container>
 </div>
