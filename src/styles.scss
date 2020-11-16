@@ -1,10 +1,10 @@
-@import "~@angular/material/theming";
-@import "./app/styles/theme.scss";
+@import '~@angular/material/theming';
+@import './app/styles/theme.scss';
 
 @include mat-core();
 // colour
-$primary: mat-palette($todo-blue);
-$accent: mat-palette($todo-orange);
+$primary: mat-palette($mc-blue);
+$accent: mat-palette($mc-pink);
 $warn: mat-palette($mat-red);
 $theme: mat-light-theme($primary, $accent, $warn);
 
@@ -16,5 +16,5 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
