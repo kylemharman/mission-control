@@ -42,15 +42,14 @@ export class AuthService {
     }
   }
 
-  async signUp(email, password, name): Promise<void> {
+  async signUp(email: string, password: string, name: string): Promise<void> {
     try {
       const credential = await this.afAuth.createUserWithEmailAndPassword(
         email,
         password
       );
-      const user = { ...credential.user, displayName: name };
       await this.sendVerificationEmailMail();
-      await this._updateUserData(user);
+      await this._updateUserName(credential.user, name);
     } catch (error) {
       console.log(error);
       this.serverErrorMessage$.next(error.message);
@@ -94,21 +93,11 @@ export class AuthService {
     this.router.navigate(['sign-in']);
   }
 
-  private _updateUserData(user: firebase.User): Promise<void> {
-    const userRef: AngularFirestoreDocument<IUser> = this.afs.doc(
+  private _updateUserName(user: firebase.User, name: string): Promise<void> {
+    const userRef: AngularFirestoreDocument<Partial<IUser>> = this.afs.doc(
       `users/${user.uid}`
     );
 
-    const data = {
-      uid: user.uid,
-      displayName: user.displayName,
-      email: user.email,
-      emailVerified: user.emailVerified,
-      profileImage: user.photoURL,
-      colourTheme: '',
-      darkMode: false,
-    };
-
-    return userRef.set(data, { merge: true });
+    return userRef.set({ displayName: name }, { merge: true });
   }
 }
