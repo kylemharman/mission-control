@@ -10,6 +10,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WordDividerComponent } from './components/word-divider/word-divider.component';
 import { AuthFormContainerComponent } from './components/auth-form-container/auth-form-container.component';
+import { AuthPageContainerComponent } from './components/auth-page-container/auth-page-container.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AuthFormContainerComponent } from './components/auth-form-container/aut
     VerifyEmailComponent,
     WordDividerComponent,
     AuthFormContainerComponent,
+    AuthPageContainerComponent,
   ],
   imports: [CommonModule, AuthRoutingModule, SharedModule, ReactiveFormsModule],
   providers: [AuthService],

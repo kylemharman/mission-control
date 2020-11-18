@@ -1,7 +1,4 @@
-<div
-  style="height: 100vh; background-color: #fafafa;"
-  fxLayoutAlign="center center"
->
+<mc-auth-page-container [login]="false">
   <mc-auth-form-container title="Let's do this!">
     <mc-button
       (click)="googleSignUp()"
@@ -90,4 +87,4 @@
       </mat-error>
     </form>
   </mc-auth-form-container>
-</div>
+</mc-auth-page-container>

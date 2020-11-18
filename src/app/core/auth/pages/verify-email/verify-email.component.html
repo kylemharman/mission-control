@@ -1,7 +1,4 @@
-<div
-  style="height: 100vh; background-color: #fafafa;"
-  fxLayoutAlign="center center"
->
+<mc-auth-page-container>
   <mc-auth-form-container title="Welcome Aboard!">
     <div *ngIf="user$ | async as user">
       <p>
@@ -33,4 +30,4 @@
       Resend verification email
     </button>
   </mc-auth-form-container>
-</div>
+</mc-auth-page-container>
