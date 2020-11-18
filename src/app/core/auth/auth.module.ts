@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 import { AuthService } from './auth.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,7 +14,7 @@ import { AuthFormContainerComponent } from './components/auth-form-container/aut
 @NgModule({
   declarations: [
     ForgotPasswordComponent,
-    SignInComponent,
+    LoginComponent,
     SignUpComponent,
     VerifyEmailComponent,
     WordDividerComponent,

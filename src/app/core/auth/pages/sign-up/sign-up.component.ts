@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Observable } from 'rxjs';
 import { AuthService } from '../../auth.service';
 
 @Component({
@@ -38,15 +43,15 @@ export class SignUpComponent implements OnInit {
     await this.auth.googleSignIn();
   }
 
-  get fullname() {
+  get fullname(): AbstractControl {
     return this.form.get('fullname');
   }
 
-  get email() {
+  get email(): AbstractControl {
     return this.form.get('email');
   }
 
-  get password() {
+  get password(): AbstractControl {
     return this.form.get('password');
   }
 }

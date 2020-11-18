@@ -1,0 +1,109 @@
+<div class="login-page--container">
+  <div
+    style="
+      padding: 0 30px;
+      height: 100px;
+      position: sticky;
+      flex-shrink: 0;
+      top: 0;
+    "
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    fxLayoutGap="16px"
+  >
+    <div>
+      <h3 routerLink="/">Misson Control</h3>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="16px">
+      <p>Don't have an account?</p>
+      <mc-button label="Sign Up" size="medium" routerLink="/signup">
+      </mc-button>
+    </div>
+  </div>
+  <div
+    fxLayoutAlign="center center"
+    style="padding-bottom: 70px; flex-grow: 1;"
+  >
+    <mc-auth-form-container title="Welcome Back!">
+      <mc-button
+        (click)="googleSignIn()"
+        [fullWidth]="true"
+        type="submit"
+        label="Log in with Google"
+        icon="assets/buttons/google.svg"
+      >
+      </mc-button>
+
+      <mc-word-divider label="OR"></mc-word-divider>
+
+      <form
+        fxLayout="column"
+        fxLayoutGap="16px"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+      >
+        <!-- email -->
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            type="email"
+            placeholder="example@site.com"
+            autocomplete="off"
+          />
+          <mat-error *ngIf="!email.value.length && email.touched">
+            <mat-icon>warning</mat-icon> This field is required!
+          </mat-error>
+          <mat-error
+            *ngIf="email.value.length >= 1 && email.touched && email.invalid"
+          >
+            <mat-icon>warning</mat-icon> Email address invalid!
+          </mat-error>
+        </mat-form-field>
+
+        <!-- password -->
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            [type]="passwordHidden ? 'password' : 'text'"
+            autocomplete="off"
+            minlength="6"
+          />
+          <mat-icon matSuffix (click)="passwordHidden = !passwordHidden">{{
+            passwordHidden ? 'visibility_off' : 'visibility'
+          }}</mat-icon>
+          <mat-error *ngIf="password.value.length < 8 && password.dirty">
+            <mat-icon>warning</mat-icon> Password must be 8 characters or
+            longer!
+          </mat-error>
+          <mat-error *ngIf="!password.value.length && password.touched">
+            <mat-icon>warning</mat-icon> This field is required!
+          </mat-error>
+        </mat-form-field>
+
+        <mc-button
+          [primary]="true"
+          [fullWidth]="true"
+          type="submit"
+          label="Log in"
+          size="large"
+        ></mc-button>
+
+        <mat-error *ngIf="serverErrorMessage$ | async as err">
+          {{ err }}
+        </mat-error>
+      </form>
+      <mat-divider></mat-divider>
+      <button
+        mat-button
+        style="color: rgb(170, 170, 170);"
+        routerLink="/forgot-password"
+      >
+        Forgot Password?
+      </button>
+    </mc-auth-form-container>
+  </div>
+</div>
