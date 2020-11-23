@@ -90,7 +90,7 @@ export class AuthService {
 
   async signOut(): Promise<void> {
     await this.afAuth.signOut();
-    this.router.navigate(['sign-in']);
+    this.router.navigate(['login']);
   }
 
   private _updateUserName(user: firebase.User, name: string): Promise<void> {

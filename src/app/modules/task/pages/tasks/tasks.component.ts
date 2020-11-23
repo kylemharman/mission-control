@@ -1,16 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'mc-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent {
+  constructor(private _auth: AuthService) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  logout(): void {
+    this._auth.signOut();
   }
-
 }
