@@ -13,29 +13,18 @@ import { IUser } from '../models/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user$: Observable<IUser>;
   serverErrorMessage$ = new Subject<string>();
 
   constructor(
-    private afs: AngularFirestore,
-    private afAuth: AngularFireAuth,
-    private router: Router // private snackBar: MatSnackBar
-  ) {
-    this.user$ = this.afAuth.authState.pipe(
-      switchMap((user) => {
-        if (user) {
-          return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
-        } else {
-          return of(null);
-        }
-      })
-    );
-  }
+    private _afs: AngularFirestore,
+    private _afAuth: AngularFireAuth,
+    private _router: Router // private snackBar: MatSnackBar
+  ) {}
 
   async signIn(email, password): Promise<void> {
     try {
-      await this.afAuth.signInWithEmailAndPassword(email, password);
-      this.router.navigate(['tasks']);
+      await this._afAuth.signInWithEmailAndPassword(email, password);
+      this._router.navigate(['tasks']);
     } catch (error) {
       console.log(error);
       this.serverErrorMessage$.next(error.message);
@@ -44,7 +33,7 @@ export class AuthService {
 
   async signUp(email: string, password: string, name: string): Promise<void> {
     try {
-      const credential = await this.afAuth.createUserWithEmailAndPassword(
+      const credential = await this._afAuth.createUserWithEmailAndPassword(
         email,
         password
       );
@@ -58,9 +47,9 @@ export class AuthService {
 
   async sendVerificationEmailMail(): Promise<void> {
     try {
-      const currentUser = await this.afAuth.currentUser;
+      const currentUser = await this._afAuth.currentUser;
       await currentUser.sendEmailVerification();
-      this.router.navigate(['verify-email-address']);
+      this._router.navigate(['verify-email-address']);
     } catch (error) {
       console.log(error);
       this.serverErrorMessage$.next(error.message);
@@ -69,7 +58,7 @@ export class AuthService {
 
   async forgotPassword(passwordResetEmail): Promise<void> {
     try {
-      await this.afAuth.sendPasswordResetEmail(passwordResetEmail);
+      await this._afAuth.sendPasswordResetEmail(passwordResetEmail);
       // this.snackBar.open('Password reset email sent, check your inbox.');
     } catch (error) {
       console.log(error);
@@ -80,21 +69,21 @@ export class AuthService {
   async googleSignIn(): Promise<void> {
     try {
       const provider = new auth.GoogleAuthProvider();
-      await this.afAuth.signInWithPopup(provider);
+      await this._afAuth.signInWithPopup(provider);
       console.log('user registered');
-      this.router.navigate(['tasks']);
+      this._router.navigate(['tasks']);
     } catch (error) {
       console.log(error);
     }
   }
 
   async signOut(): Promise<void> {
-    await this.afAuth.signOut();
-    this.router.navigate(['login']);
+    await this._afAuth.signOut();
+    this._router.navigate(['login']);
   }
 
   private _updateUserName(user: firebase.User, name: string): Promise<void> {
-    const userRef: AngularFirestoreDocument<Partial<IUser>> = this.afs.doc(
+    const userRef: AngularFirestoreDocument<Partial<IUser>> = this._afs.doc(
       `users/${user.uid}`
     );
 

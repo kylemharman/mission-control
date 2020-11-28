@@ -11,6 +11,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ButtonComponent } from './components/button/button.component';
+import { SpacesBarComponent } from './components/spaces-bar/spaces-bar.component';
+import { AvatarComponent } from './components/avatar/avatar.component';
 
 const modules = [
   CommonModule,
@@ -25,10 +27,10 @@ const modules = [
   MatSnackBarModule,
   FlexLayoutModule,
 ];
-const components = [ButtonComponent];
+const components = [ButtonComponent, SpacesBarComponent];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, AvatarComponent],
   imports: [...modules],
   exports: [...modules, ...components],
 })

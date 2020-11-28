@@ -18,12 +18,12 @@ export class ForgotPasswordComponent implements OnInit {
   form: FormGroup;
   serverErrorMessage$: Observable<string>;
 
-  constructor(public auth: AuthService, private fb: FormBuilder) {
+  constructor(public auth: AuthService, private _fb: FormBuilder) {
     this.serverErrorMessage$ = this.auth.serverErrorMessage$;
   }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
+    this.form = this._fb.group({
       email: ['', [Validators.required, Validators.email]],
     });
   }
