@@ -20,7 +20,6 @@ export class ButtonComponent {
   @Input() type: 'submit' | 'button' = 'button';
   @Input() size: 'small' | 'medium' | 'large' = 'medium';
   @Input() icon?: string;
-  // tslint:disable-next-line: no-output-on-prefix
   @Output() onClick = new EventEmitter<Event>();
 
   public get classes(): string[] {

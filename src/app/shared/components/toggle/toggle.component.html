@@ -1,0 +1,7 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <ng-content></ng-content>
+  <label [ngClass]="toggleClasses">
+    <input type="checkbox" (change)="onToggle($event)" [checked]="on" />
+    <span [ngClass]="sliderClasses"></span>
+  </label>
+</div>

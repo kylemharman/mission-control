@@ -8,9 +8,5 @@ import { AuthService } from 'src/app/core/auth/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksComponent {
-  constructor(private _auth: AuthService) {}
-
-  logout(): void {
-    this._auth.signOut();
-  }
+  constructor() {}
 }

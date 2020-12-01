@@ -1,6 +1,13 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  HostBinding,
+} from '@angular/core';
 import { auth } from 'firebase';
+import { first, last } from 'lodash';
 import { Observable } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { UserService } from 'src/app/core/services/user.service';
 
@@ -11,11 +18,32 @@ import { UserService } from 'src/app/core/services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarComponent {
-  @Input() size: number;
+  @Input() diameter = 32;
   userInitials$: Observable<string>;
-  userProfileImage$: Observable<string>;
+  userProfileImage$: Observable<string | undefined>;
 
   constructor(private _user: UserService) {
-    this.userInitials$ = this._user.user$.pipe();
+    this.userInitials$ = this._user.user$.pipe(
+      map((user) => this._getInitials(user.displayName))
+    );
+    this.userProfileImage$ = this._user.user$.pipe(
+      map((user) => user.profileImage)
+    );
+  }
+
+  @HostBinding('style.width')
+  @HostBinding('style.height')
+  get size(): string {
+    return `${this.diameter}px`;
+  }
+
+  private _getInitials(name: string): string {
+    const initials: RegExpMatchArray = name.match(/\b(\w)/g) || [];
+
+    if (initials.length > 1) {
+      return `${first(initials)}${last(initials)}`.toUpperCase();
+    }
+
+    return initials.join('').toUpperCase();
   }
 }
