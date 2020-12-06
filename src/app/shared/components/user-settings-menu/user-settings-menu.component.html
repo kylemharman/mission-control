@@ -1,21 +1,16 @@
 <mc-avatar [matMenuTriggerFor]="userSettings"></mc-avatar>
-<mat-menu #userSettings>
+<mat-menu #userSettings [overlapTrigger]="true">
   <div
     class="user-settings-menu--container mat-small"
     fxLayout="column"
-    fxLayoutGap="10px"
+    fxLayoutGap="12px"
     (click)="$event.stopPropagation()"
   >
+    <mat-icon (click)="closeMenu()">close</mat-icon>
     <a [routerLink]="['USERID', 'settings', 'profile']">My Settings</a>
     <a [routerLink]="['USERID', 'notifications']">Notifications</a>
     <a (click)="logout()">Logout</a>
-
     <mat-divider></mat-divider>
-
-    <mat-slide-toggle disableRipple labelPosition="before" color="primary">
-      Dark Mode
-    </mat-slide-toggle>
-
-    <mc-toggle [on]="true" (toggle)="toggle($event)">Dark Mode</mc-toggle>
+    <mc-toggle (toggle)="darkMode($event)">Dark Mode</mc-toggle>
   </div>
 </mat-menu>

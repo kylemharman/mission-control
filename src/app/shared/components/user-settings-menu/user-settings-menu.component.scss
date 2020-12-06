@@ -1,4 +1,32 @@
 .user-settings-menu--container {
-  padding: 10px 20px;
+  position: relative;
+  padding: 20px 20px 10px;
   width: 220px;
+}
+
+mc-avatar {
+  cursor: pointer;
+}
+
+a,
+mc-toggle {
+  cursor: pointer;
+  transition: 0.2s ease-in;
+  &:hover {
+    color: #7b68ee;
+  }
+}
+
+.mat-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 6px;
+  color: #bcc0c7;
+  font-size: 22px;
+  transition: 0.2s ease-in-out;
+  &:hover {
+    color: #5f48ea;
+    transform: rotate(90deg);
+  }
 }

@@ -1,2 +1,10 @@
-@import 'colour-pallets';
+@import '~@angular/material/theming';
+@import 'typography';
+@import 'colour-theme';
 @import 'material-styles';
+
+@include mat-core();
+
+@include mat-base-typography($typography);
+@include mat-checkbox-typography($typography);
+@include angular-material-typography($typography);

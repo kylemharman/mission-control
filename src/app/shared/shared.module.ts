@@ -15,7 +15,6 @@ import { SpacesBarComponent } from './components/spaces-bar/spaces-bar.component
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { UserSettingsMenuComponent } from './components/user-settings-menu/user-settings-menu.component';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { RouterModule } from '@angular/router';
 import { ToggleComponent } from './components/toggle/toggle.component';
 
@@ -31,7 +30,6 @@ const modules = [
   MatSnackBarModule,
   MatMenuModule,
   LayoutModule,
-  MatSlideToggleModule,
   FlexLayoutModule,
   RouterModule,
 ];

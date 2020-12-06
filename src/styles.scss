@@ -1,15 +1,6 @@
 @import '~@angular/material/theming';
 @import './app/styles/theme.scss';
 
-@include mat-core();
-// colour
-$primary: mat-palette($mc-blue);
-$accent: mat-palette($mc-pink);
-$warn: mat-palette($mat-red);
-$theme: mat-light-theme($primary, $accent, $warn);
-
-@include angular-material-theme($theme);
-
 html,
 body {
   height: 100%;

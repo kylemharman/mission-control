@@ -17,42 +17,42 @@ export default {
   },
 } as Meta;
 
-const Template: Story<ButtonComponent> = (args: ButtonComponent) => ({
+const template: Story<ButtonComponent> = (args: ButtonComponent) => ({
   component: ButtonComponent,
   props: args,
 });
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const primary = template.bind({});
+primary.args = {
   primary: true,
   label: 'Primary Button',
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
+export const secondary = template.bind({});
+secondary.args = {
   label: 'Secondary Button',
 };
 
-export const FullWidth = Template.bind({});
-FullWidth.args = {
+export const fullWidth = template.bind({});
+fullWidth.args = {
   fullWidth: true,
   label: 'Full Width Button',
 };
 
-export const Large = Template.bind({});
-Large.args = {
+export const large = template.bind({});
+large.args = {
   size: 'large',
   label: 'Large Button',
 };
 
-export const Medium = Template.bind({});
-Medium.args = {
+export const medium = template.bind({});
+medium.args = {
   size: 'medium',
   label: 'Medium Button',
 };
 
-export const Small = Template.bind({});
-Small.args = {
+export const small = template.bind({});
+small.args = {
   size: 'small',
   label: 'Small Button',
 };

@@ -1,5 +1,3 @@
-import { DocumentReference } from '@angular/fire/firestore';
-
 export interface IUser {
   uid: string;
   displayName: string;

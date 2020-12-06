@@ -4,13 +4,11 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/firestore';
-// import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { auth } from 'firebase';
-import { Observable, of, Subject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { IUser } from '../models/user';
-
+// import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   serverErrorMessage$ = new Subject<string>();
@@ -70,7 +68,6 @@ export class AuthService {
     try {
       const provider = new auth.GoogleAuthProvider();
       await this._afAuth.signInWithPopup(provider);
-      console.log('user registered');
       this._router.navigate(['tasks']);
     } catch (error) {
       console.log(error);
