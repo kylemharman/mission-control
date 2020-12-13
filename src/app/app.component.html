@@ -1,1 +1,3 @@
-<router-outlet></router-outlet>
+<div [class]="theme.presentTheme$ | async" class="mc-theme--wrapper">
+  <router-outlet></router-outlet>
+</div>

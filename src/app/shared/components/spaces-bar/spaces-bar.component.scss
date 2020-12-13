@@ -2,8 +2,13 @@
   height: 100%;
   width: 55px;
   border-right: solid 1px #cccccc;
+  background-color: var(--background);
 
   .mc-left-sidebar--user {
     padding: 10px 0;
   }
+}
+
+.background-test {
+  background-color: var(--background);
 }

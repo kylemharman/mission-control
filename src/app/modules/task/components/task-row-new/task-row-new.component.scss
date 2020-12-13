@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fff;
+  background: var(--background);
   // TODO - make colours sass variables - this will be part of the theme selection
   border: 1px solid #7b68ee;
   //

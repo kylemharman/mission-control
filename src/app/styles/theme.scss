@@ -1,10 +1,14 @@
 @import '~@angular/material/theming';
 @import 'typography';
-@import 'colour-theme';
+@import 'material-colour-theme';
 @import 'material-styles';
+@import 'light-theme';
+@import 'dark-theme';
 
 @include mat-core();
 
 @include mat-base-typography($typography);
 @include mat-checkbox-typography($typography);
 @include angular-material-typography($typography);
+
+@include angular-material-theme($theme);
