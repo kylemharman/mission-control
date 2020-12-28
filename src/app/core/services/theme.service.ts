@@ -5,12 +5,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ThemeService {
-  private presentThemeSubject = new BehaviorSubject('theme-light');
-  presentTheme$: Observable<string> = this.presentThemeSubject.asObservable();
+  private currentThemeSubject = new BehaviorSubject('light-theme');
+  currentTheme$: Observable<string> = this.currentThemeSubject.asObservable();
 
   constructor() {}
 
   changeTheme(theme: string): void {
-    this.presentThemeSubject.next(theme);
+    this.currentThemeSubject.next(theme);
   }
 }

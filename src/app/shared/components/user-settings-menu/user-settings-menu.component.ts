@@ -23,7 +23,7 @@ export class UserSettingsMenuComponent {
 
   darkMode(value: boolean): void {
     if (value) {
-      return this._theme.changeTheme('theme-dark');
+      return this._theme.changeTheme('dark-theme');
     }
 
     return this._theme.changeTheme('light-theme');
