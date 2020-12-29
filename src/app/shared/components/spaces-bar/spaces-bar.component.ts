@@ -1,4 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IUser } from 'src/app/core/models/user';
+import { UserService } from 'src/app/core/services/user.service';
+import { filterUndefined } from '../../helpers/rxjs';
 
 @Component({
   selector: 'mc-spaces-bar',
@@ -6,8 +10,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./spaces-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SpacesBarComponent implements OnInit {
-  constructor() {}
+export class SpacesBarComponent {
+  user$: Observable<IUser>;
 
-  ngOnInit(): void {}
+  constructor(private _user: UserService) {
+    this.user$ = this._user.user$.pipe(filterUndefined());
+  }
 }

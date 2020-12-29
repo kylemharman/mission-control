@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { auth } from 'firebase';
 import { Subject } from 'rxjs';
 import { IUser } from '../models/user';
+
 // import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -22,7 +23,7 @@ export class AuthService {
   async signIn(email, password): Promise<void> {
     try {
       await this._afAuth.signInWithEmailAndPassword(email, password);
-      this._router.navigate(['tasks']);
+      this._router.navigate([(await this._afAuth.currentUser).uid, 'tasks']);
     } catch (error) {
       console.log(error);
       this.serverErrorMessage$.next(error.message);
@@ -68,7 +69,7 @@ export class AuthService {
     try {
       const provider = new auth.GoogleAuthProvider();
       await this._afAuth.signInWithPopup(provider);
-      this._router.navigate(['tasks']);
+      this._router.navigate([(await this._afAuth.currentUser).uid, 'tasks']);
     } catch (error) {
       console.log(error);
     }

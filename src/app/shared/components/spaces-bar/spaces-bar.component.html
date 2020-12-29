@@ -1,4 +1,9 @@
-<div fxLayout="row" fxLayoutAlign="start stretch" style="height: 100%;">
+<div
+  *ngIf="user$ | async as user"
+  fxLayout="row"
+  fxLayoutAlign="start stretch"
+  style="height: 100%;"
+>
   <!-- sidenav -->
   <div
     fxLayout="column"
@@ -15,19 +20,25 @@
       <div fxLayoutAlign="center center" class="logo">
         <div></div>
       </div>
-      <a>
+      <a
+        [routerLink]="['/', user.uid, 'home', 'landing']"
+        routerLinkActive="active"
+      >
         <svg class="home-icon" viewBox="0 0 24 24">
           <use xlink:href="assets/icons/home-outline.svg#home-outline" />
         </svg>
       </a>
-      <a>
+      <a [routerLink]="['/', user.uid, 'tasks']" routerLinkActive="active">
         <svg class="tasks-icon" viewBox="0 0 24 24">
           <use
             xlink:href="assets/icons/check-box-outline.svg#check-box-outline"
           />
         </svg>
       </a>
-      <a>
+      <a
+        [routerLink]="['/', user.uid, 'notifications']"
+        routerLinkActive="active"
+      >
         <svg class="notifications-icon" viewBox="0 0 24 24">
           <use
             xlink:href="assets/icons/notifications-outline.svg#notifications-outline"
