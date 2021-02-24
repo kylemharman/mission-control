@@ -9,9 +9,10 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
+import { AppShellComponent } from './core/components/app-shell/app-shell.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AppShellComponent],
   imports: [
     SharedModule,
     BrowserModule,
