@@ -22,7 +22,7 @@ const routes: Routes = [
       {
         path: 'tasks',
         loadChildren: () =>
-          import('./modules/task/tasks.module').then((m) => m.TasksModule),
+          import('./modules/tasks/tasks.module').then((m) => m.TasksModule),
       },
       {
         path: 'notifications',

@@ -1,3 +1,7 @@
+import { DocumentReference } from '@google-cloud/firestore';
+import { AtLeast } from 'src/app/shared/helpers/common';
+import { IUser } from './user';
+
 export interface ITask {
   name: string;
   description: string;
@@ -29,4 +33,15 @@ export enum TaskPriority {
   Normal = 'normal',
   Low = 'low',
   None = 'none',
+}
+
+export class Task {
+  static init(overrides: AtLeast<ITask, 'name'>): ITask {
+    return {
+      description: '',
+      status: TaskStatus.None,
+      priority: TaskPriority.None,
+      ...overrides,
+    };
+  }
 }
