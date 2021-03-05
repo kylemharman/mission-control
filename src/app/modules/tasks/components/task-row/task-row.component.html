@@ -1,0 +1,31 @@
+<div
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  fxLayoutGap="4px"
+  class="task-row--container"
+>
+  <span class="task-row--drag">
+    <mat-icon>drag_indicator</mat-icon>
+  </span>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    class="task-row--info"
+    fxFlex
+  >
+    <div fxFlex class="mat-small task-row--name">{{ task.name }}</div>
+
+    <div fxLayoutAlign="center center" fxLayoutGap="20px">
+      <!-- TODO - Set these up -->
+      <button mat-icon-button disableRipple="true">
+        <mat-icon>label_outline</mat-icon>
+      </button>
+      <button mat-icon-button disableRipple="true">
+        <mat-icon>person_add_alt</mat-icon>
+      </button>
+      <button mat-icon-button disableRipple="true">
+        <mat-icon>event</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

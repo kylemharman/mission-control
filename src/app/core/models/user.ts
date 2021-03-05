@@ -7,3 +7,7 @@ export interface IUser {
   darkMode: boolean;
   profileImage?: string;
 }
+
+export enum UserCollection {
+  Tasks = 'tasks',
+}

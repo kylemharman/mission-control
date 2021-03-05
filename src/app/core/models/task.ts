@@ -1,18 +1,18 @@
-import { DocumentReference } from '@google-cloud/firestore';
 import { AtLeast } from 'src/app/shared/helpers/common';
-import { IUser } from './user';
 
 export interface ITask {
   name: string;
   description: string;
+  order: number;
   status: TaskStatus;
   priority: TaskPriority;
-  // createdAt: moment;
-  // updatedAt: moment;
+  tags: ITag[];
+  createdAt: Date;
+  updatedAt: Date;
+  dueDate: Date;
   // creator: DocumentReference<IUser>;
   // AssignedTo: DocumentReference<IUser>[];
   // timeTracking: ;
-  // dueDate: moment;
   // watchers: DocumentReference<IUser>[];
 }
 
@@ -35,12 +35,21 @@ export enum TaskPriority {
   None = 'none',
 }
 
+// TODO - move tags to thier own class/model
+export interface ITag {
+  name: string;
+  hexColour: string;
+}
 export class Task {
-  static init(overrides: AtLeast<ITask, 'name'>): ITask {
+  static init(overrides: AtLeast<ITask, 'name' | 'order'>): ITask {
     return {
       description: '',
       status: TaskStatus.None,
       priority: TaskPriority.None,
+      tags: [],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      dueDate: new Date(),
       ...overrides,
     };
   }

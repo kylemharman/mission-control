@@ -14,6 +14,7 @@ export const createUserRecord = functions
 
     const data = {
       uid: user.uid,
+      ref: userRef, // TODO need to deploy functions for this to work.
       displayName: user.displayName,
       email: user.email,
       emailVerified: user.emailVerified,
