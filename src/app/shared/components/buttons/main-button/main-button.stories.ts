@@ -1,9 +1,9 @@
 import { Story, Meta } from '@storybook/angular/types-6-0';
-import { ButtonComponent } from './button.component';
+import { MainButtonComponent } from './main-button.component';
 
 export default {
   title: 'Shared/Button',
-  component: ButtonComponent,
+  component: MainButtonComponent,
   argTypes: {
     borderColor: { control: 'color' },
   },
@@ -17,8 +17,8 @@ export default {
   },
 } as Meta;
 
-const template: Story<ButtonComponent> = (args: ButtonComponent) => ({
-  component: ButtonComponent,
+const template: Story<MainButtonComponent> = (args: MainButtonComponent) => ({
+  component: MainButtonComponent,
   props: args,
 });
 

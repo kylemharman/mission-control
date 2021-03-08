@@ -7,12 +7,12 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'mc-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss'],
+  selector: 'mc-main-button',
+  templateUrl: './main-button.component.html',
+  styleUrls: ['./main-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ButtonComponent {
+export class MainButtonComponent {
   @Input() primary = false;
   @Input() fullWidth = false;
   @Input() label: string;
@@ -23,8 +23,10 @@ export class ButtonComponent {
   @Output() onClick = new EventEmitter<Event>();
 
   public get classes(): string[] {
-    const mode = this.primary ? 'mc-button--primary' : 'mc-button--secondary';
+    const mode = this.primary
+      ? 'mc-main-button--primary'
+      : 'mc-main-button--secondary';
     const fullWidth = this.fullWidth ? 'mc-button--fullwidth' : '';
-    return ['mc-button', `mc-button--${this.size}`, mode, fullWidth];
+    return ['mc-main-button', `mc-main-button--${this.size}`, mode, fullWidth];
   }
 }

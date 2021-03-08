@@ -11,15 +11,19 @@
     <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="16px">
       <ng-container *ngIf="login; else signUp">
         <p>Don't have an account?</p>
-        <mc-button
+        <mc-main-button
           label="Sign Up"
           size="medium"
           routerLink="/signup"
-        ></mc-button>
+        ></mc-main-button>
       </ng-container>
       <ng-template #signUp>
         <p>Already have an account?</p>
-        <mc-button label="Login" size="medium" routerLink="/login"></mc-button>
+        <mc-main-button
+          label="Login"
+          size="medium"
+          routerLink="/login"
+        ></mc-main-button>
       </ng-template>
     </div>
   </div>

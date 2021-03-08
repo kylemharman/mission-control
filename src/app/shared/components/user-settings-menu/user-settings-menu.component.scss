@@ -1,6 +1,10 @@
+.close-button-container {
+  padding-right: 6px;
+}
+
 .user-settings-menu--container {
   position: relative;
-  padding: 20px 20px 10px;
+  padding: 0 20px 10px;
   width: 220px;
 }
 
@@ -14,19 +18,5 @@ mc-toggle {
   transition: 0.2s ease-in;
   &:hover {
     color: #7b68ee;
-  }
-}
-
-.mat-icon {
-  cursor: pointer;
-  position: absolute;
-  top: 0;
-  right: 6px;
-  color: #bcc0c7;
-  font-size: 22px;
-  transition: 0.2s ease-in-out;
-  &:hover {
-    color: #5f48ea;
-    transform: rotate(90deg);
   }
 }

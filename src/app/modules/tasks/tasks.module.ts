@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { TasksRoutingModule } from './tasks-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TasksComponent } from './pages/tasks/tasks.component';
@@ -10,6 +9,7 @@ import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskRowComponent } from './components/task-row/task-row.component';
 import { FormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TaskDialogComponent } from './components/dialogs/task-dialog.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +18,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     TaskComponent,
     TaskListComponent,
     TaskRowComponent,
+    TaskDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -26,5 +27,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FormsModule,
     DragDropModule,
   ],
+  entryComponents: [TaskDialogComponent],
 })
 export class TasksModule {}

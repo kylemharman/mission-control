@@ -1,4 +1,6 @@
+import * as firebase from 'firebase';
 import { AtLeast } from 'src/app/shared/helpers/common';
+import { Timestamp } from 'src/app/shared/helpers/firebase';
 
 export interface ITask {
   name: string;
@@ -7,10 +9,8 @@ export interface ITask {
   status: TaskStatus;
   priority: TaskPriority;
   tags: ITag[];
-  createdAt: Date;
-  updatedAt: Date;
-  dueDate: Date;
-  // creator: DocumentReference<IUser>;
+  dueDate?: Timestamp;
+  // creator: AngularFirestoreDocument<IUser>;
   // AssignedTo: DocumentReference<IUser>[];
   // timeTracking: ;
   // watchers: DocumentReference<IUser>[];
@@ -42,14 +42,12 @@ export interface ITag {
 }
 export class Task {
   static init(overrides: AtLeast<ITask, 'name' | 'order'>): ITask {
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp();
     return {
       description: '',
       status: TaskStatus.None,
       priority: TaskPriority.None,
       tags: [],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      dueDate: new Date(),
       ...overrides,
     };
   }

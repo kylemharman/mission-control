@@ -1,4 +1,4 @@
-.mc-button {
+.mc-main-button {
   font-weight: 600;
   border: 0;
   border-radius: 4px;
@@ -6,17 +6,17 @@
   display: inline-block;
 }
 
-.mc-button--fullwidth {
+.mc-main-button--fullwidth {
   width: 100%;
 }
 
-.mc-button--icon {
+.mc-main-button--icon {
   width: 30px;
   height: 30px;
   margin-right: 10px;
 }
 
-.mc-button--primary {
+.mc-main-button--primary {
   color: #ffffff;
   background: rgb(0, 140, 255);
   background: linear-gradient(
@@ -26,7 +26,7 @@
   );
 }
 
-.mc-button--secondary {
+.mc-main-button--secondary {
   color: #000000;
   border-width: 1px;
   border-style: solid;
@@ -34,17 +34,17 @@
   background-color: transparent;
 }
 
-.mc-button--small {
+.mc-main-button--small {
   font-size: 12px;
   padding: 8px 14px;
 }
 
-.mc-button--medium {
+.mc-main-button--medium {
   font-size: 16px;
   padding: 10px 20px;
 }
 
-.mc-button--large {
+.mc-main-button--large {
   font-size: 18px;
   padding: 14px 24px;
 }

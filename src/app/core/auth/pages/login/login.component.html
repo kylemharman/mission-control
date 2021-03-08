@@ -1,13 +1,13 @@
 <mc-auth-page-container>
   <mc-auth-form-container title="Welcome Back!">
-    <mc-button
+    <mc-main-button
       (click)="googleSignIn()"
       [fullWidth]="true"
       type="submit"
       label="Log in with Google"
       icon="assets/buttons/google.svg"
     >
-    </mc-button>
+    </mc-main-button>
 
     <mc-word-divider label="OR"></mc-word-divider>
     <!-- TODO - make forms more DRY using nested forms - see bookmark -->
@@ -58,13 +58,13 @@
         </mat-error>
       </mat-form-field>
 
-      <mc-button
+      <mc-main-button
         [primary]="true"
         [fullWidth]="true"
         type="submit"
         label="Log in"
         size="large"
-      ></mc-button>
+      ></mc-main-button>
 
       <mat-error *ngIf="serverErrorMessage$ | async as err">
         {{ err }}

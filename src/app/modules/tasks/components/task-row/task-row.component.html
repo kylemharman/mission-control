@@ -1,9 +1,4 @@
-<div
-  fxLayout="row"
-  fxLayoutAlign="center center"
-  fxLayoutGap="4px"
-  class="task-row--container"
->
+<div fxLayout="row" fxLayoutAlign="center center" class="task-row--container">
   <span class="task-row--drag">
     <mat-icon>drag_indicator</mat-icon>
   </span>
@@ -13,18 +8,27 @@
     class="task-row--info"
     fxFlex
   >
-    <div fxFlex class="mat-small task-row--name">{{ task.name }}</div>
+    <div (click)="openTaskDialog()" fxFlex class="mat-small task-row--name">
+      {{ task.name }}
+    </div>
 
     <div fxLayoutAlign="center center" fxLayoutGap="20px">
       <!-- TODO - Set these up -->
       <button mat-icon-button disableRipple="true">
-        <mat-icon>label_outline</mat-icon>
+        <mat-icon tooltip="Edit tags">
+          label_outline
+        </mat-icon>
       </button>
       <button mat-icon-button disableRipple="true">
-        <mat-icon>person_add_alt</mat-icon>
+        <mat-icon tooltip="Set priority">
+          error_outline
+        </mat-icon>
       </button>
+      <!-- <button mat-icon-button disableRipple="true">
+        <mat-icon tooltip="Assign">person_add_alt</mat-icon>
+      </button> -->
       <button mat-icon-button disableRipple="true">
-        <mat-icon>event</mat-icon>
+        <mat-icon tooltip="Due date">event</mat-icon>
       </button>
     </div>
   </div>

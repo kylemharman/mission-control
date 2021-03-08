@@ -1,13 +1,13 @@
 <mc-auth-page-container [login]="false">
   <mc-auth-form-container title="Let's do this!">
-    <mc-button
+    <mc-main-button
       (click)="googleSignUp()"
       [fullWidth]="true"
       type="submit"
       label="Sign up with Google"
       icon="assets/buttons/google.svg"
     >
-    </mc-button>
+    </mc-main-button>
 
     <mc-word-divider label="OR"></mc-word-divider>
 
@@ -74,13 +74,13 @@
         <mat-hint align="end">{{ password.value.length }}/8</mat-hint>
       </mat-form-field>
 
-      <mc-button
+      <mc-main-button
         [primary]="true"
         [fullWidth]="true"
         type="submit"
         label="Get started!"
         size="large"
-      ></mc-button>
+      ></mc-main-button>
 
       <mat-error *ngIf="serverErrorMessage$ | async as err">
         {{ err }}
