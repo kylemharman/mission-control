@@ -11,7 +11,7 @@ import {
 import * as firebase from 'firebase/app';
 import { isString } from 'lodash';
 import { Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 import { DocumentReference } from '../helpers/firebase';
 

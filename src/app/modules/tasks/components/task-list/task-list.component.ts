@@ -21,6 +21,6 @@ export class TaskListComponent {
   async drop(event: CdkDragDrop<ITask[]>): Promise<void> {
     const tasks = await snapshot(this.tasks$);
     moveItemInArray(tasks, event.previousIndex, event.currentIndex);
-    this._tasks.sortTasks(tasks);
+    await this._tasks.sortTasks(tasks);
   }
 }

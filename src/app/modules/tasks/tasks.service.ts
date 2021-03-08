@@ -1,22 +1,12 @@
 import { Injectable } from '@angular/core';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
-import { combineLatest, Observable } from 'rxjs';
-import {
-  debounce,
-  debounceTime,
-  map,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { ITask, Task } from 'src/app/core/models/task';
 import { IUser, UserCollection } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
-import { DocumentReference, WithRef } from 'src/app/shared/helpers/firebase';
+import { WithRef } from 'src/app/shared/helpers/firebase';
 import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 

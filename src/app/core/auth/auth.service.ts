@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { auth } from 'firebase';
 import { Subject } from 'rxjs';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
-
 import { IUser } from '../models/user';
 
 // import { MatSnackBar } from '@angular/material/snack-bar';
