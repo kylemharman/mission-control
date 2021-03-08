@@ -9,8 +9,10 @@ import {
   DocumentSnapshotExists,
 } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
+import { isString } from 'lodash';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
+
 import { DocumentReference } from '../helpers/firebase';
 
 type CollectionPredicate<T> = string | AngularFirestoreCollection<T>;
@@ -23,13 +25,11 @@ export class FirestoreService {
   constructor(private _afs: AngularFirestore) {}
 
   col<T>(ref: CollectionPredicate<T>, queryFn?): AngularFirestoreCollection<T> {
-    return typeof ref === 'string'
-      ? this._afs.collection<T>(ref, queryFn)
-      : ref;
+    return isString(ref) ? this._afs.collection<T>(ref, queryFn) : ref;
   }
 
   doc<T>(ref: DocPredicate<T>): AngularFirestoreDocument<T> {
-    return typeof ref === 'string' ? this._afs.doc<T>(ref) : ref;
+    return isString(ref) ? this._afs.doc<T>(ref) : ref;
   }
 
   /// **************
@@ -86,13 +86,15 @@ export class FirestoreService {
     return firebase.firestore.FieldValue.serverTimestamp();
   }
 
-  set<T>(ref: DocPredicate<T>, data: any): Promise<void> {
+  set<T>(ref: DocPredicate<T>, data: T): Promise<void> {
     const timestamp = this.timestamp;
-    return this.doc(ref).set(
+    const doc = this.doc(ref);
+    return doc.set(
       {
         ...data,
         updatedAt: timestamp,
         createdAt: timestamp,
+        ref: doc.ref,
       },
       { merge: true }
     );
@@ -124,7 +126,7 @@ export class FirestoreService {
     return doc.ref;
   }
 
-  upsert<T>(ref: DocPredicate<T>, data: any): Promise<void> {
+  upsert<T>(ref: DocPredicate<T>, data: T): Promise<void> {
     const doc = this.doc(ref).snapshotChanges().pipe(take(1)).toPromise();
 
     return doc.then(

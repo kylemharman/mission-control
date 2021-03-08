@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import {
-  AngularFirestore,
-  AngularFirestoreDocument,
-} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { auth } from 'firebase';
 import { Subject } from 'rxjs';
+import { FirestoreService } from 'src/app/shared/services/firestore.service';
+
 import { IUser } from '../models/user';
 
 // import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,7 +13,7 @@ export class AuthService {
   serverErrorMessage$ = new Subject<string>();
 
   constructor(
-    private _afs: AngularFirestore,
+    private _db: FirestoreService,
     private _afAuth: AngularFireAuth,
     private _router: Router // private snackBar: MatSnackBar
   ) {}
@@ -80,11 +78,14 @@ export class AuthService {
     this._router.navigate(['login']);
   }
 
-  private _updateUserName(user: firebase.User, name: string): Promise<void> {
-    const userRef: AngularFirestoreDocument<Partial<IUser>> = this._afs.doc(
-      `users/${user.uid}`
-    );
-
-    return userRef.set({ displayName: name }, { merge: true });
+  // TODO only updates on email sign up - edit firebase function to add timestamps and ref to user
+  private async _updateUserName(
+    user: firebase.User,
+    name: string
+  ): Promise<void> {
+    console.log('_updateUserName', { user, name });
+    await this._db.set<Partial<IUser>>(`users/${user.uid}`, {
+      displayName: name,
+    });
   }
 }

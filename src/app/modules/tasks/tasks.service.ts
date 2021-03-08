@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
-import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import {
+  debounce,
+  debounceTime,
+  map,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs/operators';
 import { ITask, Task } from 'src/app/core/models/task';
-import { UserCollection } from 'src/app/core/models/user';
+import { IUser, UserCollection } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
-import { WithRef } from 'src/app/shared/helpers/firebase';
+import { DocumentReference, WithRef } from 'src/app/shared/helpers/firebase';
 import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 
@@ -14,17 +24,21 @@ import { FirestoreService } from 'src/app/shared/services/firestore.service';
   providedIn: 'root',
 })
 export class TasksService {
-  constructor(private _db: FirestoreService, private _user: UserService) {}
+  constructor(
+    private _db: FirestoreService,
+    private _afs: AngularFirestore,
+    private _user: UserService
+  ) {}
 
   async createTask(name: string): Promise<void> {
     const order = await this._getOrderNumber();
     const task = Task.init({ name, order });
-    const tasksCollection = await this._getTasksCollection();
+    const tasksCollection = await snapshot(this._getTasksCollection$());
     await this._db.add(tasksCollection, task);
   }
 
   async sortTasks(tasks: WithRef<ITask>[]) {
-    const tasksCollection = await this._getTasksCollection();
+    const tasksCollection = await snapshot(this._getTasksCollection$());
     const db = firebase.firestore();
     const batch = db.batch();
 
@@ -34,12 +48,9 @@ export class TasksService {
   }
 
   getAllTasks$(): Observable<WithRef<ITask>[]> {
-    return this._user.user$.pipe(
-      switchMap((user) =>
-        this._db.col$<WithRef<ITask>>(
-          `users/${user.uid}/${UserCollection.Tasks}`,
-          (doc) => doc.orderBy('order')
-        )
+    return this._getTasksCollection$().pipe(
+      switchMap((ref) =>
+        this._db.col$<WithRef<ITask>>(ref, (doc) => doc.orderBy('order'))
       )
     );
   }
@@ -48,9 +59,10 @@ export class TasksService {
     await this._db.update<Partial<ITask>>(task.ref.path, task);
   }
 
-  private async _getTasksCollection(): Promise<string> {
-    const user = await snapshot(this._user.user$);
-    return `users/${user.uid}/${UserCollection.Tasks}`; // TODO make a root collection for 'users'
+  private _getTasksCollection$(): Observable<string> {
+    return this._user.user$.pipe(
+      map((user: IUser) => `users/${user.uid}/${UserCollection.Tasks}`) // TODO make a root collection for 'users'
+    );
   }
 
   private async _getOrderNumber(): Promise<number> {

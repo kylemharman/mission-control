@@ -1,4 +1,3 @@
-import * as firebase from 'firebase';
 import { AtLeast } from 'src/app/shared/helpers/common';
 import { Timestamp } from 'src/app/shared/helpers/firebase';
 
@@ -42,7 +41,6 @@ export interface ITag {
 }
 export class Task {
   static init(overrides: AtLeast<ITask, 'name' | 'order'>): ITask {
-    const timestamp = firebase.firestore.FieldValue.serverTimestamp();
     return {
       description: '',
       status: TaskStatus.None,
