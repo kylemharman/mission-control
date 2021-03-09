@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { RootCollection } from 'src/app/core/models/root-collection';
 import { ITask, Task } from 'src/app/core/models/task';
 import { IUser, UserCollection } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
@@ -51,7 +52,10 @@ export class TasksService {
 
   private _getTasksCollection$(): Observable<string> {
     return this._user.user$.pipe(
-      map((user: IUser) => `users/${user.uid}/${UserCollection.Tasks}`) // TODO make a root collection for 'users'
+      map(
+        (user: IUser) =>
+          `${RootCollection.Users}/${user.uid}/${UserCollection.Tasks}`
+      )
     );
   }
 

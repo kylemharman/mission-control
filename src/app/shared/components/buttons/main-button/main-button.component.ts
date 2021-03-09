@@ -26,7 +26,7 @@ export class MainButtonComponent {
     const mode = this.primary
       ? 'mc-main-button--primary'
       : 'mc-main-button--secondary';
-    const fullWidth = this.fullWidth ? 'mc-button--fullwidth' : '';
+    const fullWidth = this.fullWidth ? 'mc-main-button--fullwidth' : '';
     return ['mc-main-button', `mc-main-button--${this.size}`, mode, fullWidth];
   }
 }

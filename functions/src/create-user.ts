@@ -13,14 +13,15 @@ export const createUserRecord = functions
     const userRef = db.doc(`users/${user.uid}`);
 
     const data = {
-      uid: user.uid,
       ref: userRef, // TODO need to deploy functions for this to work.
+      uid: user.uid,
       displayName: user.displayName,
       email: user.email,
       emailVerified: user.emailVerified,
       profileImage: user.photoURL,
       colourTheme: '',
       darkMode: false,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
     };
 
     return userRef.set(data, { merge: true });

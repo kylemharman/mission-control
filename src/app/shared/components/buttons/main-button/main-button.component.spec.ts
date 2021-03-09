@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MainButtonComponent } from './main-button.component';
 
 describe('ButtonComponent', () => {

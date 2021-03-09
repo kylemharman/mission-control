@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { auth } from 'firebase';
 import { Subject } from 'rxjs';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
+import { RootCollection } from '../models/root-collection';
 import { IUser } from '../models/user';
 
 // import { MatSnackBar } from '@angular/material/snack-bar';
@@ -83,7 +84,7 @@ export class AuthService {
     name: string
   ): Promise<void> {
     console.log('_updateUserName', { user, name });
-    await this._db.set<Partial<IUser>>(`users/${user.uid}`, {
+    await this._db.set<Partial<IUser>>(`${RootCollection.Users}/${user.uid}`, {
       displayName: name,
     });
   }
