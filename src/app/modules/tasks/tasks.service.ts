@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { RootCollection } from 'src/app/core/models/root-collection';
 import { ITask, Task } from 'src/app/core/models/task';
 import { IUser, UserCollection } from 'src/app/core/models/user';
@@ -17,19 +18,23 @@ import { FirestoreService } from 'src/app/shared/services/firestore.service';
 export class TasksService {
   constructor(
     private _db: FirestoreService,
-    private _afs: AngularFirestore,
-    private _user: UserService
+    private _user: UserService,
+    private _snack: MatSnackBar
   ) {}
 
   async createTask(name: string): Promise<void> {
+    if (!name.trim().length) {
+      this._snack.open('⚠️ Task name can not be empty.');
+      return;
+    }
     const order = await this._getOrderNumber();
     const task = Task.init({ name, order });
-    const tasksCollection = await snapshot(this._getTasksCollection$());
+    const tasksCollection = await snapshot(this.getTasksCollection$());
     await this._db.add(tasksCollection, task);
   }
 
   async sortTasks(tasks: WithRef<ITask>[]) {
-    const tasksCollection = await snapshot(this._getTasksCollection$());
+    const tasksCollection = await snapshot(this.getTasksCollection$());
     const db = firebase.firestore();
     const batch = db.batch();
 
@@ -39,10 +44,16 @@ export class TasksService {
   }
 
   getAllTasks$(): Observable<WithRef<ITask>[]> {
-    return this._getTasksCollection$().pipe(
+    return this.getTasksCollection$().pipe(
       switchMap((ref) =>
         this._db.col$<WithRef<ITask>>(ref, (doc) => doc.orderBy('order'))
       )
+    );
+  }
+
+  getTask$(id: string): Observable<WithRef<ITask>> {
+    return this.getTasksCollection$().pipe(
+      switchMap((ref) => this._db.doc$<WithRef<ITask>>(`${ref}/${id}`))
     );
   }
 
@@ -50,7 +61,7 @@ export class TasksService {
     await this._db.update<Partial<ITask>>(task.ref.path, task);
   }
 
-  private _getTasksCollection$(): Observable<string> {
+  getTasksCollection$(): Observable<string> {
     return this._user.user$.pipe(
       map(
         (user: IUser) =>

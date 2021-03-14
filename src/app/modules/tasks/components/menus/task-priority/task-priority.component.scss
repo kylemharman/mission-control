@@ -1,0 +1,32 @@
+.priority-menu-trigger {
+  .mat-icon-button {
+    width: 22px;
+    height: 22px;
+    line-height: 0px;
+  }
+
+  .mat-icon {
+    font-size: 16px;
+    color: #bebebe;
+
+    &:hover {
+      color: #008cff;
+    }
+  }
+}
+
+.mat-menu-item {
+  .urgent,
+  .clear {
+    color: #f44336;
+  }
+  .high {
+    color: #fecb01;
+  }
+  .normal {
+    color: #008cff;
+  }
+  .low {
+    color: #bebebe;
+  }
+}

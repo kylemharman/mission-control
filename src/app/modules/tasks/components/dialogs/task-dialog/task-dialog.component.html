@@ -1,0 +1,23 @@
+<div fxLayout="row" fxLayoutAlign="start center" class="task-header">
+  <span fxFlex></span>
+  <mc-close-button (click)="close()" size="large"></mc-close-button>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="task-container" fxLayout="column" fxLayoutGap="12px">
+  <input
+    matInput
+    autocomplete="chrome-off"
+    [(ngModel)]="task.name"
+    value="{{ task.name }}"
+  />
+
+  <textarea
+    matInput
+    placeholder="Description"
+    [(ngModel)]="task.description"
+    value="{{ task.description }}"
+  >
+  </textarea>
+</div>
