@@ -11,6 +11,7 @@ import { TasksService } from '../../../tasks.service';
 })
 export class TaskPriorityComponent {
   @Input() task: WithRef<ITask>;
+  @Input() size: 'small' | 'large' = 'small';
   taskPriority = TaskPriority;
 
   constructor(private _task: TasksService) {}

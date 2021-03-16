@@ -3,8 +3,9 @@
   border: 1px solid #fff;
   border-radius: 4px;
   box-sizing: border-box;
-  &:hover {
-    border: 1px solid #bebebe;
+  &:hover,
+  &:focus {
+    border: 1px solid #e0e0e0;
   }
 }
 
@@ -21,5 +22,7 @@
   }
   textarea {
     @include default;
+    min-height: 300px;
+    max-height: 450px;
   }
 }

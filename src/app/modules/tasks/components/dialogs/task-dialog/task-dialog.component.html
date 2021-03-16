@@ -1,4 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="start center" class="task-header">
+  <mc-task-priority [task]="task" size="large"></mc-task-priority>
   <span fxFlex></span>
   <mc-close-button (click)="close()" size="large"></mc-close-button>
 </div>
@@ -16,6 +17,7 @@
   <textarea
     matInput
     placeholder="Description"
+    cdkTextareaAutosize
     [(ngModel)]="task.description"
     value="{{ task.description }}"
   >
