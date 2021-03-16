@@ -34,14 +34,15 @@ export class TaskEntryDialogComponent {
   }
 
   async openTaskDialog(): Promise<void> {
-    const task = await this._dialog
+    const task = await snapshot(this.task$);
+    const data = await this._dialog
       .open(TaskDialogComponent, {
         height: '100%',
         width: '100%',
         maxWidth: '95vw',
         maxHeight: '90vh',
         autoFocus: false,
-        data: await snapshot(this.task$),
+        data: task,
       })
       .afterClosed()
       .toPromise();
@@ -50,7 +51,7 @@ export class TaskEntryDialogComponent {
       await this._navigateBack();
       return;
     }
-    await this._task.updateTask(task);
+    await this._task.updateTask(task, data);
     await this._navigateBack();
   }
 

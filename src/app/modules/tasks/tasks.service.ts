@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { RootCollection } from 'src/app/core/models/root-collection';
 import { ITask, Task } from 'src/app/core/models/task';
 import { IUser, UserCollection } from 'src/app/core/models/user';
@@ -57,8 +57,11 @@ export class TasksService {
     );
   }
 
-  async updateTask(task: WithRef<Partial<ITask>>): Promise<void> {
-    await this._db.update<Partial<ITask>>(task.ref.path, task);
+  async updateTask(
+    task: AngularFirestoreDocument<ITask>,
+    data: Partial<ITask>
+  ): Promise<void> {
+    await this._db.update(task.ref.path, data);
   }
 
   getTasksCollection$(): Observable<string> {

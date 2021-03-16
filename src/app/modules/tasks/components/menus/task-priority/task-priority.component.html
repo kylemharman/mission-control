@@ -1,32 +1,38 @@
 <button
   class="priority-menu-trigger"
   mat-icon-button
-  [matMenuTriggerFor]="priority_menu"
+  [matMenuTriggerFor]="priorityMenu"
   disableRipple="true"
 >
-  <mat-icon tooltip="Set priority">
-    outlined_flag
+  <mat-icon
+    tooltip="Set priority"
+    [ngClass]="[
+      task.priority,
+      task.priority === taskPriority.None ? 'hover' : ''
+    ]"
+  >
+    {{ task.priority === taskPriority.None ? 'outlined_flag' : 'flag' }}
   </mat-icon>
 </button>
 
-<mat-menu #priority_menu="matMenu">
-  <button mat-menu-item>
+<mat-menu #priorityMenu="matMenu">
+  <button mat-menu-item (click)="setPriority(taskPriority.Urgent)">
     <mat-icon class="urgent">flag</mat-icon>
     <span>Urgent</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="setPriority(taskPriority.High)">
     <mat-icon class="high">flag</mat-icon>
     <span>High</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="setPriority(taskPriority.Normal)">
     <mat-icon class="normal">flag</mat-icon>
     <span>Normal</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="setPriority(taskPriority.Low)">
     <mat-icon class="low">flag</mat-icon>
     <span>Low</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item (click)="setPriority(taskPriority.None)">
     <mat-icon class="clear">close</mat-icon>
     <span>Clear</span>
   </button>
