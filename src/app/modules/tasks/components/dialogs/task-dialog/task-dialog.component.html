@@ -1,25 +1,31 @@
-<div fxLayout="row" fxLayoutAlign="start center" class="task-header">
-  <mc-task-priority [task]="task" size="large"></mc-task-priority>
-  <span fxFlex></span>
-  <mc-close-button (click)="close()" size="large"></mc-close-button>
-</div>
+<ng-container *ngIf="task$ | async as task">
+  <div fxLayout="row" fxLayoutAlign="start center" class="task-header">
+    <mc-task-priority
+      (priority)=""
+      [task]="task"
+      size="large"
+    ></mc-task-priority>
+    <span fxFlex></span>
+    <mc-close-button (click)="close()" size="large"></mc-close-button>
+  </div>
 
-<mat-divider></mat-divider>
+  <mat-divider></mat-divider>
 
-<div class="task-container" fxLayout="column" fxLayoutGap="12px">
-  <input
-    matInput
-    autocomplete="chrome-off"
-    [(ngModel)]="task.name"
-    value="{{ task.name }}"
-  />
+  <div class="task-container" fxLayout="column" fxLayoutGap="12px">
+    <input
+      matInput
+      autocomplete="chrome-off"
+      [(ngModel)]="task.name"
+      value="{{ task.name }}"
+    />
 
-  <textarea
-    matInput
-    placeholder="Description"
-    cdkTextareaAutosize
-    [(ngModel)]="task.description"
-    value="{{ task.description }}"
-  >
-  </textarea>
-</div>
+    <textarea
+      matInput
+      placeholder="Description"
+      cdkTextareaAutosize
+      [(ngModel)]="task.description"
+      value="{{ task.description }}"
+    >
+    </textarea>
+  </div>
+</ng-container>
