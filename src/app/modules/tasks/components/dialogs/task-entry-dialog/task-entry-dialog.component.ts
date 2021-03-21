@@ -42,7 +42,7 @@ export class TaskEntryDialogComponent {
         maxWidth: '95vw',
         maxHeight: '90vh',
         autoFocus: false,
-        data: task,
+        data: this.task$,
       })
       .afterClosed()
       .toPromise();

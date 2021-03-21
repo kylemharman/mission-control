@@ -17,23 +17,23 @@
 </button>
 
 <mat-menu #priorityMenu="matMenu">
-  <button mat-menu-item (click)="setPriority(taskPriority.Urgent)">
+  <button mat-menu-item (click)="priority.emit(taskPriority.Urgent)">
     <mat-icon class="urgent">flag</mat-icon>
     <span>Urgent</span>
   </button>
-  <button mat-menu-item (click)="setPriority(taskPriority.High)">
+  <button mat-menu-item (click)="priority.emit(taskPriority.High)">
     <mat-icon class="high">flag</mat-icon>
     <span>High</span>
   </button>
-  <button mat-menu-item (click)="setPriority(taskPriority.Normal)">
+  <button mat-menu-item (click)="priority.emit(taskPriority.Normal)">
     <mat-icon class="normal">flag</mat-icon>
     <span>Normal</span>
   </button>
-  <button mat-menu-item (click)="setPriority(taskPriority.Low)">
+  <button mat-menu-item (click)="priority.emit(taskPriority.Low)">
     <mat-icon class="low">flag</mat-icon>
     <span>Low</span>
   </button>
-  <button mat-menu-item (click)="setPriority(taskPriority.None)">
+  <button mat-menu-item (click)="priority.emit(taskPriority.None)">
     <mat-icon class="clear">close</mat-icon>
     <span>Clear</span>
   </button>

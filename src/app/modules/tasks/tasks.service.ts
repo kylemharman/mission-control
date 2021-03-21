@@ -74,6 +74,7 @@ export class TasksService {
   }
 
   private async _getOrderNumber(): Promise<number> {
+    // TODO get this value from a counters doc in the db - will need a cloud function that listens and increments/decrement on add/delete of a task
     const allTasks = await snapshot(this.getAllTasks$());
     return allTasks.length ? allTasks.length++ : 0;
   }

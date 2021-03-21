@@ -1,7 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { isEqual } from 'lodash';
-import { ITask } from 'src/app/core/models/task';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { ITask, TaskPriority } from 'src/app/core/models/task';
+import { WithRef } from 'src/app/shared/helpers/firebase';
+import { snapshot } from 'src/app/shared/helpers/rxjs';
+import { TasksService } from '../../../tasks.service';
 
 @Component({
   selector: 'mc-task-dialog',
@@ -9,17 +14,23 @@ import { ITask } from 'src/app/core/models/task';
   styleUrls: ['./task-dialog.component.scss'],
 })
 export class TaskDialogComponent {
-  task: ITask;
+  task$: Observable<WithRef<ITask>>;
 
   constructor(
+    private _task: TasksService,
     private _dialogRef: MatDialogRef<TaskDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private _data: ITask
+    @Inject(MAT_DIALOG_DATA) public data$: Observable<WithRef<ITask>>
   ) {
-    this.task = { ..._data };
+    this.task$ = this.data$.pipe(
+      switchMap((task) => this._task.getTask$(task.ref.id))
+    );
   }
 
-  close(): void {
-    const task = !isEqual(this.task, this._data) ? this.task : undefined;
-    this._dialogRef.close(task);
+  async close(): Promise<void> {
+    const task = await snapshot(this.task$);
+    const data = await snapshot(this.data$);
+
+    const update = !isEqual(task, data ? task : undefined);
+    this._dialogRef.close(update);
   }
 }
