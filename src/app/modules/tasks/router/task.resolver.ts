@@ -5,7 +5,7 @@ import { WithRef } from 'src/app/shared/helpers/firebase';
 import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { TasksService } from '../tasks.service';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class TaskResolver implements Resolve<ITask> {
   constructor(private _task: TasksService) {}
 

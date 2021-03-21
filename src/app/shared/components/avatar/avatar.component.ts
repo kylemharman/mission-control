@@ -1,14 +1,12 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  Input,
+  Component,
   HostBinding,
+  Input,
 } from '@angular/core';
-import { auth } from 'firebase';
 import { first, last } from 'lodash';
 import { Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
-import { AuthService } from 'src/app/core/auth/auth.service';
+import { map } from 'rxjs/operators';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({

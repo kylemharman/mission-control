@@ -42,15 +42,16 @@ export class TaskEntryDialogComponent {
         maxWidth: '95vw',
         maxHeight: '90vh',
         autoFocus: false,
-        data: this.task$,
+        data: task,
       })
       .afterClosed()
       .toPromise();
 
-    if (!task) {
+    if (!data) {
       await this._navigateBack();
       return;
     }
+    console.log(data);
     await this._task.updateTask(task, data);
     await this._navigateBack();
   }

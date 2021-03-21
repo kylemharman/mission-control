@@ -12,6 +12,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TaskDialogComponent } from './components/dialogs/task-dialog/task-dialog.component';
 import { TaskEntryDialogComponent } from './components/dialogs/task-entry-dialog/task-entry-dialog.component';
 import { TaskPriorityComponent } from './components/menus/task-priority/task-priority.component';
+import { TasksService } from './tasks.service';
+import { TaskResolver } from './router/task.resolver';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { TaskPriorityComponent } from './components/menus/task-priority/task-pri
     FormsModule,
     DragDropModule,
   ],
+  providers: [TasksService, TaskResolver],
   entryComponents: [TaskDialogComponent, TaskEntryDialogComponent],
 })
 export class TasksModule {}

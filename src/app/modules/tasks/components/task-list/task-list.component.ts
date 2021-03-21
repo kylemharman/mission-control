@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ITask } from 'src/app/core/models/task';
 import { WithRef } from 'src/app/shared/helpers/firebase';
@@ -10,6 +10,7 @@ import { TasksService } from '../../tasks.service';
   selector: 'mc-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskListComponent {
   tasks$: Observable<WithRef<ITask>[]>;
