@@ -51,7 +51,6 @@ export class TaskEntryDialogComponent {
       await this._navigateBack();
       return;
     }
-    console.log(data);
     await this._task.updateTask(task, data);
     await this._navigateBack();
   }

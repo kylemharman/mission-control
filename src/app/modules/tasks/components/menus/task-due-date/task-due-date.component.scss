@@ -1,0 +1,32 @@
+// TODO - set up a mixin for this - repeating this code in a few places now.
+.mat-icon-button {
+  width: 22px;
+  height: 22px;
+  line-height: 0px;
+}
+
+.mat-icon {
+  font-size: 16px;
+  color: #bebebe;
+
+  &:hover {
+    color: #008cff;
+  }
+}
+
+.time-container {
+  padding: 16px 0 0;
+}
+
+.close-button-container {
+  padding-right: 6px;
+}
+
+.menu-container {
+  padding: 0 16px 10px;
+  width: 250px;
+}
+
+.mat-calendar {
+  height: 300px;
+}

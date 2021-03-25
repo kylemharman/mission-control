@@ -13,3 +13,17 @@ mat-divider {
     font-family: 'Lato';
   }
 }
+
+.custom-toggle-group {
+  .mat-button-toggle-label-content {
+    line-height: 30px !important;
+    width: 30px !important;
+    font-size: 12px !important;
+    padding: 0 !important;
+  }
+
+  .mat-button-toggle-checked {
+    border: 1px solid blue !important;
+    border-radius: 4px !important;
+  }
+}

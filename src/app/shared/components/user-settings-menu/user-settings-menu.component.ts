@@ -15,6 +15,7 @@ import { filterUndefined } from '../../helpers/rxjs';
 })
 export class UserSettingsMenuComponent {
   user$: Observable<IUser>;
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
   constructor(
     private _auth: AuthService,
@@ -24,7 +25,6 @@ export class UserSettingsMenuComponent {
     this.user$ = this._user.user$.pipe(filterUndefined());
   }
 
-  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   closeMenu(): void {
     this.trigger.closeMenu();
   }

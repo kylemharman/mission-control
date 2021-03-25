@@ -4,7 +4,6 @@ import { TasksRoutingModule } from './tasks-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
-import { TaskComponent } from './components/task/task.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskRowComponent } from './components/task-row/task-row.component';
 import { FormsModule } from '@angular/forms';
@@ -14,17 +13,18 @@ import { TaskEntryDialogComponent } from './components/dialogs/task-entry-dialog
 import { TaskPriorityComponent } from './components/menus/task-priority/task-priority.component';
 import { TasksService } from './tasks.service';
 import { TaskResolver } from './router/task.resolver';
+import { TaskDueDateComponent } from './components/menus/task-due-date/task-due-date.component';
 
 @NgModule({
   declarations: [
     TasksComponent,
     CreateTaskComponent,
-    TaskComponent,
     TaskListComponent,
     TaskRowComponent,
     TaskDialogComponent,
     TaskEntryDialogComponent,
     TaskPriorityComponent,
+    TaskDueDateComponent,
   ],
   imports: [
     CommonModule,
