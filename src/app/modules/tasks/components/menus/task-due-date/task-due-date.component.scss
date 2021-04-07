@@ -1,12 +1,10 @@
-// TODO - set up a mixin for this - repeating this code in a few places now.
+@import '../../../../../styles/mixin';
+
 .mat-icon-button {
-  width: 22px;
-  height: 22px;
-  line-height: 0px;
+  @include mat-icon-button-size(16px);
 }
 
 .mat-icon {
-  font-size: 16px;
   color: #bebebe;
 
   &:hover {
@@ -14,19 +12,10 @@
   }
 }
 
-.time-container {
-  padding: 16px 0 0;
+.mc-time-selector {
+  margin-left: 18px;
 }
 
 .close-button-container {
-  padding-right: 6px;
-}
-
-.menu-container {
-  padding: 0 16px 10px;
-  width: 250px;
-}
-
-.mat-calendar {
-  height: 300px;
+  padding: 0 6px 0 18px;
 }

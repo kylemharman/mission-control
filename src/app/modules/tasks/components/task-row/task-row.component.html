@@ -27,7 +27,10 @@
       <!-- <button mat-icon-button disableRipple="true">
         <mat-icon tooltip="Assign">person_add_alt</mat-icon>
       </button> -->
-      <mc-task-due-date></mc-task-due-date>
+      <mc-task-due-date
+        [task]="task"
+        (dueDate)="setDueDate($event)"
+      ></mc-task-due-date>
     </div>
   </div>
 </div>

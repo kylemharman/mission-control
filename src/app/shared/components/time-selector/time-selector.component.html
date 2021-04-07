@@ -1,0 +1,25 @@
+<mat-form-field appearance="outline">
+  <mat-label>{{ label }}</mat-label>
+  <input
+    #timeInput
+    type="text"
+    matInput
+    [formControl]="time"
+    [matAutocomplete]="auto"
+  />
+  <button
+    *ngIf="timeInput.value"
+    matSuffix
+    mat-icon-button
+    aria-label="Clear"
+    tooltip="Clear"
+    (click)="time.setValue('')"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+<mat-autocomplete #auto="matAutocomplete">
+  <mat-option *ngFor="let option of filteredOptions$ | async" [value]="option">
+    {{ option }}
+  </mat-option>
+</mat-autocomplete>

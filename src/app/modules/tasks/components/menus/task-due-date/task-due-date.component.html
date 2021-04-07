@@ -3,48 +3,27 @@
 </button>
 
 <mat-menu #dueDateMenu="matMenu">
-  <span
+  <div
     fxLayout="row"
-    fxLayoutAlign="end start"
+    fxLayoutAlign="space-between center"
     class="close-button-container"
     (click)="$event.stopPropagation()"
   >
+    <span class="mat-small">
+      <strong>{{ date | amDateFormat: 'MMM D' }}</strong>
+      <strong *ngIf="time">@ {{ time }}</strong>
+    </span>
     <mc-close-button (click)="closeMenu()" size="meduim"></mc-close-button>
-  </span>
+  </div>
 
   <div (click)="$event.stopPropagation()" class="menu-container">
-    <mat-calendar
-      #cal
-      [selected]="date"
-      (selectedChange)="selectedDate($event)"
-    ></mat-calendar>
-
-    <mat-divider></mat-divider>
-
-    <div
-      fxLayout="row"
-      fxLayoutAlign="center center"
-      fxLayoutGap="16px"
-      class="time-container"
-    >
-      <!-- <mat-form-field appearance="outline">
-        <input
-          matInput
-          type="number"
-          width="60"
-          [min]="1"
-          [max]="12"
-          value="hour"
-        />
-      </mat-form-field>
-      <strong>:</strong>
-      <mat-form-field appearance="outline">
-        <input matInput type="number" [min]="1" [max]="12" value="hour" />
-      </mat-form-field> -->
-      <mat-button-toggle-group name="timeSelect" vertical value="AM">
-        <mat-button-toggle color="primary" value="AM">AM</mat-button-toggle>
-        <mat-button-toggle color="primary" value="PM">PM</mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
+    <mc-date-selector
+      [task]="task"
+      (emitDate)="selectedDate($event)"
+    ></mc-date-selector>
+    <mc-time-selector
+      [task]="task"
+      (emitTime)="selectedTime($event)"
+    ></mc-time-selector>
   </div>
 </mat-menu>

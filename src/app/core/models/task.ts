@@ -1,5 +1,5 @@
 import { AtLeast } from 'src/app/shared/helpers/common';
-import { Timestamp } from 'src/app/shared/helpers/firebase';
+import { ITimestamp } from 'src/app/shared/helpers/time';
 
 export interface ITask {
   name: string;
@@ -8,7 +8,7 @@ export interface ITask {
   status: TaskStatus;
   priority: TaskPriority;
   tags: ITag[];
-  dueDate?: Timestamp;
+  dueDate?: ITimestamp;
   // creator: AngularFirestoreDocument<IUser>;
   // AssignedTo: DocumentReference<IUser>[];
   // timeTracking: ;

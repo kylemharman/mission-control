@@ -5,6 +5,7 @@
 @import 'material-styles';
 @import 'light-theme';
 @import 'dark-theme';
+@import 'mixin';
 
 @include mat-core();
 

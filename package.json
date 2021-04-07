@@ -34,6 +34,7 @@
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "ng2-tooltip-directive": "^2.9.22",
+    "ngx-moment": "^5.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

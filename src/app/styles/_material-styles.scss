@@ -10,20 +10,28 @@ mat-divider {
   font-size: 24px;
   font-family: 'Material Icons', 'Material Icons';
   .mat-badge-content {
-    font-family: 'Lato';
+    font-family: 'Poppins';
   }
 }
 
-.custom-toggle-group {
-  .mat-button-toggle-label-content {
-    line-height: 30px !important;
-    width: 30px !important;
-    font-size: 12px !important;
-    padding: 0 !important;
-  }
+.mat-button-toggle-label-content {
+  line-height: 30px !important;
+  width: 30px !important;
+  font-size: 12px !important;
+  padding: 0 !important;
+}
 
-  .mat-button-toggle-checked {
-    border: 1px solid blue !important;
-    border-radius: 4px !important;
-  }
+.mat-option {
+  height: 30px !important;
+  line-height: 30px !important;
+  font-size: 12px !important;
+}
+
+.mat-list-text {
+  font-family: 'Poppins' !important;
+  padding-right: 0 !important;
+}
+
+.mat-menu-panel {
+  max-width: fit-content !important;
 }
