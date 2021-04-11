@@ -1,9 +1,10 @@
-<mat-form-field appearance="outline">
-  <mat-label>{{ label }}</mat-label>
+<mat-form-field [appearance]="appearance">
+  <mat-label *ngIf="label">{{ label }}</mat-label>
   <input
     #timeInput
     type="text"
     matInput
+    [placeholder]="placeholder"
     [formControl]="time"
     [matAutocomplete]="auto"
   />

@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
+<div fxLayout="row">
   <div class="quick-select-container">
     <mat-selection-list dense [multiple]="false">
       <mat-list-option
@@ -15,9 +15,11 @@
       </mat-list-option>
     </mat-selection-list>
   </div>
-  <mat-calendar
-    #calendar
-    [selected]="date"
-    (selectedChange)="selectedDate($event)"
-  ></mat-calendar>
+  <div class="calendar-container">
+    <mat-calendar
+      #calendar
+      [selected]="date"
+      (selectedChange)="selectedDate($event)"
+    ></mat-calendar>
+  </div>
 </div>

@@ -40,6 +40,10 @@ export class TaskDueDateComponent {
     this.time = time;
   }
 
+  clearDate(): void {
+    this.date = undefined;
+  }
+
   private _createDueDate(): moment.Moment {
     if (!this.date) return;
 

@@ -12,10 +12,12 @@
   }
 }
 
-.mc-time-selector {
-  margin-left: 18px;
+.due-date-header {
+  border-bottom: 1px solid #bebebe;
+  padding: 8px;
 }
 
-.close-button-container {
-  padding: 0 6px 0 18px;
+.selected-container {
+  border: 1px solid #bebebe;
+  @include border-radius();
 }

@@ -13,3 +13,7 @@
     @include mat-icon-size($size);
   }
 }
+
+@mixin border-radius() {
+  border-radius: 4px;
+}

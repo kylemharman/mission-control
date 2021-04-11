@@ -1,9 +1,13 @@
 .quick-select-container {
-  margin-top: 24px;
+  padding-top: 12px;
+}
+
+.calendar-container {
+  border-left: 1px solid #bebebe;
 }
 
 .mat-calendar {
-  height: 265px;
+  height: 250px;
   max-width: 200px;
 }
 

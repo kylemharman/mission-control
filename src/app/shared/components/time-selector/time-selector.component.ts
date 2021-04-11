@@ -26,8 +26,10 @@ import { getIntervals, toMoment } from '../../helpers/time';
 export class TimeSelectorComponent implements OnDestroy, OnInit {
   private _onDestroy$: Subject<void> = new Subject();
   @Input() task: WithRef<ITask>;
+  @Input() label: string;
+  @Input() placeholder: string;
   @Input() interval: number = 15;
-  @Input() label: string = 'Select time';
+  @Input() appearance: string = 'outline';
   @Output() emitTime = new EventEmitter<string>();
 
   @ViewChild('timeInput', { read: MatAutocompleteTrigger })

@@ -3,27 +3,29 @@
 </button>
 
 <mat-menu #dueDateMenu="matMenu">
-  <div
-    fxLayout="row"
-    fxLayoutAlign="space-between center"
-    class="close-button-container"
-    (click)="$event.stopPropagation()"
-  >
-    <span class="mat-small">
-      <strong>{{ date | amDateFormat: 'MMM D' }}</strong>
-      <strong *ngIf="time">@ {{ time }}</strong>
-    </span>
-    <mc-close-button (click)="closeMenu()" size="meduim"></mc-close-button>
-  </div>
+  <div fxLayout="column" (click)="$event.stopPropagation()">
+    <div class="due-date-header">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        fxLayoutGap="8px"
+        class="selected-container"
+      >
+        <span class="mat-small">{{ date | amDateFormat: 'D/M/YY' }}</span>
+        <mc-close-button *ngIf="date" (click)="clearDate()"></mc-close-button>
+        <mc-time-selector
+          *ngIf="date"
+          [task]="task"
+          appearance="none"
+          placeholder="Select time"
+          (emitTime)="selectedTime($event)"
+        ></mc-time-selector>
+      </div>
+    </div>
 
-  <div (click)="$event.stopPropagation()" class="menu-container">
     <mc-date-selector
       [task]="task"
       (emitDate)="selectedDate($event)"
     ></mc-date-selector>
-    <mc-time-selector
-      [task]="task"
-      (emitTime)="selectedTime($event)"
-    ></mc-time-selector>
   </div>
 </mat-menu>
