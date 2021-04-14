@@ -1,12 +1,17 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
-  FormGroup,
-  FormBuilder,
-  Validators,
   AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { IUser } from 'src/app/core/models/user';
+import { State } from 'src/app/reducers';
+import { WithRef } from 'src/app/shared/helpers/firebase';
 import { AuthService } from '../../auth.service';
+import { LoginPageActions } from '../../store/actions';
 
 @Component({
   selector: 'mc-login',
@@ -19,8 +24,12 @@ export class LoginComponent implements OnInit {
   passwordHidden = true;
   serverErrorMessage$: Observable<string>;
 
-  constructor(public auth: AuthService, private _fb: FormBuilder) {
-    this.serverErrorMessage$ = this.auth.serverErrorMessage$;
+  constructor(
+    private _auth: AuthService,
+    private _fb: FormBuilder,
+    private _store: Store<State>
+  ) {
+    this.serverErrorMessage$ = this._auth.serverErrorMessage$;
   }
 
   ngOnInit(): void {
@@ -30,19 +39,21 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  async onSubmit(): Promise<void> {
-    await this.auth.signIn(this.email.value, this.password.value);
-  }
-
-  async googleSignIn(): Promise<void> {
-    await this.auth.googleSignIn();
-  }
-
   get email(): AbstractControl {
     return this.form.get('email');
   }
 
   get password(): AbstractControl {
     return this.form.get('password');
+  }
+
+  async onSubmit(): Promise<void> {
+    await this._auth.signIn(this.email.value, this.password.value);
+  }
+
+  async googleSignIn(): Promise<void> {
+    const user = await this._auth.googleSignIn();
+    console.log('user :>> ', user);
+    this._store.dispatch(LoginPageActions.login({ user }));
   }
 }

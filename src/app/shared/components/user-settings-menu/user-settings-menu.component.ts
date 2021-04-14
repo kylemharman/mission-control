@@ -1,11 +1,8 @@
-import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { IUser } from 'src/app/core/models/user';
+import { AuthFacade } from 'src/app/core/auth/store/facades/auth.facade';
 import { ThemeService } from 'src/app/core/services/theme.service';
-import { UserService } from 'src/app/core/services/user.service';
-import { filterUndefined } from '../../helpers/rxjs';
 
 @Component({
   selector: 'mc-user-settings-menu',
@@ -14,23 +11,21 @@ import { filterUndefined } from '../../helpers/rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserSettingsMenuComponent {
-  user$: Observable<IUser>;
+  user$ = this._auth.user$;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
   constructor(
-    private _auth: AuthService,
-    private _user: UserService,
+    private _authService: AuthService,
+    private _auth: AuthFacade,
     private _theme: ThemeService
-  ) {
-    this.user$ = this._user.user$.pipe(filterUndefined());
-  }
+  ) {}
 
   closeMenu(): void {
     this.trigger.closeMenu();
   }
 
   logout(): void {
-    this._auth.signOut();
+    this._authService.signOut();
   }
 
   darkMode(value: boolean): void {

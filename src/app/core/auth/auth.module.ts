@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { WordDividerComponent } from './components/word-divider/word-divider.component';
 import { AuthFormContainerComponent } from './components/auth-form-container/auth-form-container.component';
 import { AuthPageContainerComponent } from './components/auth-page-container/auth-page-container.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromAuth from './store/reducers';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,13 @@ import { AuthPageContainerComponent } from './components/auth-page-container/aut
     AuthFormContainerComponent,
     AuthPageContainerComponent,
   ],
-  imports: [CommonModule, AuthRoutingModule, SharedModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    AuthRoutingModule,
+    SharedModule,
+    ReactiveFormsModule,
+    StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.authReducer),
+  ],
   providers: [AuthService],
 })
 export class AuthModule {}

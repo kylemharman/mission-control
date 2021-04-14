@@ -3,7 +3,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { moduleMetadata, Story } from '@storybook/angular';
 import { Meta } from '@storybook/angular/types-6-0';
 import { of } from 'rxjs';
-import { UserService } from 'src/app/core/services/user.service';
+import { AuthFacade } from 'src/app/core/auth/store/facades/auth.facade';
 import { IUser } from '../../../core/models/user';
 import { AvatarComponent } from './avatar.component';
 
@@ -22,7 +22,7 @@ const metadata = {
       imports: [FlexLayoutModule, LayoutModule],
       providers: [
         {
-          provide: UserService,
+          provide: AuthFacade,
           useValue: {
             user$: of(user),
           },
@@ -51,7 +51,7 @@ export const avatatWithInitals = () => ({
     moduleMetadata({
       providers: [
         {
-          provide: UserService,
+          provide: AuthFacade,
           useValue: {
             user$: of(user.displayName),
           },
@@ -71,7 +71,7 @@ export const avatatWithImage = () => ({
     moduleMetadata({
       providers: [
         {
-          provide: UserService,
+          provide: AuthFacade,
           useValue: {
             user$: of(user.profileImage),
           },

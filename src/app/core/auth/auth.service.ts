@@ -1,27 +1,41 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import * as firebase from 'firebase';
 import { auth } from 'firebase';
-import { Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { WithRef } from 'src/app/shared/helpers/firebase';
+import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { RootCollection } from '../models/root-collection';
 import { IUser } from '../models/user';
-
-// import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  user$: Observable<WithRef<IUser> | undefined>;
   serverErrorMessage$ = new Subject<string>();
 
   constructor(
     private _db: FirestoreService,
     private _afAuth: AngularFireAuth,
-    private _router: Router // private snackBar: MatSnackBar
-  ) {}
+    private _router: Router
+  ) {
+    this.user$ = this._afAuth.authState.pipe(
+      switchMap((user) =>
+        user
+          ? _db.doc$<IUser>(`${RootCollection.Users}/${user.uid}`)
+          : of(undefined)
+      )
+    );
+  }
 
   async signIn(email, password): Promise<void> {
     try {
-      await this._afAuth.signInWithEmailAndPassword(email, password);
-      this._router.navigate([(await this._afAuth.currentUser).uid, 'tasks']);
+      const userCredentials = await this._afAuth.signInWithEmailAndPassword(
+        email,
+        password
+      );
+      this._router.navigate([userCredentials.user.uid, 'tasks']);
     } catch (error) {
       console.log(error);
       this.serverErrorMessage$.next(error.message);
@@ -30,12 +44,12 @@ export class AuthService {
 
   async signUp(email: string, password: string, name: string): Promise<void> {
     try {
-      const credential = await this._afAuth.createUserWithEmailAndPassword(
+      const userCredentials = await this._afAuth.createUserWithEmailAndPassword(
         email,
         password
       );
       await this.sendVerificationEmailMail();
-      await this._updateUserName(credential.user, name);
+      await this._updateUserName(userCredentials.user, name);
     } catch (error) {
       console.log(error);
       this.serverErrorMessage$.next(error.message);
@@ -63,11 +77,12 @@ export class AuthService {
     }
   }
 
-  async googleSignIn(): Promise<void> {
+  async googleSignIn(): Promise<IUser> {
     try {
-      const provider = new auth.GoogleAuthProvider();
-      await this._afAuth.signInWithPopup(provider);
-      this._router.navigate([(await this._afAuth.currentUser).uid, 'tasks']);
+      await this._afAuth.signInWithPopup(new auth.GoogleAuthProvider());
+      const user = await snapshot(this.user$);
+      this._router.navigate([user.uid, 'tasks']);
+      return this._removeDocumentRef(user);
     } catch (error) {
       console.log(error);
     }
@@ -84,8 +99,16 @@ export class AuthService {
     name: string
   ): Promise<void> {
     console.log('_updateUserName', { user, name });
-    await this._db.set<Partial<IUser>>(`${RootCollection.Users}/${user.uid}`, {
-      displayName: name,
-    });
+    await this._db.set<Pick<IUser, 'displayName'>>(
+      `${RootCollection.Users}/${user.uid}`,
+      {
+        displayName: name,
+      }
+    );
+  }
+
+  private _removeDocumentRef(user: WithRef<IUser>): IUser {
+    delete user.ref;
+    return user;
   }
 }
