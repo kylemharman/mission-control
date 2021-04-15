@@ -1,7 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { removeDocumentRef } from 'src/app/shared/helpers/firebase';
 import { IUser } from '../../../models/user';
-import { LoginPageActions } from '../actions';
+import { AuthActions, LoginPageActions } from '../actions';
 
 export const authFeatureKey = 'auth';
 
@@ -17,5 +16,8 @@ export const authReducer = createReducer(
   initialAuthState,
   on(LoginPageActions.login, (_state, action) => {
     return { user: action.user };
+  }),
+  on(AuthActions.logout, (_state, _action) => {
+    return { user: undefined };
   })
 );

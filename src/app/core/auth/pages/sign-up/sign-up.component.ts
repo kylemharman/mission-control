@@ -11,6 +11,7 @@ import { State } from 'src/app/reducers';
 import { removeDocumentRef } from 'src/app/shared/helpers/firebase';
 import { AuthService } from '../../auth.service';
 import { LoginPageActions } from '../../store/actions';
+import { AuthFacade } from '../../store/facades/auth.facade';
 
 @Component({
   selector: 'mc-sign-up',
@@ -24,11 +25,11 @@ export class SignUpComponent implements OnInit {
   serverErrorMessage$: Observable<string>;
 
   constructor(
-    private _auth: AuthService,
-    private _fb: FormBuilder,
-    private _store: Store<State>
+    private _authService: AuthService,
+    private _authStore: AuthFacade,
+    private _fb: FormBuilder
   ) {
-    this.serverErrorMessage$ = this._auth.serverErrorMessage$;
+    this.serverErrorMessage$ = this._authService.serverErrorMessage$;
   }
 
   ngOnInit(): void {
@@ -40,7 +41,7 @@ export class SignUpComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    await this._auth.signUp(
+    await this._authService.signUp(
       this.email.value,
       this.password.value,
       this.fullname.value
@@ -48,10 +49,8 @@ export class SignUpComponent implements OnInit {
   }
 
   async googleSignUp(): Promise<void> {
-    const user = await this._auth.googleSignIn();
-    this._store.dispatch(
-      LoginPageActions.login({ user: removeDocumentRef(user) })
-    );
+    const user = await this._authService.googleSignIn();
+    this._authStore.login(user);
   }
 
   get fullname(): AbstractControl {

@@ -11,12 +11,12 @@ import { ThemeService } from 'src/app/core/services/theme.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserSettingsMenuComponent {
-  user$ = this._auth.user$;
+  user$ = this._authStore.user$;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
   constructor(
     private _authService: AuthService,
-    private _auth: AuthFacade,
+    private _authStore: AuthFacade,
     private _theme: ThemeService
   ) {}
 
@@ -25,7 +25,8 @@ export class UserSettingsMenuComponent {
   }
 
   logout(): void {
-    this._authService.signOut();
+    this._authService.logout();
+    this._authStore.logout();
   }
 
   darkMode(value: boolean): void {

@@ -14,8 +14,11 @@ import { AuthFacade } from '../../store/facades/auth.facade';
 export class VerifyEmailComponent {
   user$: Observable<IUser>;
 
-  constructor(private _auth: AuthFacade, private _authService: AuthService) {
-    this.user$ = this._auth.user$;
+  constructor(
+    private _authStore: AuthFacade,
+    private _authService: AuthService
+  ) {
+    this.user$ = this._authStore.user$;
   }
 
   sendVerificationEmail(): void {

@@ -4,10 +4,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { AuthService } from 'src/app/core/auth/auth.service';
 import { RootCollection } from 'src/app/core/models/root-collection';
 import { ITask, Task } from 'src/app/core/models/task';
 import { IUser, UserCollection } from 'src/app/core/models/user';
-import { UserService } from 'src/app/core/services/user.service';
 import { WithRef } from 'src/app/shared/helpers/firebase';
 import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
@@ -16,7 +16,8 @@ import { FirestoreService } from 'src/app/shared/services/firestore.service';
 export class TasksService {
   constructor(
     private _db: FirestoreService,
-    private _user: UserService,
+    // TODO - use store instead of service.
+    private _authStore: AuthService,
     private _snack: MatSnackBar
   ) {}
 
@@ -63,7 +64,7 @@ export class TasksService {
   }
 
   getTasksCollection$(): Observable<string> {
-    return this._user.user$.pipe(
+    return this._authStore.user$.pipe(
       map(
         (user: IUser) =>
           `${RootCollection.Users}/${user.uid}/${UserCollection.Tasks}`

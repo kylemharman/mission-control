@@ -29,7 +29,7 @@ export class AuthService {
     );
   }
 
-  async signIn(email, password): Promise<WithRef<IUser>> {
+  async login(email, password): Promise<WithRef<IUser>> {
     try {
       const userCredentials = await this._afAuth.signInWithEmailAndPassword(
         email,
@@ -45,14 +45,12 @@ export class AuthService {
 
   async signUp(email: string, password: string, name: string): Promise<void> {
     try {
-      const userCredentials = await this._afAuth.createUserWithEmailAndPassword(
+      const credentials = await this._afAuth.createUserWithEmailAndPassword(
         email,
         password
       );
+      await this._createUser(this._convertFirbaseUser(credentials.user, name));
       await this.sendVerificationEmailMail();
-      await this._createUser(
-        this._convertFirbaseUser(userCredentials.user, name)
-      );
     } catch (error) {
       console.log(error);
       this.serverErrorMessage$.next(error.message);
@@ -61,9 +59,9 @@ export class AuthService {
 
   async sendVerificationEmailMail(): Promise<void> {
     try {
-      const currentUser = await this._afAuth.currentUser;
+      const user = await snapshot(this._afAuth.authState);
+      await user.sendEmailVerification();
       await this._router.navigate(['verify-email-address']);
-      await currentUser.sendEmailVerification();
     } catch (error) {
       console.log(error);
       this.serverErrorMessage$.next(error.message);
@@ -82,27 +80,24 @@ export class AuthService {
 
   async googleSignIn(): Promise<WithRef<IUser>> {
     try {
-      const userCredentials = await this._afAuth.signInWithPopup(
+      const credentials = await this._afAuth.signInWithPopup(
         new auth.GoogleAuthProvider()
       );
-      const user = await this._createUser(
-        this._convertFirbaseUser(userCredentials.user)
-      );
-      await this._router.navigate([user.uid, 'tasks']);
-      return user;
+      await this._createUser(this._convertFirbaseUser(credentials.user));
+      await this._router.navigate([credentials.user.uid, 'tasks']);
+      return snapshot(this.user$);
     } catch (error) {
       console.log(error);
     }
   }
 
-  async signOut(): Promise<void> {
+  async logout(): Promise<void> {
     await this._afAuth.signOut();
     await this._router.navigate(['login']);
   }
 
-  private async _createUser(user: IUser): Promise<WithRef<IUser>> {
+  private async _createUser(user: IUser): Promise<void> {
     await this._db.set<IUser>(`${RootCollection.Users}/${user.uid}`, user);
-    return snapshot(this.user$);
   }
 
   private _convertFirbaseUser(
@@ -119,13 +114,4 @@ export class AuthService {
       darkMode: false,
     };
   }
-  // TODO - sort this shit out.
-  // private async _storeUser(): Promise<IUser> {
-  //   const user = await snapshot(this.user$);
-  //   console.log('user :>> ', user);
-  //   if (!user) {
-  //     return;
-  //   }
-  //   return removeDocumentRef(user);
-  // }
 }
