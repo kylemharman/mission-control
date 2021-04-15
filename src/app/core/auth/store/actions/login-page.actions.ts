@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-import { WithRef } from 'src/app/shared/helpers/firebase';
 import { IUser } from '../../../models/user';
 
 enum LoginPageActions {

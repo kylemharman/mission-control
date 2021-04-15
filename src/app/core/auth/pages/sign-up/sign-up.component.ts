@@ -5,8 +5,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { State } from 'src/app/reducers';
+import { removeDocumentRef } from 'src/app/shared/helpers/firebase';
 import { AuthService } from '../../auth.service';
+import { LoginPageActions } from '../../store/actions';
 
 @Component({
   selector: 'mc-sign-up',
@@ -19,8 +23,12 @@ export class SignUpComponent implements OnInit {
   passwordHidden = true;
   serverErrorMessage$: Observable<string>;
 
-  constructor(public auth: AuthService, private _fb: FormBuilder) {
-    this.serverErrorMessage$ = this.auth.serverErrorMessage$;
+  constructor(
+    private _auth: AuthService,
+    private _fb: FormBuilder,
+    private _store: Store<State>
+  ) {
+    this.serverErrorMessage$ = this._auth.serverErrorMessage$;
   }
 
   ngOnInit(): void {
@@ -32,7 +40,7 @@ export class SignUpComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    await this.auth.signUp(
+    await this._auth.signUp(
       this.email.value,
       this.password.value,
       this.fullname.value
@@ -40,7 +48,10 @@ export class SignUpComponent implements OnInit {
   }
 
   async googleSignUp(): Promise<void> {
-    await this.auth.googleSignIn();
+    const user = await this._auth.googleSignIn();
+    this._store.dispatch(
+      LoginPageActions.login({ user: removeDocumentRef(user) })
+    );
   }
 
   get fullname(): AbstractControl {

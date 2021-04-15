@@ -5,7 +5,7 @@ import * as firebase from 'firebase';
 import { auth } from 'firebase';
 import { Observable, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { WithRef } from 'src/app/shared/helpers/firebase';
+import { removeDocumentRef, WithRef } from 'src/app/shared/helpers/firebase';
 import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { RootCollection } from '../models/root-collection';
@@ -23,19 +23,20 @@ export class AuthService {
     this.user$ = this._afAuth.authState.pipe(
       switchMap((user) =>
         user
-          ? _db.doc$<IUser>(`${RootCollection.Users}/${user.uid}`)
+          ? _db.doc$<WithRef<IUser>>(`${RootCollection.Users}/${user.uid}`)
           : of(undefined)
       )
     );
   }
 
-  async signIn(email, password): Promise<void> {
+  async signIn(email, password): Promise<WithRef<IUser>> {
     try {
       const userCredentials = await this._afAuth.signInWithEmailAndPassword(
         email,
         password
       );
-      this._router.navigate([userCredentials.user.uid, 'tasks']);
+      await this._router.navigate([userCredentials.user.uid, 'tasks']);
+      return snapshot(this.user$);
     } catch (error) {
       console.log(error);
       this.serverErrorMessage$.next(error.message);
@@ -49,7 +50,9 @@ export class AuthService {
         password
       );
       await this.sendVerificationEmailMail();
-      await this._updateUserName(userCredentials.user, name);
+      await this._createUser(
+        this._convertFirbaseUser(userCredentials.user, name)
+      );
     } catch (error) {
       console.log(error);
       this.serverErrorMessage$.next(error.message);
@@ -59,8 +62,8 @@ export class AuthService {
   async sendVerificationEmailMail(): Promise<void> {
     try {
       const currentUser = await this._afAuth.currentUser;
+      await this._router.navigate(['verify-email-address']);
       await currentUser.sendEmailVerification();
-      this._router.navigate(['verify-email-address']);
     } catch (error) {
       console.log(error);
       this.serverErrorMessage$.next(error.message);
@@ -77,12 +80,16 @@ export class AuthService {
     }
   }
 
-  async googleSignIn(): Promise<IUser> {
+  async googleSignIn(): Promise<WithRef<IUser>> {
     try {
-      await this._afAuth.signInWithPopup(new auth.GoogleAuthProvider());
-      const user = await snapshot(this.user$);
-      this._router.navigate([user.uid, 'tasks']);
-      return this._removeDocumentRef(user);
+      const userCredentials = await this._afAuth.signInWithPopup(
+        new auth.GoogleAuthProvider()
+      );
+      const user = await this._createUser(
+        this._convertFirbaseUser(userCredentials.user)
+      );
+      await this._router.navigate([user.uid, 'tasks']);
+      return user;
     } catch (error) {
       console.log(error);
     }
@@ -90,25 +97,35 @@ export class AuthService {
 
   async signOut(): Promise<void> {
     await this._afAuth.signOut();
-    this._router.navigate(['login']);
+    await this._router.navigate(['login']);
   }
 
-  // TODO only updates on email sign up - edit firebase function to add timestamps and ref to user
-  private async _updateUserName(
-    user: firebase.User,
-    name: string
-  ): Promise<void> {
-    console.log('_updateUserName', { user, name });
-    await this._db.set<Pick<IUser, 'displayName'>>(
-      `${RootCollection.Users}/${user.uid}`,
-      {
-        displayName: name,
-      }
-    );
+  private async _createUser(user: IUser): Promise<WithRef<IUser>> {
+    await this._db.set<IUser>(`${RootCollection.Users}/${user.uid}`, user);
+    return snapshot(this.user$);
   }
 
-  private _removeDocumentRef(user: WithRef<IUser>): IUser {
-    delete user.ref;
-    return user;
+  private _convertFirbaseUser(
+    firebaseUser: firebase.User,
+    name?: string
+  ): IUser {
+    return {
+      uid: firebaseUser.uid,
+      displayName: name ?? firebaseUser.displayName,
+      email: firebaseUser.email,
+      emailVerified: firebaseUser.emailVerified,
+      profileImage: firebaseUser.photoURL,
+      colourTheme: '',
+      darkMode: false,
+    };
   }
+  // TODO - sort this shit out.
+  // private async _storeUser(): Promise<IUser> {
+  //   const user = await snapshot(this.user$);
+  //   console.log('user :>> ', user);
+  //   if (!user) {
+  //     return;
+  //   }
+  //   return removeDocumentRef(user);
+  // }
 }

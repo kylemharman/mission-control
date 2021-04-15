@@ -7,9 +7,8 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IUser } from 'src/app/core/models/user';
 import { State } from 'src/app/reducers';
-import { WithRef } from 'src/app/shared/helpers/firebase';
+import { removeDocumentRef } from 'src/app/shared/helpers/firebase';
 import { AuthService } from '../../auth.service';
 import { LoginPageActions } from '../../store/actions';
 
@@ -48,12 +47,17 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    await this._auth.signIn(this.email.value, this.password.value);
+    const user = await this._auth.signIn(this.email.value, this.password.value);
+    this._store.dispatch(
+      LoginPageActions.login({ user: removeDocumentRef(user) })
+    );
   }
 
   async googleSignIn(): Promise<void> {
     const user = await this._auth.googleSignIn();
-    console.log('user :>> ', user);
-    this._store.dispatch(LoginPageActions.login({ user }));
+
+    this._store.dispatch(
+      LoginPageActions.login({ user: removeDocumentRef(user) })
+    );
   }
 }
