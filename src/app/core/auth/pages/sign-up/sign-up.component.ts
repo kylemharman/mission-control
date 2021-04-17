@@ -5,13 +5,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { State } from 'src/app/reducers';
-import { removeDocumentRef } from 'src/app/shared/helpers/firebase';
 import { AuthService } from '../../auth.service';
-import { LoginPageActions } from '../../store/actions';
-import { AuthFacade } from '../../store/facades/auth.facade';
 
 @Component({
   selector: 'mc-sign-up',
@@ -24,11 +19,7 @@ export class SignUpComponent implements OnInit {
   passwordHidden = true;
   serverErrorMessage$: Observable<string>;
 
-  constructor(
-    private _authService: AuthService,
-    private _authStore: AuthFacade,
-    private _fb: FormBuilder
-  ) {
+  constructor(private _authService: AuthService, private _fb: FormBuilder) {
     this.serverErrorMessage$ = this._authService.serverErrorMessage$;
   }
 
@@ -49,8 +40,7 @@ export class SignUpComponent implements OnInit {
   }
 
   async googleSignUp(): Promise<void> {
-    const user = await this._authService.googleSignIn();
-    this._authStore.login(user);
+    await this._authService.googleSignIn();
   }
 
   get fullname(): AbstractControl {

@@ -8,6 +8,7 @@ import { first, last } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthFacade } from 'src/app/core/auth/store/facades/auth.facade';
+import { filterUndefined } from '../../helpers/rxjs';
 
 @Component({
   selector: 'mc-avatar',
@@ -20,11 +21,13 @@ export class AvatarComponent {
   userInitials$: Observable<string>;
   userProfileImage$: Observable<string | undefined>;
 
-  constructor(private _auth: AuthFacade) {
-    this.userInitials$ = this._auth.user$.pipe(
+  constructor(private _authStore: AuthFacade) {
+    this.userInitials$ = this._authStore.user$.pipe(
+      filterUndefined(),
       map((user) => this._getInitials(user.displayName))
     );
-    this.userProfileImage$ = this._auth.user$.pipe(
+    this.userProfileImage$ = this._authStore.user$.pipe(
+      filterUndefined(),
       map((user) => user.profileImage)
     );
   }

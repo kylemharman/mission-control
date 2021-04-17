@@ -26,7 +26,6 @@ export class UserSettingsMenuComponent {
 
   logout(): void {
     this._authService.logout();
-    this._authStore.logout();
   }
 
   darkMode(value: boolean): void {

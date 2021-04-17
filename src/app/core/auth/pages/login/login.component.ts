@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../auth.service';
-import { AuthFacade } from '../../store/facades/auth.facade';
 
 @Component({
   selector: 'mc-login',
@@ -20,11 +19,7 @@ export class LoginComponent implements OnInit {
   passwordHidden = true;
   serverErrorMessage$: Observable<string>;
 
-  constructor(
-    private _authService: AuthService,
-    private _authStore: AuthFacade,
-    private _fb: FormBuilder
-  ) {
+  constructor(private _authService: AuthService, private _fb: FormBuilder) {
     this.serverErrorMessage$ = this._authService.serverErrorMessage$;
   }
 
@@ -44,15 +39,10 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    const user = await this._authService.login(
-      this.email.value,
-      this.password.value
-    );
-    this._authStore.login(user);
+    await this._authService.login(this.email.value, this.password.value);
   }
 
   async googleSignIn(): Promise<void> {
-    const user = await this._authService.googleSignIn();
-    this._authStore.login(user);
+    await this._authService.googleSignIn();
   }
 }

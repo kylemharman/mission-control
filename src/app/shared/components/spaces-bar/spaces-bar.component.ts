@@ -8,7 +8,7 @@ import { AuthFacade } from 'src/app/core/auth/store/facades/auth.facade';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpacesBarComponent {
-  user$ = this._auth.user$;
+  user$ = this._authStore.user$;
 
-  constructor(private _auth: AuthFacade) {}
+  constructor(private _authStore: AuthFacade) {}
 }

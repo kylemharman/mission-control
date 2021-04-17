@@ -16,14 +16,12 @@ export class AuthFacade {
   user$ = this._store.select(user);
   isLoggedIn$ = this._store.select(isLoggedIn);
 
-  constructor(private _store: Store<AuthState>) {
-    this.isLoggedIn$.subscribe((d) => console.log('isLoggedIn$: ', d));
-  }
+  constructor(private _store: Store<AuthState>) {}
 
-  login(user: WithRef<IUser> | IUser): void {
+  login(user: WithRef<IUser>): void {
     this._store.dispatch(
       LoginPageActions.login({
-        user: isWithRef(user) ? removeDocumentRef(user) : user,
+        user: removeDocumentRef(user),
       })
     );
   }
