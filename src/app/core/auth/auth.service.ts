@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { auth } from 'firebase';
 import { Observable, of, Subject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { removeDocumentRef, WithRef } from 'src/app/shared/helpers/firebase';
+import { switchMap, tap } from 'rxjs/operators';
+import { WithRef } from 'src/app/shared/helpers/firebase';
 import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { RootCollection } from '../models/root-collection';
 import { IUser } from '../models/user';
+import { AuthFacade } from './store/facades/auth.facade';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user$: Observable<WithRef<IUser> | undefined>;
@@ -18,6 +19,7 @@ export class AuthService {
   constructor(
     private _db: FirestoreService,
     private _afAuth: AngularFireAuth,
+    private _authStore: AuthFacade,
     private _router: Router
   ) {
     this.user$ = this._afAuth.authState.pipe(
@@ -26,6 +28,9 @@ export class AuthService {
           ? _db.doc$<WithRef<IUser>>(`${RootCollection.Users}/${user.uid}`)
           : of(undefined)
       )
+      // tap((user: WithRef<IUser>) =>
+      //   user ? this._authStore.login(user) : this._authStore.logout()
+      // )
     );
   }
 

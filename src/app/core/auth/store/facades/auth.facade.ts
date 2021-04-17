@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IUser } from 'src/app/core/models/user';
 import { State } from 'src/app/reducers';
-import { removeDocumentRef, WithRef } from 'src/app/shared/helpers/firebase';
+import {
+  isWithRef,
+  removeDocumentRef,
+  WithRef,
+} from 'src/app/shared/helpers/firebase';
 import { AuthActions, LoginPageActions } from '../actions';
 import { AuthState } from '../reducers';
 import { isLoggedIn, user } from '../selectors/auth.selectors';
@@ -16,9 +20,11 @@ export class AuthFacade {
     this.isLoggedIn$.subscribe((d) => console.log('isLoggedIn$: ', d));
   }
 
-  login(user: WithRef<IUser>): void {
+  login(user: WithRef<IUser> | IUser): void {
     this._store.dispatch(
-      LoginPageActions.login({ user: removeDocumentRef(user) })
+      LoginPageActions.login({
+        user: isWithRef(user) ? removeDocumentRef(user) : user,
+      })
     );
   }
 

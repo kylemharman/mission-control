@@ -13,6 +13,8 @@ import { AuthFormContainerComponent } from './components/auth-form-container/aut
 import { AuthPageContainerComponent } from './components/auth-page-container/auth-page-container.component';
 import { StoreModule } from '@ngrx/store';
 import * as fromAuth from './store/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './store/effects/auth.effects';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import * as fromAuth from './store/reducers';
     SharedModule,
     ReactiveFormsModule,
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.authReducer),
+    EffectsModule.forFeature([AuthEffects]),
   ],
   providers: [AuthService],
 })

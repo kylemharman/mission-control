@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { IUser } from '../../../models/user';
 
-enum LoginPageActions {
+export enum LoginPageActions {
   Login = '[Login Page] login',
 }
 
