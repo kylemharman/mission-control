@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import * as moment from 'moment';
 import { ITask, TaskPriority } from 'src/app/core/models/task';
-import { WithRef } from 'src/app/shared/helpers/firebase';
 import { toTimestamp } from 'src/app/shared/helpers/time';
 
 import { TasksService } from '../../tasks.service';
@@ -13,7 +12,7 @@ import { TasksService } from '../../tasks.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskRowComponent {
-  @Input() task: WithRef<ITask>;
+  @Input() task: ITask;
 
   constructor(private _task: TasksService) {}
 

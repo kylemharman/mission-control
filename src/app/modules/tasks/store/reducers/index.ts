@@ -1,16 +1,6 @@
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createReducer,
-  createSelector,
-  MetaReducer,
-  on,
-} from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { ITask } from 'src/app/core/models/task';
-import { removeDocumentRefs } from 'src/app/shared/helpers/firebase';
-import { environment } from 'src/environments/environment';
 import { TaskActions } from '../actions';
 
 export const tasksFeatureKey = 'tasks';

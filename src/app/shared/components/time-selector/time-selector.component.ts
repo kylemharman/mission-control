@@ -10,11 +10,9 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import * as moment from 'moment';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 import { ITask } from 'src/app/core/models/task';
-import { WithRef } from '../../helpers/firebase';
 import { getIntervals, toMoment } from '../../helpers/time';
 
 @Component({
@@ -25,7 +23,7 @@ import { getIntervals, toMoment } from '../../helpers/time';
 })
 export class TimeSelectorComponent implements OnDestroy, OnInit {
   private _onDestroy$: Subject<void> = new Subject();
-  @Input() task: WithRef<ITask>;
+  @Input() task: ITask;
   @Input() label: string;
   @Input() placeholder: string;
   @Input() interval: number = 15;

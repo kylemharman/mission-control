@@ -10,7 +10,7 @@ const routes: Routes = [
       import('./core/auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: ':uid',
+    path: ':id',
     canActivate: [AuthGuard],
     component: AppShellComponent,
     children: [

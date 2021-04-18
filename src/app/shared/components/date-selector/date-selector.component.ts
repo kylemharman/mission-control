@@ -10,7 +10,6 @@ import {
 import { MatCalendar } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { ITask } from 'src/app/core/models/task';
-import { WithRef } from '../../helpers/firebase';
 import { toMoment } from '../../helpers/time';
 import { IQuickDate, quickDate } from './date-selector';
 
@@ -22,7 +21,7 @@ import { IQuickDate, quickDate } from './date-selector';
 })
 export class DateSelectorComponent implements OnInit {
   @ViewChild(MatCalendar) calendar: MatCalendar<moment.Moment>;
-  @Input() task: WithRef<ITask>;
+  @Input() task: ITask;
   @Output() emitDate = new EventEmitter<moment.Moment>();
   date: moment.Moment | undefined;
   quickDates: IQuickDate[] = quickDate;

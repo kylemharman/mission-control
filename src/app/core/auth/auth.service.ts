@@ -4,15 +4,7 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { auth } from 'firebase';
 import { Observable, of, Subject } from 'rxjs';
-import {
-  distinctUntilChanged,
-  first,
-  last,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs/operators';
-import { WithRef } from 'src/app/shared/helpers/firebase';
+import { switchMap, take, tap } from 'rxjs/operators';
 import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { RootCollection } from '../models/root-collection';
@@ -20,7 +12,7 @@ import { IUser } from '../models/user';
 import { AuthFacade } from './store/facades/auth.facade';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user$: Observable<WithRef<IUser> | undefined>;
+  user$: Observable<IUser | undefined>;
   serverErrorMessage$ = new Subject<string>();
 
   constructor(
@@ -33,10 +25,10 @@ export class AuthService {
       take(1),
       switchMap((user) => {
         return user
-          ? _db.doc$<WithRef<IUser>>(`${RootCollection.Users}/${user.uid}`)
+          ? _db.doc$<IUser>(`${RootCollection.Users}/${user.uid}`)
           : of(undefined);
       }),
-      tap((user: WithRef<IUser> | undefined) => {
+      tap((user: IUser | undefined) => {
         user ? this._authStore.login(user) : this._authStore.logout();
       })
     );

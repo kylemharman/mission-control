@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ITask } from 'src/app/core/models/task';
-import { WithRef } from 'src/app/shared/helpers/firebase';
 import {
   filterUndefined,
   findProp,
@@ -17,7 +16,7 @@ import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
   template: ``,
 })
 export class TaskEntryDialogComponent {
-  task$: Observable<WithRef<ITask>>;
+  task$: Observable<ITask>;
 
   constructor(
     private _dialog: MatDialog,
@@ -26,7 +25,7 @@ export class TaskEntryDialogComponent {
     private _route: ActivatedRoute
   ) {
     this.task$ = this._route.data.pipe(
-      findProp<WithRef<ITask>>('task'),
+      findProp<ITask>('task'),
       filterUndefined()
     );
 

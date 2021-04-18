@@ -95,7 +95,6 @@ export class FirestoreService {
         createdAt: timestamp,
         id: doc.ref.id,
         path: doc.ref.path,
-        ref: doc.ref,
       },
       { merge: true }
     );
@@ -112,10 +111,7 @@ export class FirestoreService {
     return this.doc(ref).delete();
   }
 
-  async add<T>(
-    ref: CollectionPredicate<T>,
-    data: T
-  ): Promise<DocumentReference> {
+  async add<T>(ref: CollectionPredicate<T>, data: T): Promise<DocPredicate<T>> {
     const timestamp = this.timestamp;
     const doc = this.col(ref).doc<T>(this._afs.createId());
     await doc.set({
@@ -124,9 +120,8 @@ export class FirestoreService {
       createdAt: timestamp,
       id: doc.ref.id,
       path: doc.ref.path,
-      ref: doc.ref,
     });
-    return doc.ref;
+    return doc;
   }
 
   upsert<T>(ref: DocPredicate<T>, data: T): Promise<void> {

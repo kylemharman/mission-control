@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IUser } from 'src/app/core/models/user';
-import { State } from 'src/app/reducers';
-import {
-  isWithRef,
-  removeDocumentRef,
-  WithRef,
-} from 'src/app/shared/helpers/firebase';
 import { AuthActions, LoginPageActions } from '../actions';
 import { AuthState } from '../reducers';
 import { isLoggedIn, user } from '../selectors/auth.selectors';
@@ -18,12 +12,8 @@ export class AuthFacade {
 
   constructor(private _store: Store<AuthState>) {}
 
-  login(user: WithRef<IUser>): void {
-    this._store.dispatch(
-      LoginPageActions.login({
-        user: removeDocumentRef(user),
-      })
-    );
+  login(user: IUser): void {
+    this._store.dispatch(LoginPageActions.login({ user }));
   }
 
   logout(): void {

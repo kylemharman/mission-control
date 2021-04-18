@@ -21,14 +21,14 @@
         <div></div>
       </div>
       <a
-        [routerLink]="['/', user.uid, 'home', 'landing']"
+        [routerLink]="['/', user.id, 'home', 'landing']"
         routerLinkActive="active"
       >
         <svg class="home-icon" viewBox="0 0 24 24">
           <use xlink:href="assets/icons/home-outline.svg#home-outline" />
         </svg>
       </a>
-      <a [routerLink]="['/', user.uid, 'tasks']" routerLinkActive="active">
+      <a [routerLink]="['/', user.id, 'tasks']" routerLinkActive="active">
         <svg class="tasks-icon" viewBox="0 0 24 24">
           <use
             xlink:href="assets/icons/check-box-outline.svg#check-box-outline"
@@ -36,7 +36,7 @@
         </svg>
       </a>
       <a
-        [routerLink]="['/', user.uid, 'notifications']"
+        [routerLink]="['/', user.id, 'notifications']"
         routerLinkActive="active"
       >
         <svg class="notifications-icon" viewBox="0 0 24 24">

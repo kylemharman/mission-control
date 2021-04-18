@@ -6,7 +6,6 @@ import {
   Output,
 } from '@angular/core';
 import { ITask, TaskPriority } from 'src/app/core/models/task';
-import { WithRef } from 'src/app/shared/helpers/firebase';
 
 @Component({
   selector: 'mc-task-priority',
@@ -15,7 +14,7 @@ import { WithRef } from 'src/app/shared/helpers/firebase';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskPriorityComponent {
-  @Input() task: WithRef<ITask>;
+  @Input() task: ITask;
   @Input() size: 'small' | 'large' = 'small';
   @Output() priority = new EventEmitter<TaskPriority>();
   taskPriority = TaskPriority;

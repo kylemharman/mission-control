@@ -7,7 +7,6 @@ import { map, switchMap } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { ITask, Task } from 'src/app/core/models/task';
 import { IUser, UserCollection } from 'src/app/core/models/user';
-import { WithRef } from 'src/app/shared/helpers/firebase';
 import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 
@@ -31,35 +30,32 @@ export class TasksService {
     await this._db.add(tasksCollection, task);
   }
 
-  async sortTasks(tasks: WithRef<ITask>[]) {
+  async sortTasks(tasks: ITask[]) {
     const tasksCollection = await snapshot(this.getTasksCollection$());
     const db = firebase.firestore();
     const batch = db.batch();
 
-    const refs = tasks.map((t) => db.collection(tasksCollection).doc(t.ref.id));
+    const refs = tasks.map((t) => db.collection(tasksCollection).doc(t.path));
     refs.forEach((ref, i) => batch.update(ref, { order: i }));
     batch.commit();
   }
 
-  getAllTasks$(): Observable<WithRef<ITask>[]> {
+  getAllTasks$(): Observable<ITask[]> {
     return this.getTasksCollection$().pipe(
       switchMap((ref) =>
-        this._db.col$<WithRef<ITask>>(ref, (doc) => doc.orderBy('order'))
+        this._db.col$<ITask>(ref, (doc) => doc.orderBy('order'))
       )
     );
   }
 
-  getTask$(id: string): Observable<WithRef<ITask>> {
+  getTask$(id: string): Observable<ITask> {
     return this.getTasksCollection$().pipe(
-      switchMap((ref) => this._db.doc$<WithRef<ITask>>(`${ref}/${id}`))
+      switchMap((ref) => this._db.doc$<ITask>(`${ref}/${id}`))
     );
   }
 
-  async updateTask(
-    task: AngularFirestoreDocument<ITask>,
-    data: Partial<ITask>
-  ): Promise<void> {
-    await this._db.update(task.ref.path, data);
+  async updateTask(task: ITask, data: Partial<ITask>): Promise<void> {
+    await this._db.update(task.path, data);
   }
 
   getTasksCollection$(): Observable<string> {

@@ -2,8 +2,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ITask } from 'src/app/core/models/task';
-import { WithRef } from 'src/app/shared/helpers/firebase';
 import { snapshot } from 'src/app/shared/helpers/rxjs';
+
 import { TaskFacade } from '../../store/facades/task.facade';
 import { TasksService } from '../../tasks.service';
 
@@ -14,7 +14,7 @@ import { TasksService } from '../../tasks.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskListComponent implements OnInit {
-  tasks$: Observable<WithRef<ITask>[]>;
+  tasks$: Observable<ITask[]>;
 
   constructor(private _tasks: TasksService, private _taskStore: TaskFacade) {
     this.tasks$ = this._tasks.getAllTasks$();

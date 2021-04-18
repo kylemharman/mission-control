@@ -15,8 +15,8 @@
     fxLayoutGap="12px"
     (click)="$event.stopPropagation()"
   >
-    <a [routerLink]="['/', user.uid, 'settings', 'profile']">My Settings</a>
-    <a [routerLink]="['/', user.uid, 'notifications']">Notifications</a>
+    <a [routerLink]="['/', user.id, 'settings', 'profile']">My Settings</a>
+    <a [routerLink]="['/', user.id, 'notifications']">Notifications</a>
     <a (click)="logout()">Logout</a>
     <mat-divider></mat-divider>
     <mc-toggle (toggle)="darkMode($event)">Dark Mode</mc-toggle>

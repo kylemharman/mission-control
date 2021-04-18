@@ -9,7 +9,6 @@ import { isEqual } from 'lodash';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { ITask, TaskPriority } from 'src/app/core/models/task';
-import { WithRef } from 'src/app/shared/helpers/firebase';
 
 @Component({
   selector: 'mc-task-dialog',
@@ -23,7 +22,7 @@ export class TaskDialogComponent implements OnDestroy {
 
   constructor(
     private _dialogRef: MatDialogRef<TaskDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: WithRef<ITask>
+    @Inject(MAT_DIALOG_DATA) public data: ITask
   ) {
     this.task = { ...this.data };
     this._dialogRef

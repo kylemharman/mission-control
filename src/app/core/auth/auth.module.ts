@@ -34,6 +34,5 @@ import { AuthEffects } from './store/effects/auth.effects';
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.authReducer),
     EffectsModule.forFeature([AuthEffects]),
   ],
-  providers: [AuthService],
 })
 export class AuthModule {}

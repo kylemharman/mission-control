@@ -9,7 +9,6 @@ import {
 import { MatMenuTrigger } from '@angular/material/menu';
 import * as moment from 'moment';
 import { ITask } from 'src/app/core/models/task';
-import { WithRef } from 'src/app/shared/helpers/firebase';
 
 @Component({
   selector: 'mc-task-due-date',
@@ -19,7 +18,7 @@ import { WithRef } from 'src/app/shared/helpers/firebase';
 })
 export class TaskDueDateComponent {
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
-  @Input() task: WithRef<ITask>;
+  @Input() task: ITask;
   @Output() dueDate = new EventEmitter<moment.Moment>();
 
   date: moment.Moment | undefined;
