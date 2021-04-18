@@ -5,7 +5,6 @@ import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { RootCollection } from 'src/app/core/models/root-collection';
 import { ITask, Task } from 'src/app/core/models/task';
 import { IUser, UserCollection } from 'src/app/core/models/user';
 import { WithRef } from 'src/app/shared/helpers/firebase';
@@ -17,7 +16,7 @@ export class TasksService {
   constructor(
     private _db: FirestoreService,
     // TODO - use store instead of service.
-    private _authStore: AuthService,
+    private _authService: AuthService,
     private _snack: MatSnackBar
   ) {}
 
@@ -64,11 +63,8 @@ export class TasksService {
   }
 
   getTasksCollection$(): Observable<string> {
-    return this._authStore.user$.pipe(
-      map(
-        (user: IUser) =>
-          `${RootCollection.Users}/${user.uid}/${UserCollection.Tasks}`
-      )
+    return this._authService.user$.pipe(
+      map((user: IUser) => `${user.path}/${UserCollection.Tasks}`)
     );
   }
 

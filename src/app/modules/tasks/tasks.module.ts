@@ -14,6 +14,12 @@ import { TaskPriorityComponent } from './components/menus/task-priority/task-pri
 import { TasksService } from './tasks.service';
 import { TaskResolver } from './router/task.resolver';
 import { TaskDueDateComponent } from './components/menus/task-due-date/task-due-date.component';
+import { TaskFacade } from './store/facades/task.facade';
+import { StoreModule } from '@ngrx/store';
+import * as fromTasks from './store/reducers';
+import { TasksResolver } from './router/tasks.resolver';
+import { EffectsModule } from '@ngrx/effects';
+import { TasksEffects } from './store/effects/tasks.effects';
 
 @NgModule({
   declarations: [
@@ -32,8 +38,10 @@ import { TaskDueDateComponent } from './components/menus/task-due-date/task-due-
     SharedModule,
     FormsModule,
     DragDropModule,
+    StoreModule.forFeature(fromTasks.tasksFeatureKey, fromTasks.tasksReducers),
+    EffectsModule.forFeature([TasksEffects]),
   ],
-  providers: [TasksService, TaskResolver],
+  providers: [TasksService, TaskFacade, TaskResolver, TasksResolver],
   entryComponents: [TaskDialogComponent, TaskEntryDialogComponent],
 })
 export class TasksModule {}

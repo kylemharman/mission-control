@@ -93,6 +93,8 @@ export class FirestoreService {
         ...data,
         updatedAt: timestamp,
         createdAt: timestamp,
+        id: doc.ref.id,
+        path: doc.ref.path,
         ref: doc.ref,
       },
       { merge: true }
@@ -120,6 +122,8 @@ export class FirestoreService {
       ...data,
       updatedAt: timestamp,
       createdAt: timestamp,
+      id: doc.ref.id,
+      path: doc.ref.path,
       ref: doc.ref,
     });
     return doc.ref;

@@ -14,6 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers, metaReducers } from './reducers';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
+import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
   declarations: [AppComponent, AppShellComponent],
@@ -26,13 +27,21 @@ import { EffectsModule } from '@ngrx/effects';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictActionTypeUniqueness: true,
+      },
+    }),
     StoreDevtoolsModule.instrument({
       name: 'Mission Control NgRx DevTools',
       maxAge: 25,
       logOnly: environment.production,
     }),
     EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

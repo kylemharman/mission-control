@@ -2,6 +2,8 @@ import { AtLeast } from 'src/app/shared/helpers/common';
 import { ITimestamp } from 'src/app/shared/helpers/time';
 
 export interface ITask {
+  id: string;
+  path: string;
   name: string;
   description: string;
   order: number;
@@ -9,10 +11,10 @@ export interface ITask {
   priority: TaskPriority;
   tags: ITag[];
   dueDate?: ITimestamp;
-  // creator: AngularFirestoreDocument<IUser>;
-  // AssignedTo: DocumentReference<IUser>[];
-  // timeTracking: ;
-  // watchers: DocumentReference<IUser>[];
+  // creator: INameDoc<IUser>;
+  // AssignedTo: INameDoc<IUser>[];
+  // timeTracking: TimeStamp;
+  // watchers: INameDoc<IUser>[];
 }
 
 export enum TaskStatus {
@@ -42,6 +44,8 @@ export interface ITag {
 export class Task {
   static init(overrides: AtLeast<ITask, 'name' | 'order'>): ITask {
     return {
+      id: '',
+      path: '',
       description: '',
       status: TaskStatus.None,
       priority: TaskPriority.None,

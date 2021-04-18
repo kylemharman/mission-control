@@ -109,7 +109,7 @@ export class AuthService {
   }
 
   private async _createUser(user: IUser): Promise<void> {
-    await this._db.set<IUser>(`${RootCollection.Users}/${user.uid}`, user);
+    await this._db.set<IUser>(`${RootCollection.Users}/${user.id}`, user);
   }
 
   private _convertFirbaseUser(
@@ -117,7 +117,8 @@ export class AuthService {
     name?: string
   ): IUser {
     return {
-      uid: firebaseUser.uid,
+      id: firebaseUser.uid,
+      path: '',
       displayName: name ?? firebaseUser.displayName,
       email: firebaseUser.email,
       emailVerified: firebaseUser.emailVerified,
