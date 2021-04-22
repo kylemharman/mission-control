@@ -1,17 +1,40 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
+import { select, Store } from '@ngrx/store';
+import { ITask } from 'src/app/core/models/task';
 import { TaskActions } from '../actions';
 import { TasksState } from '../reducers';
+import {
+  selectAllTasks,
+  selectTask,
+  selectTotalTasks,
+} from '../selectors/task.selectors';
 
 @Injectable()
 export class TaskFacade {
+  tasks$ = this._store.pipe(select(selectAllTasks));
+  task$ = this._store.pipe(select(selectTask));
+  totalTasks$ = this._store.pipe(select(selectTotalTasks));
+
   constructor(private _store: Store<TasksState>) {}
 
   loadAllTasks(): void {
     this._store.dispatch(TaskActions.loadAllTasks());
   }
 
-  // loadTask(): void {
-  //   this._store.dispatch();
-  // }
+  setSelectedTaskId(id: string): void {
+    this._store.dispatch(TaskActions.setSelectedTaskId({ id }));
+  }
+
+  clearSelectedTask(): void {
+    this._store.dispatch(TaskActions.clearSelectTaskId());
+  }
+
+  updateTask(update: Update<ITask>): void {
+    this._store.dispatch(TaskActions.taskUpdated({ update }));
+  }
+
+  createTask(task: ITask): void {
+    this._store.dispatch(TaskActions.taskCreated({ task }));
+  }
 }

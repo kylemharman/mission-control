@@ -2,8 +2,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import * as moment from 'moment';
 import { ITask, TaskPriority } from 'src/app/core/models/task';
 import { toTimestamp } from 'src/app/shared/helpers/time';
-
-import { TasksService } from '../../tasks.service';
+import { TaskFacade } from '../../store/facades/task.facade';
 
 @Component({
   selector: 'mc-task-row',
@@ -14,15 +13,21 @@ import { TasksService } from '../../tasks.service';
 export class TaskRowComponent {
   @Input() task: ITask;
 
-  constructor(private _task: TasksService) {}
+  constructor(private _taskStore: TaskFacade) {}
 
-  async setPriority(priority: TaskPriority): Promise<void> {
+  setPriority(priority: TaskPriority): void {
     if (this.task.priority !== priority) {
-      await this._task.updateTask(this.task, { priority });
+      this._taskStore.updateTask({
+        id: this.task.id,
+        changes: { priority },
+      });
     }
   }
 
-  async setDueDate(dueDate: moment.Moment): Promise<void> {
-    await this._task.updateTask(this.task, { dueDate: toTimestamp(dueDate) });
+  setDueDate(dueDate: moment.Moment): void {
+    this._taskStore.updateTask({
+      id: this.task.id,
+      changes: { dueDate: toTimestamp(dueDate) },
+    });
   }
 }

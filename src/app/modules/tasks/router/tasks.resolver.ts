@@ -4,14 +4,15 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { finalize, first, tap } from 'rxjs/operators';
+import { filter, finalize, first, tap } from 'rxjs/operators';
 import { TaskFacade } from '../store/facades/task.facade';
 import { TasksState } from '../store/reducers';
+import { allTasksLoadedCheck } from '../store/selectors/task.selectors';
 
 @Injectable()
-export class TasksResolver implements Resolve<any> {
+export class TasksResolver implements Resolve<unknown> {
   loading = false;
 
   constructor(
@@ -19,18 +20,16 @@ export class TasksResolver implements Resolve<any> {
     private _store: Store<TasksState>
   ) {}
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<any> {
-    // TODO move all this to the facade
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this._store.pipe(
-      tap(() => {
-        if (!this.loading) {
+      select(allTasksLoadedCheck),
+      tap((tasksLoaded) => {
+        if (!this.loading && !tasksLoaded) {
           this.loading = true;
           this._taskStore.loadAllTasks();
         }
       }),
+      filter((tasksLoaded) => tasksLoaded),
       first(),
       finalize(() => (this.loading = false))
     );

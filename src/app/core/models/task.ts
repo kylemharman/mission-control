@@ -42,15 +42,24 @@ export interface ITag {
   hexColour: string;
 }
 export class Task {
-  static init(overrides: AtLeast<ITask, 'name' | 'order'>): ITask {
+  static init(
+    overrides: AtLeast<ITask, 'name' | 'order' | 'id' | 'path'>
+  ): ITask {
     return {
-      id: '',
-      path: '',
       description: '',
       status: TaskStatus.None,
       priority: TaskPriority.None,
       tags: [],
       ...overrides,
     };
+  }
+  static compareTasks(t1: ITask, t2: ITask): 1 | -1 | 0 {
+    const compare = t1.order - t2.order;
+
+    if (compare > 0) {
+      return 1;
+    } else if (compare < 0) {
+      return -1;
+    } else return 0;
   }
 }

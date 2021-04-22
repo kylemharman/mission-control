@@ -137,4 +137,8 @@ export class FirestoreService {
       }
     );
   }
+
+  generateId(): string {
+    return this._afs.createId();
+  }
 }

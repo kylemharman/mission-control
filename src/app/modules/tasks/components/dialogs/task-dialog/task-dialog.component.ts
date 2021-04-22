@@ -9,6 +9,7 @@ import { isEqual } from 'lodash';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { ITask, TaskPriority } from 'src/app/core/models/task';
+import { TaskFacade } from '../../../store/facades/task.facade';
 
 @Component({
   selector: 'mc-task-dialog',
@@ -21,6 +22,7 @@ export class TaskDialogComponent implements OnDestroy {
   task: ITask;
 
   constructor(
+    private _taskStore: TaskFacade,
     private _dialogRef: MatDialogRef<TaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ITask
   ) {
@@ -46,5 +48,6 @@ export class TaskDialogComponent implements OnDestroy {
   close(): void {
     const update = !isEqual(this.task, this.data) ? this.task : undefined;
     this._dialogRef.close(update);
+    this._taskStore.clearSelectedTask();
   }
 }

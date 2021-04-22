@@ -8,7 +8,7 @@ import {
   findProp,
   snapshot,
 } from 'src/app/shared/helpers/rxjs';
-import { TasksService } from '../../../tasks.service';
+import { TaskFacade } from '../../../store/facades/task.facade';
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 
 @Component({
@@ -16,25 +16,18 @@ import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
   template: ``,
 })
 export class TaskEntryDialogComponent {
-  task$: Observable<ITask>;
-
   constructor(
     private _dialog: MatDialog,
-    private _task: TasksService,
+    private _taskStore: TaskFacade,
     private _router: Router,
     private _route: ActivatedRoute
   ) {
-    this.task$ = this._route.data.pipe(
-      findProp<ITask>('task'),
-      filterUndefined()
-    );
-
     this.openTaskDialog();
   }
 
   async openTaskDialog(): Promise<void> {
-    const task = await snapshot(this.task$);
-    const data = await this._dialog
+    const task = await snapshot(this._taskStore.task$);
+    const data: ITask = await this._dialog
       .open(TaskDialogComponent, {
         height: '100%',
         width: '100%',
@@ -50,7 +43,13 @@ export class TaskEntryDialogComponent {
       await this._navigateBack();
       return;
     }
-    await this._task.updateTask(task, data);
+    console.log(data);
+
+    this._taskStore.updateTask({
+      id: task.id,
+      changes: data,
+    });
+
     await this._navigateBack();
   }
 
