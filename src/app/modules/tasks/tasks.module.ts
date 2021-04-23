@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TasksRoutingModule } from './tasks-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { TasksComponent } from './pages/tasks/tasks.component';
+import { TasksComponent } from './containers/tasks/tasks.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { TaskListComponent } from './components/task-list/task-list.component';
 import { TaskRowComponent } from './components/task-row/task-row.component';

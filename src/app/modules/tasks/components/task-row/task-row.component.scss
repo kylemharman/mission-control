@@ -3,26 +3,26 @@
   color: #bebebe;
 }
 
-.task-row--container {
+.task-row-container {
   transition: 1s ease-in-out;
 
   &:hover {
-    .task-row--drag {
+    .task-row-drag {
       opacity: 1;
     }
   }
-  .task-row--drag {
+  .task-row-drag {
     opacity: 0;
   }
 }
 
-.task-row--info {
+.task-row-info {
   padding: 10px;
   margin: 4px 0;
   background-color: var(--background);
   border-radius: 4px;
 
-  .task-row--name {
+  .task-row-name {
     &:hover {
       color: #008cff;
       cursor: pointer;
@@ -44,7 +44,7 @@
   }
 }
 
-.task-row--drag {
+.task-row-drag {
   &:hover {
     cursor: move;
   }

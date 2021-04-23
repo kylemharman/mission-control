@@ -6,10 +6,12 @@ export const authFeatureKey = 'auth';
 
 export interface AuthState {
   user: IUser | undefined;
+  // loaded: boolean;
 }
 
 export const initialAuthState: AuthState = {
   user: undefined,
+  // loaded: false,
 };
 
 export const authReducer = createReducer(

@@ -23,9 +23,9 @@ export class ToggleComponent {
   }
 
   public get toggleClasses(): string[] {
-    return ['mc-toggle', `mc-toggle--${this.size}`];
+    return ['mc-toggle', `mc-toggle-${this.size}`];
   }
   public get sliderClasses(): string[] {
-    return ['mc-slider', `mc-slider--${this.size}`];
+    return ['mc-slider', `mc-slider-${this.size}`];
   }
 }

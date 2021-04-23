@@ -1,4 +1,4 @@
-.auth-page--container {
+.auth-page-container {
   width: 100vw;
   height: 100vh;
   background-color: #fafafa;
@@ -6,7 +6,7 @@
     no-repeat;
 }
 
-.auth-page--navbar {
+.auth-page-navbar {
   padding: 0 30px;
   height: 100px;
   position: sticky;
@@ -14,7 +14,7 @@
   top: 0;
 }
 
-.auth-page--form {
+.auth-page-form {
   padding-bottom: 70px;
   flex-grow: 1;
 }

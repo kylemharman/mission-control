@@ -1,14 +1,14 @@
-<div fxLayout="row" fxLayoutAlign="center center" class="task-row--container">
-  <span class="task-row--drag">
+<div fxLayout="row" fxLayoutAlign="center center" class="task-row-container">
+  <span class="task-row-drag">
     <mat-icon>drag_indicator</mat-icon>
   </span>
   <div
     fxLayout="row"
     fxLayoutAlign="space-between center"
-    class="task-row--info"
+    class="task-row-info"
     fxFlex
   >
-    <div [routerLink]="task.id" fxFlex class="mat-small task-row--name">
+    <div [routerLink]="task.id" fxFlex class="mat-small task-row-name">
       {{ task.name }}
     </div>
 

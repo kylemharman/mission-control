@@ -14,9 +14,9 @@ import {
 })
 export class CloseButtonComponent {
   @Input() size: 'small' | 'medium' | 'large' = 'small';
-  @Output() onClick = new EventEmitter<Event>();
+  @Output() onClick = new EventEmitter<void>();
 
   public get classes(): string[] {
-    return [`mc-close-button--${this.size}`];
+    return [`mc-close-button-${this.size}`];
   }
 }

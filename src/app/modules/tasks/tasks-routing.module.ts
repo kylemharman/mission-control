@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TaskEntryDialogComponent } from './components/dialogs/task-entry-dialog/task-entry-dialog.component';
-import { TasksComponent } from './pages/tasks/tasks.component';
+import { TasksComponent } from './containers/tasks/tasks.component';
 import { TaskResolver } from './router/task.resolver';
 import { TasksResolver } from './router/tasks.resolver';
 

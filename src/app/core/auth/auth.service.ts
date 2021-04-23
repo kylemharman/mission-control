@@ -34,13 +34,16 @@ export class AuthService {
     );
   }
 
-  async login(email, password): Promise<void> {
+  async login(email, password): Promise<Observable<IUser>> {
     try {
-      const userCredentials = await this._afAuth.signInWithEmailAndPassword(
+      const credentials = await this._afAuth.signInWithEmailAndPassword(
         email,
         password
       );
-      await this._router.navigate([userCredentials.user.uid, 'tasks']);
+      await this._router.navigate([credentials.user.uid, 'tasks']);
+      return this._db.doc$<IUser>(
+        `${RootCollection.Users}/${credentials.user.uid}`
+      );
     } catch (error) {
       console.log(error);
       this.serverErrorMessage$.next(error.message);
@@ -82,13 +85,16 @@ export class AuthService {
     }
   }
 
-  async googleSignIn(): Promise<void> {
+  async googleSignIn(): Promise<Observable<IUser>> {
     try {
       const credentials = await this._afAuth.signInWithPopup(
         new auth.GoogleAuthProvider()
       );
       await this._createUser(this._convertFirbaseUser(credentials.user));
       await this._router.navigate([credentials.user.uid, 'tasks']);
+      return this._db.doc$<IUser>(
+        `${RootCollection.Users}/${credentials.user.uid}`
+      );
     } catch (error) {
       console.log(error);
     }

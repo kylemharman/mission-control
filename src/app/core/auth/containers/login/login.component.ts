@@ -45,4 +45,12 @@ export class LoginComponent implements OnInit {
   async googleSignIn(): Promise<void> {
     await this._authService.googleSignIn();
   }
+
+  // onGoogleLogin(): void {
+  //   this.store.dispatch(new AuthActions.GoogleLogin());
+  // }
+
+  // onLoginWithCredentials(credentials: { email: string, password: string, name: string }): void {
+  //   this.store.dispatch(new AuthActions.CredentialsLogin(credentials.email, credentials.password, credentials.rememberMe));
+  // }
 }

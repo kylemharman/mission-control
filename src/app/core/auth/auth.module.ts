@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
-import { LoginComponent } from './pages/login/login.component';
-import { SignUpComponent } from './pages/sign-up/sign-up.component';
-import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
-import { AuthService } from './auth.service';
+import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component';
+import { LoginComponent } from './containers/login/login.component';
+import { SignUpComponent } from './containers/sign-up/sign-up.component';
+import { VerifyEmailComponent } from './containers/verify-email/verify-email.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WordDividerComponent } from './components/word-divider/word-divider.component';
