@@ -3,9 +3,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { AuthService } from 'src/app/core/auth/auth.service';
+import { AuthFacade } from 'src/app/core/auth/store/facades/auth.facade';
+import { RootCollection } from 'src/app/core/models/root-collection';
 import { ITask, Task } from 'src/app/core/models/task';
-import { IUser, UserCollection } from 'src/app/core/models/user';
+import { UserCollection } from 'src/app/core/models/user';
 import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { TaskFacade } from './store/facades/task.facade';
@@ -15,8 +16,7 @@ export class TasksService {
   constructor(
     private _db: FirestoreService,
     private _taskStore: TaskFacade,
-    // TODO - use store instead of service.
-    private _authService: AuthService,
+    private _authStore: AuthFacade,
     private _snack: MatSnackBar
   ) {}
 
@@ -66,8 +66,13 @@ export class TasksService {
   }
 
   getTasksCollection$(): Observable<string> {
-    return this._authService.user$.pipe(
-      map((user: IUser) => `${user.path}/${UserCollection.Tasks}`)
+    return this._authStore.user$.pipe(
+      map((user) => {
+        if (!user) {
+          return;
+        }
+        return `${RootCollection.Users}/${user.id}/${UserCollection.Tasks}`;
+      })
     );
   }
 

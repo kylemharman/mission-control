@@ -43,7 +43,6 @@ export class TaskEntryDialogComponent {
       await this._navigateBack();
       return;
     }
-    console.log(data);
 
     this._taskStore.updateTask({
       id: task.id,

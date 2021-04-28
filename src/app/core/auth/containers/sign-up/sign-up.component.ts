@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../auth.service';
+import { AuthFacade } from '../../store/facades/auth.facade';
 
 @Component({
   selector: 'mc-sign-up',
@@ -19,7 +20,11 @@ export class SignUpComponent implements OnInit {
   passwordHidden = true;
   serverErrorMessage$: Observable<string>;
 
-  constructor(private _authService: AuthService, private _fb: FormBuilder) {
+  constructor(
+    private _authService: AuthService,
+    private _fb: FormBuilder,
+    private _authStore: AuthFacade
+  ) {
     this.serverErrorMessage$ = this._authService.serverErrorMessage$;
   }
 
@@ -29,18 +34,6 @@ export class SignUpComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
-  }
-
-  async onSubmit(): Promise<void> {
-    await this._authService.signUp(
-      this.email.value,
-      this.password.value,
-      this.fullname.value
-    );
-  }
-
-  async googleSignUp(): Promise<void> {
-    await this._authService.googleSignIn();
   }
 
   get fullname(): AbstractControl {
@@ -53,5 +46,19 @@ export class SignUpComponent implements OnInit {
 
   get password(): AbstractControl {
     return this.form.get('password');
+  }
+
+  onSubmit() {
+    if (this.form.valid) {
+      this._authStore.signUp(
+        this.fullname.value,
+        this.email.value,
+        this.password.value
+      );
+    }
+  }
+
+  googleSignUp(authProvider: 'google' | 'facebook' = 'google') {
+    this._authStore.authProviderLogin(authProvider);
   }
 }

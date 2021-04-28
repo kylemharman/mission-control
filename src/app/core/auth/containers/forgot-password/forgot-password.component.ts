@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../auth.service';
+import { AuthFacade } from '../../store/facades/auth.facade';
 
 @Component({
   selector: 'mc-forgot-password',
@@ -18,7 +19,11 @@ export class ForgotPasswordComponent implements OnInit {
   form: FormGroup;
   serverErrorMessage$: Observable<string>;
 
-  constructor(public auth: AuthService, private _fb: FormBuilder) {
+  constructor(
+    public auth: AuthService,
+    private _fb: FormBuilder,
+    private _authStore: AuthFacade
+  ) {
     this.serverErrorMessage$ = this.auth.serverErrorMessage$;
   }
 
@@ -29,7 +34,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    await this.auth.forgotPassword(this.email.value);
+    this._authStore.forgotPassword(this.email.value);
   }
 
   get email(): AbstractControl {

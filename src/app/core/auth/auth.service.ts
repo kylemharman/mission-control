@@ -1,122 +1,67 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { auth } from 'firebase';
-import { Observable, of, Subject } from 'rxjs';
-import { switchMap, take, tap } from 'rxjs/operators';
-import { snapshot } from 'src/app/shared/helpers/rxjs';
+import { from, Observable, Subject } from 'rxjs';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { RootCollection } from '../models/root-collection';
 import { IUser } from '../models/user';
-import { AuthFacade } from './store/facades/auth.facade';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user$: Observable<IUser | undefined>;
   serverErrorMessage$ = new Subject<string>();
+  user$ = this._afAuth.user;
 
   constructor(
     private _db: FirestoreService,
-    private _afAuth: AngularFireAuth,
-    private _authStore: AuthFacade,
-    private _router: Router
-  ) {
-    this.user$ = this._afAuth.authState.pipe(
-      take(1),
-      switchMap((user) => {
-        return user
-          ? _db.doc$<IUser>(`${RootCollection.Users}/${user.uid}`)
-          : of(undefined);
-      }),
-      tap((user: IUser | undefined) => {
-        user ? this._authStore.login(user) : this._authStore.logout();
-      })
-    );
+    private _afAuth: AngularFireAuth
+  ) {}
+
+  signUp$(email: string, password: string): Observable<auth.UserCredential> {
+    return from(this._afAuth.createUserWithEmailAndPassword(email, password));
   }
 
-  async login(email, password): Promise<Observable<IUser>> {
-    try {
-      const credentials = await this._afAuth.signInWithEmailAndPassword(
-        email,
-        password
-      );
-      await this._router.navigate([credentials.user.uid, 'tasks']);
-      return this._db.doc$<IUser>(
-        `${RootCollection.Users}/${credentials.user.uid}`
-      );
-    } catch (error) {
-      console.log(error);
-      this.serverErrorMessage$.next(error.message);
-    }
+  login$(email: string, password: string): Observable<auth.UserCredential> {
+    return from(this._afAuth.signInWithEmailAndPassword(email, password));
   }
 
-  async signUp(email: string, password: string, name: string): Promise<void> {
-    try {
-      const credentials = await this._afAuth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      await this._createUser(this._convertFirbaseUser(credentials.user, name));
-      await this.sendVerificationEmailMail();
-    } catch (error) {
-      console.log(error);
-      this.serverErrorMessage$.next(error.message);
-    }
+  logout$(): Observable<void> {
+    return from(this._afAuth.signOut());
   }
 
-  async sendVerificationEmailMail(): Promise<void> {
-    try {
-      const user = await snapshot(this._afAuth.user);
-      await user.sendEmailVerification();
-      await this._router.navigate(['verify-email-address']);
-    } catch (error) {
-      console.log(error);
-      this.serverErrorMessage$.next(error.message);
-    }
+  authProviderLogin$(
+    authProvider: 'google' | 'facebook'
+  ): Observable<auth.UserCredential> {
+    const provider =
+      authProvider === 'google'
+        ? new firebase.auth.GoogleAuthProvider()
+        : new firebase.auth.FacebookAuthProvider();
+
+    return from(this._afAuth.signInWithPopup(provider));
   }
 
-  async forgotPassword(passwordResetEmail): Promise<void> {
-    try {
-      await this._afAuth.sendPasswordResetEmail(passwordResetEmail);
-      // this.snackBar.open('Password reset email sent, check your inbox.');
-    } catch (error) {
-      console.log(error);
-      this.serverErrorMessage$.next(error.message);
-    }
+  getUser$(userUid: string): Observable<IUser | undefined> {
+    return this._db.doc$<IUser>(`${RootCollection.Users}/${userUid}`);
   }
 
-  async googleSignIn(): Promise<Observable<IUser>> {
-    try {
-      const credentials = await this._afAuth.signInWithPopup(
-        new auth.GoogleAuthProvider()
-      );
-      await this._createUser(this._convertFirbaseUser(credentials.user));
-      await this._router.navigate([credentials.user.uid, 'tasks']);
-      return this._db.doc$<IUser>(
-        `${RootCollection.Users}/${credentials.user.uid}`
-      );
-    } catch (error) {
-      console.log(error);
-    }
+  getAuthState$(): Observable<firebase.User> {
+    return this._afAuth.authState;
   }
 
-  async logout(): Promise<void> {
-    await this._afAuth.signOut();
-    this._authStore.logout();
-    await this._router.navigate(['login']);
+  sendVerificationEmail$(user: firebase.User): Observable<void> {
+    return from(user.sendEmailVerification());
   }
 
-  private async _createUser(user: IUser): Promise<void> {
-    await this._db.set<IUser>(`${RootCollection.Users}/${user.id}`, user);
+  forgotPassword$(email: string): Observable<void> {
+    return from(this._afAuth.sendPasswordResetEmail(email));
   }
 
-  private _convertFirbaseUser(
-    firebaseUser: firebase.User,
-    name?: string
-  ): IUser {
+  saveUser(user: IUser): Promise<void> {
+    return this._db.set<IUser>(`${RootCollection.Users}/${user.id}`, user);
+  }
+
+  createUser(firebaseUser: firebase.User, name?: string): IUser {
     return {
       id: firebaseUser.uid,
-      path: '',
       displayName: name ?? firebaseUser.displayName,
       email: firebaseUser.email,
       emailVerified: firebaseUser.emailVerified,

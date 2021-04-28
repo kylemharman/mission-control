@@ -1,6 +1,5 @@
 export interface IUser {
   id: string;
-  path: string;
   displayName: string;
   email: string;
   emailVerified: boolean;

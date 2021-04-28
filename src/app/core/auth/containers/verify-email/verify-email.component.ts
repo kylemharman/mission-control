@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { IUser } from 'src/app/core/models/user';
-import { filterUndefined } from 'src/app/shared/helpers/rxjs';
+import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { AuthService } from '../../auth.service';
 import { AuthFacade } from '../../store/facades/auth.facade';
 
@@ -12,16 +10,15 @@ import { AuthFacade } from '../../store/facades/auth.facade';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VerifyEmailComponent {
-  user$: Observable<IUser>;
+  user$ = this._authStore.user$;
 
   constructor(
     private _authStore: AuthFacade,
     private _authService: AuthService
-  ) {
-    this.user$ = this._authStore.user$;
-  }
+  ) {}
 
-  sendVerificationEmail(): void {
-    this._authService.sendVerificationEmailMail();
+  async sendVerificationEmail(): Promise<void> {
+    const user = await snapshot(this._authService.user$);
+    this._authStore.sendVerificationEmailMail(user);
   }
 }

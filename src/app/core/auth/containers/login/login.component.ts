@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../auth.service';
+import { AuthFacade } from '../../store/facades/auth.facade';
 
 @Component({
   selector: 'mc-login',
@@ -19,7 +20,11 @@ export class LoginComponent implements OnInit {
   passwordHidden = true;
   serverErrorMessage$: Observable<string>;
 
-  constructor(private _authService: AuthService, private _fb: FormBuilder) {
+  constructor(
+    private _authService: AuthService,
+    private _fb: FormBuilder,
+    private _authStore: AuthFacade
+  ) {
     this.serverErrorMessage$ = this._authService.serverErrorMessage$;
   }
 
@@ -38,19 +43,13 @@ export class LoginComponent implements OnInit {
     return this.form.get('password');
   }
 
-  async onSubmit(): Promise<void> {
-    await this._authService.login(this.email.value, this.password.value);
+  onSubmit() {
+    if (this.form.valid) {
+      this._authStore.login(this.email.value, this.password.value);
+    }
   }
 
-  async googleSignIn(): Promise<void> {
-    await this._authService.googleSignIn();
+  googleSignIn(authProvider: 'google' | 'facebook' = 'google') {
+    this._authStore.authProviderLogin(authProvider);
   }
-
-  // onGoogleLogin(): void {
-  //   this.store.dispatch(new AuthActions.GoogleLogin());
-  // }
-
-  // onLoginWithCredentials(credentials: { email: string, password: string, name: string }): void {
-  //   this.store.dispatch(new AuthActions.CredentialsLogin(credentials.email, credentials.password, credentials.rememberMe));
-  // }
 }

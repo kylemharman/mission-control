@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { AuthService } from 'src/app/core/auth/auth.service';
 import { AuthFacade } from 'src/app/core/auth/store/facades/auth.facade';
 import { ThemeService } from 'src/app/core/services/theme.service';
 
@@ -14,18 +13,14 @@ export class UserSettingsMenuComponent {
   user$ = this._authStore.user$;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
-  constructor(
-    private _authService: AuthService,
-    private _authStore: AuthFacade,
-    private _theme: ThemeService
-  ) {}
+  constructor(private _authStore: AuthFacade, private _theme: ThemeService) {}
 
   closeMenu(): void {
     this.trigger.closeMenu();
   }
 
   logout(): void {
-    this._authService.logout();
+    this._authStore.logout();
   }
 
   darkMode(value: boolean): void {
