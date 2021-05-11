@@ -1,74 +1,74 @@
 import { createAction, props } from '@ngrx/store';
 import { IUser } from 'src/app/core/models/user';
 
-export const SignUpRequested = createAction(
+export const signUpRequested = createAction(
   '[Auth] Sign Up Requested',
   props<{ username: string; email: string; password: string }>()
 );
 
-export const SignUpCompleted = createAction('[Auth] Sign Up Completed');
+export const signUpCompleted = createAction('[Auth] Sign Up Completed');
 
-export const SignUpFailed = createAction(
+export const signUpFailed = createAction(
   '[Auth] Sign Up Failed',
   props<{ error: unknown }>()
 );
 
-export const SendVerificationEmail = createAction(
+export const sendVerificationEmail = createAction(
   '[Auth] Auth Send Verification Email',
   props<{ user: firebase.User }>()
 );
 
-export const SendVerificationEmailSuccess = createAction(
+export const sendVerificationEmailSuccess = createAction(
   '[Auth] Auth Send Verification Email Success'
 );
 
-export const UpdateProfile = createAction(
+export const updateProfile = createAction(
   '[Auth] Update Profile',
   props<{ displayName: string; profileImage: string }>()
 );
 
-export const UpdateProfileSuccess = createAction(
+export const updateProfileSuccess = createAction(
   '[Auth] Update Profile Success',
   props<{ user: IUser }>()
 );
 
-export const LoginRequested = createAction(
+export const loginRequested = createAction(
   '[Auth] Login Requested',
   props<{ email: string; password: string }>()
 );
 
-export const LoginSuccess = createAction(
+export const loginSuccess = createAction(
   '[Auth] Login Success',
   props<{ user: IUser }>()
 );
 
-export const LoginFailed = createAction('[Auth] Login Failed');
+export const loginFailed = createAction('[Auth] Login Failed');
 
-export const AuthProviderLogin = createAction(
+export const authProviderLogin = createAction(
   '[Auth] Auth Provider Login',
   props<{ authProvider: 'google' | 'facebook' }>()
 );
 
-export const ForgotPasswordRequested = createAction(
+export const forgotPasswordRequested = createAction(
   '[Auth] Forgot Password Requested',
   props<{ email: string }>()
 );
 
-export const ForgotPasswordComplete = createAction(
+export const forgotPasswordComplete = createAction(
   '[Auth] Forgot Password Complete'
 );
 
-export const LogoutRequested = createAction('[Auth] Logout Requested');
-export const LogoutCompleted = createAction('[Auth] Logout Completed');
+export const logoutRequested = createAction('[Auth] Logout Requested');
+export const logoutCompleted = createAction('[Auth] Logout Completed');
 
-export const SaveUser = createAction(
+export const saveUser = createAction(
   '[Auth] Save User',
   props<{ user: IUser }>()
 );
 
-export const GetUser = createAction('[Auth] Get User');
+export const getUser = createAction('[Auth] Get User');
 
-export const AuthError = createAction(
+export const authError = createAction(
   '[Auth] Error',
   props<{ error: unknown }>()
 );

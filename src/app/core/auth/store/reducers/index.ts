@@ -19,30 +19,24 @@ export const initialAuthState: AuthState = {
 
 export const authReducer = createReducer(
   initialAuthState,
-  on(AuthActions.LoginSuccess, (_state, action) => ({
+  on(AuthActions.loginSuccess, (_state, action) => ({
     user: action.user,
     isLoggedIn: true,
     isLoading: false,
     error: null,
   })),
-  on(AuthActions.UpdateProfileSuccess, (state, action) => ({
+  on(AuthActions.updateProfileSuccess, (state, action) => ({
     ...state,
     user: action.user,
   })),
-  on(AuthActions.LoginFailed, (state, _action) => ({
+  on(AuthActions.loginFailed, (state, _action) => ({
     ...state,
     user: null,
     isLoading: false,
     isLoggedIn: false,
   })),
-  on(AuthActions.AuthError, (state, action) => ({
+  on(AuthActions.authError, (state, action) => ({
     ...state,
     error: action.error,
-  })),
-  on(AuthActions.LogoutCompleted, (state, _action) => ({
-    ...state,
-    user: null,
-    isLoading: false,
-    isLoggedIn: false,
   }))
 );

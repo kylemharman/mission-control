@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { auth } from 'firebase';
+import * as moment from 'moment';
 import { from, Observable, Subject } from 'rxjs';
+import { toTimestamp } from 'src/app/shared/helpers/time';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { RootCollection } from '../models/root-collection';
 import { IUser } from '../models/user';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   serverErrorMessage$ = new Subject<string>();
-  user$ = this._afAuth.user;
+  firebaseAuthUser$ = this._afAuth.user;
 
   constructor(
     private _db: FirestoreService,
@@ -24,8 +26,8 @@ export class AuthService {
     return from(this._afAuth.signInWithEmailAndPassword(email, password));
   }
 
-  logout$(): Observable<void> {
-    return from(this._afAuth.signOut());
+  logout(): Promise<void> {
+    return this._afAuth.signOut();
   }
 
   authProviderLogin$(
@@ -55,8 +57,8 @@ export class AuthService {
     return from(this._afAuth.sendPasswordResetEmail(email));
   }
 
-  saveUser(user: IUser): Promise<void> {
-    return this._db.set<IUser>(`${RootCollection.Users}/${user.id}`, user);
+  async saveUser(user: IUser): Promise<void> {
+    await this._db.set<IUser>(`${RootCollection.Users}/${user.id}`, user);
   }
 
   createUser(firebaseUser: firebase.User, name?: string): IUser {
@@ -66,8 +68,9 @@ export class AuthService {
       email: firebaseUser.email,
       emailVerified: firebaseUser.emailVerified,
       profileImage: firebaseUser.photoURL,
-      colourTheme: '',
-      darkMode: false,
+      firstSignedInAt: toTimestamp(moment(firebaseUser.metadata.creationTime)),
+      lastSignedInAt: toTimestamp(moment(firebaseUser.metadata.lastSignInTime)),
+      isOnline: true,
     };
   }
 }

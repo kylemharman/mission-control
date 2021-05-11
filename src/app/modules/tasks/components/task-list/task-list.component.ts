@@ -1,5 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Update } from '@ngrx/entity';
 import { ITask } from 'src/app/core/models/task';
 import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { TaskFacade } from '../../store/facades/task.facade';
@@ -14,12 +15,17 @@ import { TasksService } from '../../tasks.service';
 export class TaskListComponent {
   tasks$ = this._taskStore.tasks$;
 
-  constructor(private _tasks: TasksService, private _taskStore: TaskFacade) {}
+  constructor(private _taskStore: TaskFacade) {}
 
   async drop(event: CdkDragDrop<ITask[]>): Promise<void> {
     const tasks = await snapshot(this.tasks$);
-    // TODO - fire action that updates the order of the tasks in the store. With a side effect which updates the order on the backend.
-    await this._tasks.sortTasks(tasks);
+    console.log({ tasks });
     moveItemInArray(tasks, event.previousIndex, event.currentIndex);
+
+    const updates: Update<ITask>[] = tasks.map((task, index) => ({
+      id: task.id,
+      changes: { order: index },
+    }));
+    this._taskStore.sortTasks(updates);
   }
 }

@@ -1,16 +1,16 @@
 <div>
   <mat-form-field appearance="standard" fxFlex>
     <input
-      #task
+      [formControl]="name"
       matInput
       placeholder="New Task..."
-      (keydown.enter)="tasks.createTask(task.value) && (task.value = '')"
+      (keydown.enter)="createTask()"
     />
     <button
       mat-button
       matSuffix
-      [disabled]="!task.value"
-      (click)="tasks.createTask(task.value) && (task.value = '')"
+      [disabled]="!name.value"
+      (click)="createTask()"
     >
       Create
     </button>

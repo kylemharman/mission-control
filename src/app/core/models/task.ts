@@ -55,7 +55,6 @@ export class Task {
   }
   static compareTasks(t1: ITask, t2: ITask): 1 | -1 | 0 {
     const compare = t1.order - t2.order;
-
     if (compare > 0) {
       return 1;
     } else if (compare < 0) {

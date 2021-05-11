@@ -1,11 +1,14 @@
+import { ITimestamp } from 'src/app/shared/helpers/time';
+
 export interface IUser {
   id: string;
   displayName: string;
   email: string;
   emailVerified: boolean;
-  colourTheme: string;
-  darkMode: boolean;
   profileImage?: string;
+  firstSignedInAt: ITimestamp;
+  lastSignedInAt: ITimestamp;
+  isOnline: boolean;
 }
 
 export enum UserCollection {

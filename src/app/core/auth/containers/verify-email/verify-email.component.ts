@@ -18,7 +18,7 @@ export class VerifyEmailComponent {
   ) {}
 
   async sendVerificationEmail(): Promise<void> {
-    const user = await snapshot(this._authService.user$);
+    const user = await snapshot(this._authService.firebaseAuthUser$);
     this._authStore.sendVerificationEmailMail(user);
   }
 }

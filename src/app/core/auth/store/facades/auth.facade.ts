@@ -20,32 +20,32 @@ export class AuthFacade {
   constructor(private _store: Store<AuthState>) {}
 
   getUser(): void {
-    this._store.dispatch(AuthActions.GetUser());
+    this._store.dispatch(AuthActions.getUser());
   }
 
   login(email: string, password: string): void {
-    this._store.dispatch(AuthActions.LoginRequested({ email, password }));
+    this._store.dispatch(AuthActions.loginRequested({ email, password }));
   }
 
   authProviderLogin(authProvider: 'google' | 'facebook'): void {
-    this._store.dispatch(AuthActions.AuthProviderLogin({ authProvider }));
+    this._store.dispatch(AuthActions.authProviderLogin({ authProvider }));
   }
 
   signUp(username: string, email: string, password: string): void {
     this._store.dispatch(
-      AuthActions.SignUpRequested({ username, email, password })
+      AuthActions.signUpRequested({ username, email, password })
     );
   }
 
   sendVerificationEmailMail(user: firebase.User) {
-    this._store.dispatch(AuthActions.SendVerificationEmail({ user }));
+    this._store.dispatch(AuthActions.sendVerificationEmail({ user }));
   }
 
   forgotPassword(email: string) {
-    this._store.dispatch(AuthActions.ForgotPasswordRequested({ email }));
+    this._store.dispatch(AuthActions.forgotPasswordRequested({ email }));
   }
 
   logout(): void {
-    this._store.dispatch(AuthActions.LogoutRequested());
+    this._store.dispatch(AuthActions.logoutRequested());
   }
 }

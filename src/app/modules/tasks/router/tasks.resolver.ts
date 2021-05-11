@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
-  Resolve,
   ActivatedRouteSnapshot,
+  Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { filter, finalize, first, tap } from 'rxjs/operators';
 import { TaskFacade } from '../store/facades/task.facade';
 import { TasksState } from '../store/reducers';

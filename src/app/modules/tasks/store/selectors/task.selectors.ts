@@ -15,7 +15,7 @@ export const selectTotalTasks = createSelector(
   fromTasks.getTotalTasks
 );
 
-// first get all the tasks
+// get all the tasks
 export const selectTaskEntities = createSelector(
   selectTasksState,
   fromTasks.getTaskEntities

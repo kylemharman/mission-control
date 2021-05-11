@@ -26,15 +26,18 @@ export const initialTasksState = tasksAdapter.getInitialState({
 
 export const tasksReducers = createReducer(
   initialTasksState,
-  on(TaskActions.allTasksLoaded, (state, action) =>
+  on(TaskActions.loadAllTasksCompleted, (state, action) =>
     tasksAdapter.addMany(action.tasks, { ...state, loaded: true })
   ),
-  on(TaskActions.taskUpdated, (state, action) =>
-    tasksAdapter.updateOne(action.update, state)
+  on(TaskActions.taskUpdated, (state, { update }) =>
+    tasksAdapter.updateOne(update, state)
   ),
-  on(TaskActions.setSelectedTaskId, (state, action) => ({
+  on(TaskActions.sortTasks, (state, { updates }) =>
+    tasksAdapter.updateMany(updates, state)
+  ),
+  on(TaskActions.setSelectedTaskId, (state, { id }) => ({
     ...state,
-    selectedTaskId: action.id,
+    selectedTaskId: id,
   })),
   on(TaskActions.clearSelectTaskId, (state, _action) => ({
     ...state,

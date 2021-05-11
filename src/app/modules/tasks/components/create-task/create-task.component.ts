@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TasksService } from '../../tasks.service';
+import { FormControl } from '@angular/forms';
+import { TaskFacade } from '../../store/facades/task.facade';
 
 @Component({
   selector: 'mc-create-task',
@@ -8,5 +9,12 @@ import { TasksService } from '../../tasks.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateTaskComponent {
-  constructor(public tasks: TasksService) {}
+  name = new FormControl('');
+
+  constructor(private _taskStore: TaskFacade) {}
+
+  createTask(): void {
+    this._taskStore.createTask(this.name.value);
+    this.name.reset();
+  }
 }

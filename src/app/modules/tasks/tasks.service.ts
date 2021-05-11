@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { AuthFacade } from 'src/app/core/auth/store/facades/auth.facade';
+import { AuthService } from 'src/app/core/auth/auth.service';
 import { RootCollection } from 'src/app/core/models/root-collection';
 import { ITask, Task } from 'src/app/core/models/task';
 import { UserCollection } from 'src/app/core/models/user';
@@ -16,11 +16,11 @@ export class TasksService {
   constructor(
     private _db: FirestoreService,
     private _taskStore: TaskFacade,
-    private _authStore: AuthFacade,
+    private _auth: AuthService,
     private _snack: MatSnackBar
   ) {}
 
-  async createTask(name: string): Promise<void> {
+  async createTask(name: string): Promise<ITask> {
     if (!name.trim().length) {
       this._snack.open('⚠️ Task name can not be empty.');
       return;
@@ -29,20 +29,19 @@ export class TasksService {
     const order = await this._getOrderNumber();
     const taskCollectionRef = await snapshot(this.getTasksCollection$());
     const docRef = this._db.col<ITask>(taskCollectionRef).doc<ITask>(id);
-    const task = Task.init({
+    return Task.init({
       name,
       order,
       id: docRef.ref.id,
       path: docRef.ref.path,
     });
-    this._taskStore.createTask(task);
   }
 
   async saveTask(task: ITask): Promise<void> {
     await this._db.set(task.path, task);
   }
 
-  async sortTasks(tasks: ITask[]) {
+  async sortTasks(tasks: Partial<ITask>[]) {
     const tasksCollection = await snapshot(this.getTasksCollection$());
     const db = firebase.firestore();
     const batch = db.batch();
@@ -66,13 +65,10 @@ export class TasksService {
   }
 
   getTasksCollection$(): Observable<string> {
-    return this._authStore.user$.pipe(
-      map((user) => {
-        if (!user) {
-          return;
-        }
-        return `${RootCollection.Users}/${user.id}/${UserCollection.Tasks}`;
-      })
+    return this._auth.firebaseAuthUser$.pipe(
+      map(
+        (user) => `${RootCollection.Users}/${user.uid}/${UserCollection.Tasks}`
+      )
     );
   }
 

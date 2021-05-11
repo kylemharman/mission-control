@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatMap, map } from 'rxjs/operators';
+import { ITask } from 'src/app/core/models/task';
 import { TasksService } from '../../tasks.service';
 import { TaskActions } from '../actions';
 
@@ -8,9 +9,9 @@ import { TaskActions } from '../actions';
 export class TasksEffects {
   loadTasks$ = createEffect(() =>
     this._actions$.pipe(
-      ofType(TaskActions.loadAllTasks),
+      ofType(TaskActions.loadAllTasksRequested),
       concatMap(() => this._taskService.getAllTasks$()),
-      map((tasks) => TaskActions.allTasksLoaded({ tasks }))
+      map((tasks) => TaskActions.loadAllTasksCompleted({ tasks }))
     )
   );
 
@@ -28,11 +29,37 @@ export class TasksEffects {
     { dispatch: false }
   );
 
-  createTask$ = createEffect(
+  createTask$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(TaskActions.createTask),
+      concatMap((action) => this._taskService.createTask(action.name)),
+      map((task) => TaskActions.taskCreated({ task }))
+    )
+  );
+
+  taskCreated$ = createEffect(
     () =>
       this._actions$.pipe(
         ofType(TaskActions.taskCreated),
         concatMap((action) => this._taskService.saveTask(action.task))
+      ),
+    { dispatch: false }
+  );
+
+  sortTask$ = createEffect(
+    () =>
+      this._actions$.pipe(
+        ofType(TaskActions.sortTasks),
+        concatMap((action) => {
+          const tasks = action.updates.map(
+            (task) =>
+              ({
+                order: task.changes,
+                id: task.id,
+              } as Partial<ITask>)
+          );
+          return this._taskService.sortTasks(tasks);
+        })
       ),
     { dispatch: false }
   );

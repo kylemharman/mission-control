@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { ITask } from 'src/app/core/models/task';
-import {
-  filterUndefined,
-  findProp,
-  snapshot,
-} from 'src/app/shared/helpers/rxjs';
+import { snapshot } from 'src/app/shared/helpers/rxjs';
 import { TaskFacade } from '../../../store/facades/task.facade';
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 

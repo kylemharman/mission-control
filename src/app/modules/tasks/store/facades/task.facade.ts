@@ -19,7 +19,7 @@ export class TaskFacade {
   constructor(private _store: Store<TasksState>) {}
 
   loadAllTasks(): void {
-    this._store.dispatch(TaskActions.loadAllTasks());
+    this._store.dispatch(TaskActions.loadAllTasksRequested());
   }
 
   setSelectedTaskId(id: string): void {
@@ -30,11 +30,15 @@ export class TaskFacade {
     this._store.dispatch(TaskActions.clearSelectTaskId());
   }
 
+  createTask(name: string): void {
+    this._store.dispatch(TaskActions.createTask({ name }));
+  }
+
   updateTask(update: Update<ITask>): void {
     this._store.dispatch(TaskActions.taskUpdated({ update }));
   }
 
-  createTask(task: ITask): void {
-    this._store.dispatch(TaskActions.taskCreated({ task }));
+  sortTasks(updates: Update<ITask>[]): void {
+    this._store.dispatch(TaskActions.sortTasks({ updates }));
   }
 }
