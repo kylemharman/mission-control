@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import { Update } from '@ngrx/entity';
 import * as moment from 'moment';
 import { ITask, TaskPriority } from 'src/app/core/models/task';
 import { toTimestamp } from 'src/app/shared/helpers/time';
@@ -12,20 +19,19 @@ import { TaskFacade } from '../../store/facades/task.facade';
 })
 export class TaskRowComponent {
   @Input() task: ITask;
+  @Output() taskChanges = new EventEmitter<Update<ITask>>();
 
-  constructor(private _taskStore: TaskFacade) {}
-
-  setPriority(priority: TaskPriority): void {
+  updatePriority(priority: TaskPriority): void {
     if (this.task.priority !== priority) {
-      this._taskStore.updateTask({
+      this.taskChanges.emit({
         id: this.task.id,
         changes: { priority },
       });
     }
   }
 
-  setDueDate(dueDate: moment.Moment): void {
-    this._taskStore.updateTask({
+  updateDueDate(dueDate: moment.Moment): void {
+    this.taskChanges.emit({
       id: this.task.id,
       changes: { dueDate: toTimestamp(dueDate) },
     });

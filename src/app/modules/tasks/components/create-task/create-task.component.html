@@ -4,13 +4,13 @@
       [formControl]="name"
       matInput
       placeholder="New Task..."
-      (keydown.enter)="createTask()"
+      (keydown.enter)="taskNameSubmit()"
     />
     <button
       mat-button
       matSuffix
       [disabled]="!name.value"
-      (click)="createTask()"
+      (click)="taskNameSubmit()"
     >
       Create
     </button>

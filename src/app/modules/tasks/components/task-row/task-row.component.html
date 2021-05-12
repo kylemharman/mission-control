@@ -16,7 +16,7 @@
       <!-- TODO - Set these up -->
       <mc-task-priority
         [task]="task"
-        (priority)="setPriority($event)"
+        (priority)="updatePriority($event)"
       ></mc-task-priority>
 
       <button mat-icon-button disableRipple="true">
@@ -29,7 +29,7 @@
       </button> -->
       <mc-task-due-date
         [task]="task"
-        (dueDate)="setDueDate($event)"
+        (dueDate)="updateDueDate($event)"
       ></mc-task-due-date>
     </div>
   </div>

@@ -1,6 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { TaskFacade } from '../../store/facades/task.facade';
 
 @Component({
   selector: 'mc-create-task',
@@ -10,11 +14,10 @@ import { TaskFacade } from '../../store/facades/task.facade';
 })
 export class CreateTaskComponent {
   name = new FormControl('');
+  @Output() taskName = new EventEmitter<string>();
 
-  constructor(private _taskStore: TaskFacade) {}
-
-  createTask(): void {
-    this._taskStore.createTask(this.name.value);
+  taskNameSubmit(): void {
+    this.taskName.emit(this.name.value);
     this.name.reset();
   }
 }

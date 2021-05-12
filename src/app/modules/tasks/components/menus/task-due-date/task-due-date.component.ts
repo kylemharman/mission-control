@@ -20,7 +20,6 @@ export class TaskDueDateComponent {
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   @Input() task: ITask;
   @Output() dueDate = new EventEmitter<moment.Moment>();
-
   date: moment.Moment | undefined;
   time: string | undefined;
 

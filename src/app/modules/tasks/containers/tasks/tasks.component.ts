@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AuthFacade } from 'src/app/core/auth/store/facades/auth.facade';
+import { Update } from '@ngrx/entity';
+import { ITask } from 'src/app/core/models/task';
+import { TaskFacade } from '../../store/facades/task.facade';
 
 @Component({
   selector: 'mc-tasks',
@@ -8,5 +10,19 @@ import { AuthFacade } from 'src/app/core/auth/store/facades/auth.facade';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TasksComponent {
-  constructor() {}
+  tasks$ = this._taskStore.tasks$;
+
+  constructor(private _taskStore: TaskFacade) {}
+
+  createTask(name: string): void {
+    this._taskStore.createTask(name);
+  }
+
+  updateTask(task: Update<ITask>): void {
+    this._taskStore.updateTask(task);
+  }
+
+  sortTasks(tasks: Update<ITask>[]): void {
+    this._taskStore.sortTasks(tasks);
+  }
 }

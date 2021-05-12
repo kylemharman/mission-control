@@ -1,10 +1,15 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Update } from '@ngrx/entity';
+import { ReplaySubject } from 'rxjs';
 import { ITask } from 'src/app/core/models/task';
 import { snapshot } from 'src/app/shared/helpers/rxjs';
-import { TaskFacade } from '../../store/facades/task.facade';
-import { TasksService } from '../../tasks.service';
 
 @Component({
   selector: 'mc-task-list',
@@ -13,19 +18,19 @@ import { TasksService } from '../../tasks.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskListComponent {
-  tasks$ = this._taskStore.tasks$;
-
-  constructor(private _taskStore: TaskFacade) {}
+  @Input() tasks: ITask[];
+  @Output() taskOrderChanges = new EventEmitter<Update<ITask>[]>();
+  @Output() taskChanges = new EventEmitter<Update<ITask>>();
 
   async drop(event: CdkDragDrop<ITask[]>): Promise<void> {
-    const tasks = await snapshot(this.tasks$);
-    console.log({ tasks });
-    moveItemInArray(tasks, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+    this.taskOrderChanges.emit(this._sortTasks(this.tasks));
+  }
 
-    const updates: Update<ITask>[] = tasks.map((task, index) => ({
+  private _sortTasks(tasks: ITask[]): Update<ITask>[] {
+    return tasks.map((task, index) => ({
       id: task.id,
       changes: { order: index },
     }));
-    this._taskStore.sortTasks(updates);
   }
 }

@@ -1,7 +1,8 @@
-<ng-container *ngIf="tasks$ | async as tasks">
-  <div cdkDropList (cdkDropListDropped)="drop($event)">
-    <div cdkDrag *ngFor="let task of tasks">
-      <mc-task-row [task]="task"></mc-task-row>
-    </div>
+<div cdkDropList (cdkDropListDropped)="drop($event)">
+  <div cdkDrag *ngFor="let task of tasks">
+    <mc-task-row
+      [task]="task"
+      (taskChanges)="taskChanges.emit($event)"
+    ></mc-task-row>
   </div>
-</ng-container>
+</div>
