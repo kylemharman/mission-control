@@ -8,24 +8,24 @@ import {
 } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import * as moment from 'moment';
-import { ITask } from 'src/app/core/models/task';
+import { ITimestamp } from 'src/app/shared/helpers/time';
 
 @Component({
-  selector: 'mc-task-due-date',
-  templateUrl: './task-due-date.component.html',
-  styleUrls: ['./task-due-date.component.scss'],
+  selector: 'mc-due-date-selector',
+  templateUrl: './due-date-selector.component.html',
+  styleUrls: ['./due-date-selector.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskDueDateComponent {
+export class DueDateSelectorComponent {
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
-  @Input() task: ITask;
-  @Output() dueDate = new EventEmitter<moment.Moment>();
+  @Input() dueDate: ITimestamp;
+  @Output() dueDateChange = new EventEmitter<moment.Moment>();
   date: moment.Moment | undefined;
   time: string | undefined;
 
   closeMenu(): void {
     const dueDate = this._createDueDate();
-    if (dueDate) this.dueDate.emit(dueDate);
+    if (dueDate) this.dueDateChange.emit(dueDate);
 
     this.trigger.closeMenu();
   }

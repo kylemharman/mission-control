@@ -12,8 +12,7 @@ import { FormControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
-import { ITask } from 'src/app/core/models/task';
-import { getIntervals, toMoment } from '../../helpers/time';
+import { getIntervals, ITimestamp, toMoment } from '../../helpers/time';
 
 @Component({
   selector: 'mc-time-selector',
@@ -23,12 +22,12 @@ import { getIntervals, toMoment } from '../../helpers/time';
 })
 export class TimeSelectorComponent implements OnDestroy, OnInit {
   private _onDestroy$: Subject<void> = new Subject();
-  @Input() task: ITask;
+  @Input() dueDate: ITimestamp;
   @Input() label: string;
   @Input() placeholder: string;
   @Input() interval: number = 15;
   @Input() appearance: string = 'outline';
-  @Output() emitTime = new EventEmitter<string>();
+  @Output() timeChange = new EventEmitter<string>();
 
   @ViewChild('timeInput', { read: MatAutocompleteTrigger })
   timeInput: MatAutocompleteTrigger;
@@ -46,11 +45,11 @@ export class TimeSelectorComponent implements OnDestroy, OnInit {
 
     this.time.valueChanges
       .pipe(takeUntil(this._onDestroy$))
-      .subscribe((time) => this.emitTime.emit(time));
+      .subscribe((time) => this.timeChange.emit(time));
   }
 
   ngOnInit(): void {
-    this.time.setValue(this._getTimeFromTaskDueDate());
+    this.time.setValue(this._getTimeFromDueDate());
   }
 
   ngOnDestroy(): void {
@@ -69,8 +68,8 @@ export class TimeSelectorComponent implements OnDestroy, OnInit {
     );
   }
 
-  private _getTimeFromTaskDueDate(): string {
-    if (!this.task.dueDate) return '';
-    return toMoment(this.task.dueDate).format('h:mm a');
+  private _getTimeFromDueDate(): string {
+    if (!this.dueDate) return '';
+    return toMoment(this.dueDate).format('h:mm a');
   }
 }

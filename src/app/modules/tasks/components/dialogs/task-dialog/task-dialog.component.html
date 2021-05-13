@@ -1,9 +1,9 @@
 <div fxLayout="row" fxLayoutAlign="start center" class="task-header">
-  <mc-task-priority
-    (priority)="setPriority($event)"
-    [task]="task"
+  <mc-priority-selector
+    [priority]="task.priority"
+    (priorityChange)="setPriority($event)"
     size="large"
-  ></mc-task-priority>
+  ></mc-priority-selector>
   <span fxFlex></span>
   <mc-close-button (click)="close()" size="large"></mc-close-button>
 </div>

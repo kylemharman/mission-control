@@ -15,17 +15,17 @@
         <mc-close-button *ngIf="date" (click)="clearDate()"></mc-close-button>
         <mc-time-selector
           *ngIf="date"
-          [task]="task"
+          [dueDate]="dueDate"
           appearance="none"
           placeholder="Select time"
-          (emitTime)="selectedTime($event)"
+          (timeChange)="selectedTime($event)"
         ></mc-time-selector>
       </div>
     </div>
 
     <mc-date-selector
-      [task]="task"
-      (emitDate)="selectedDate($event)"
+      [dueDate]="dueDate"
+      (dateChange)="selectedDate($event)"
     ></mc-date-selector>
   </div>
 </mat-menu>
