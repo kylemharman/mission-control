@@ -17,7 +17,7 @@ import {
   WorkspaceCollection,
 } from 'src/app/core/models/workspace';
 import { multiFilter, snapshot } from 'src/app/core/utils/rxjs';
-import { FirestoreService } from 'src/app/core/services/firestore.service';
+import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { AuthService } from '../../auth/services/auth.service';
 
 @Injectable({

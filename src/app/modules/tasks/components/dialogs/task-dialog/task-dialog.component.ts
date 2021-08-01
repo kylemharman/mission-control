@@ -9,6 +9,7 @@ import { isEqual } from 'lodash';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { ITask, TaskPriority } from 'src/app/core/models/task';
+
 import { TaskFacade } from '../../../store/facades/task.facade';
 
 @Component({

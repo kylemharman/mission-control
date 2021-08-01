@@ -7,8 +7,7 @@ import { RootCollection } from 'src/app/core/models/root-collection';
 import { ITask, Task } from 'src/app/core/models/task';
 import { WorkspaceCollection } from 'src/app/core/models/workspace';
 import { snapshot } from 'src/app/core/utils/rxjs';
-import { FirestoreService } from 'src/app/core/services/firestore.service';
-import { AuthService } from '../../auth/services/auth.service';
+import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { WorkspaceService } from '../../workspaces/services/workspace.service';
 import { TaskFacade } from '../store/facades/task.facade';
 
@@ -17,7 +16,6 @@ export class TasksService {
   constructor(
     private _db: FirestoreService,
     private _taskStore: TaskFacade,
-    private _auth: AuthService,
     private _workspaceService: WorkspaceService,
     private _snack: MatSnackBar
   ) {}
@@ -64,6 +62,7 @@ export class TasksService {
       data
     );
   }
+
   getAllTasks$(): Observable<ITask[]> {
     return this.tasksCollection$().pipe(
       switchMap((ref) =>

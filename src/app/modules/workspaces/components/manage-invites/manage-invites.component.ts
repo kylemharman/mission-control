@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { IMember, Roles } from 'src/app/core/models/member';
-import { snapshot } from 'src/app/core/utils/rxjs';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { IMember, Roles } from '../../../../core/models/member';
+import { snapshot } from '../../../../core/utils/rxjs';
+import { AuthService } from '../../../auth/services/auth.service';
 import { WorkspaceService } from '../../services/workspace.service';
 
 @Component({

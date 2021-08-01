@@ -10,14 +10,13 @@
     </mc-main-button>
 
     <mc-word-divider label="OR"></mc-word-divider>
-    <!-- TODO - make forms more DRY using nested forms - see bookmark -->
+
     <form
       fxLayout="column"
       fxLayoutGap="16px"
       [formGroup]="form"
       (ngSubmit)="onSubmit()"
     >
-      <!-- email -->
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
         <input
@@ -37,7 +36,6 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- password -->
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
         <input

@@ -12,8 +12,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SharedModule } from './modules/shared/shared.module';
-import { NgMaterialModule } from './ng-material/ng-material.module';
+// import { SharedModule } from './modules/shared/shared.module';
 import { metaReducers, reducers } from './reducers';
 
 @NgModule({
@@ -26,8 +25,7 @@ import { metaReducers, reducers } from './reducers';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
-    NgMaterialModule,
-    SharedModule,
+    // SharedModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {

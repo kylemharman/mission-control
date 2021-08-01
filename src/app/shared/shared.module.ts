@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MomentModule } from 'ngx-moment';
-import { NgMaterialModule } from '../../ng-material/ng-material.module';
+import { NgMaterialModule } from '../ng-material/ng-material.module';
 
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { CloseButtonComponent } from './components/buttons/close-button/close-button.component';

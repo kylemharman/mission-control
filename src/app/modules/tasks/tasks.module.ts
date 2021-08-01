@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { TaskDialogComponent } from './components/dialogs/task-dialog/task-dialog.component';
 import { TaskEntryDialogComponent } from './components/dialogs/task-entry-dialog/task-entry-dialog.component';

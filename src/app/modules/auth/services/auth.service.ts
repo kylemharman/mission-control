@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import * as firebase from 'firebase';
 import { Observable, Subject } from 'rxjs';
 
@@ -9,7 +8,7 @@ export class AuthService {
   serverErrorMessage$ = new Subject<string>();
   user$ = this._afAuth.user;
 
-  constructor(private _afAuth: AngularFireAuth, private _snack: MatSnackBar) {}
+  constructor(private _afAuth: AngularFireAuth) {}
 
   async signUp(
     displayName: string,
@@ -75,7 +74,7 @@ export class AuthService {
     try {
       await this._afAuth.sendSignInLinkToEmail(email, actionCodeSettings);
       localStorage.setItem('emailForSignIn', email);
-      this._snack.open('Invite Sent 🥳');
+      // this._snack.open('Invite Sent 🥳');
     } catch (error) {
       this.serverErrorMessage$.next(error.message);
     }
