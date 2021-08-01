@@ -24,7 +24,7 @@ import { AuthService } from '../../auth/services/auth.service';
   providedIn: 'root',
 })
 export class WorkspaceService {
-  workspace$: Observable<IWorkspace>;
+  workspace$: Observable<IWorkspace | undefined>;
   member$: Observable<IMember | undefined>;
 
   constructor(
