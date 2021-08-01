@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import * as moment from 'moment';
-import { ITimestamp } from 'src/app/shared/helpers/time';
+import { ITimestamp } from 'src/app/core/utils/time';
 
 @Component({
   selector: 'mc-due-date-selector',

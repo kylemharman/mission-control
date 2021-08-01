@@ -1,10 +1,10 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { TaskDialogComponent } from './components/dialogs/task-dialog/task-dialog.component';
 import { TaskEntryDialogComponent } from './components/dialogs/task-entry-dialog/task-entry-dialog.component';
@@ -19,7 +19,8 @@ import { TasksEffects } from './store/effects/tasks.effects';
 import { TaskFacade } from './store/facades/task.facade';
 import * as fromTasks from './store/reducers';
 import { TasksRoutingModule } from './tasks-routing.module';
-import { TasksService } from './tasks.service';
+import { TasksService } from './services/tasks.service';
+import { NgMaterialModule } from 'src/app/ng-material/ng-material.module';
 
 @NgModule({
   declarations: [
@@ -35,8 +36,10 @@ import { TasksService } from './tasks.service';
   imports: [
     CommonModule,
     TasksRoutingModule,
+    NgMaterialModule,
     SharedModule,
     FormsModule,
+    ReactiveFormsModule,
     DragDropModule,
     StoreModule.forFeature(fromTasks.tasksFeatureKey, fromTasks.tasksReducers),
     EffectsModule.forFeature([TasksEffects]),

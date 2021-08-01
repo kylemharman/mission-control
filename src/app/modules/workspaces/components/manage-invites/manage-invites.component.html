@@ -1,0 +1,27 @@
+<div fxLayout="row" fxLayoutAlign="center start" style="margin-top: 50px;">
+  <mc-content-container title="Workspace Invites">
+    <ng-container *ngIf="invites$ | async as invites">
+      <div *ngFor="let invite of invites">
+        <p style="text-align: center;">
+          You have been invited to join
+          <strong>{{ invite.workspaceName }}</strong>
+        </p>
+        <mc-main-button
+          [primary]="true"
+          [fullWidth]="true"
+          label="Join {{ invite.workspaceName }}"
+          (click)="joinWorkspace(invite)"
+        >
+        </mc-main-button>
+        <mat-divider></mat-divider>
+      </div>
+    </ng-container>
+    <mc-word-divider label="OR"></mc-word-divider>
+    <mc-main-button
+      label="Create New Workspace"
+      [fullWidth]="true"
+      (click)="createWorkspace()"
+    >
+    </mc-main-button>
+  </mc-content-container>
+</div>

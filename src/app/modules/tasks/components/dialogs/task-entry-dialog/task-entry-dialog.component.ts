@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ITask } from 'src/app/core/models/task';
-import { snapshot } from 'src/app/shared/helpers/rxjs';
+import { snapshot } from 'src/app/core/utils/rxjs';
 import { TaskFacade } from '../../../store/facades/task.facade';
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 

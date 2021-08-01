@@ -1,5 +1,6 @@
-import { AtLeast } from 'src/app/shared/helpers/common';
-import { ITimestamp } from 'src/app/shared/helpers/time';
+import { AtLeast } from 'src/app/core/utils/common';
+import { ITimestamp } from '../utils/time';
+import { IMember } from './member';
 
 export interface ITask {
   id: string;
@@ -11,8 +12,8 @@ export interface ITask {
   priority: TaskPriority;
   tags: ITag[];
   dueDate?: ITimestamp;
-  // creator: INameDoc<IUser>;
-  // AssignedTo: INameDoc<IUser>[];
+  createdBy: Pick<IMember, 'displayName' | 'profileImage' | 'path'>;
+  AssignedTo?: Pick<IMember, 'displayName' | 'profileImage' | 'path'>;
   // timeTracking: TimeStamp;
   // watchers: INameDoc<IUser>[];
 }
@@ -43,7 +44,7 @@ export interface ITag {
 }
 export class Task {
   static init(
-    overrides: AtLeast<ITask, 'name' | 'order' | 'id' | 'path'>
+    overrides: AtLeast<ITask, 'name' | 'order' | 'id' | 'path' | 'createdBy'>
   ): ITask {
     return {
       description: '',

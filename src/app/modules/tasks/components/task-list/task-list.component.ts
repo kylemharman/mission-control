@@ -7,9 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { Update } from '@ngrx/entity';
-import { ReplaySubject } from 'rxjs';
 import { ITask } from 'src/app/core/models/task';
-import { snapshot } from 'src/app/shared/helpers/rxjs';
 
 @Component({
   selector: 'mc-task-list',

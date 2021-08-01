@@ -1,0 +1,23 @@
+<form
+  fxLayout="column"
+  fxLayoutGap="16px"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+>
+  <!-- name -->
+  <mat-form-field appearance="outline">
+    <mat-label>Workspace Name</mat-label>
+    <input matInput formControlName="name" autocomplete="off" />
+    <mat-error *ngIf="!name.value.length && name.touched">
+      <mat-icon>warning</mat-icon> This field is required!
+    </mat-error>
+  </mat-form-field>
+
+  <mc-main-button
+    [primary]="true"
+    [fullWidth]="true"
+    type="submit"
+    label="Create Workspace"
+    size="large"
+  ></mc-main-button>
+</form>
