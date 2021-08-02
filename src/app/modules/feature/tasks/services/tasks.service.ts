@@ -6,8 +6,8 @@ import { map, switchMap } from 'rxjs/operators';
 import { RootCollection } from 'src/app/core/models/root-collection';
 import { ITask, Task } from 'src/app/core/models/task';
 import { WorkspaceCollection } from 'src/app/core/models/workspace';
+import { FirestoreService } from 'src/app/core/services/firestore.service';
 import { snapshot } from 'src/app/core/utils/rxjs';
-import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
 import { WorkspaceService } from '../../workspaces/services/workspace.service';
 import { TaskFacade } from '../store/facades/task.facade';
 
