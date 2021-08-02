@@ -6,9 +6,8 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, switchMap, take, tap } from 'rxjs/operators';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
-import { WorkspaceService } from 'src/app/modules/workspaces/services/workspace.service';
+import { map, take, tap } from 'rxjs/operators';
+import { WorkspaceService } from 'src/app/modules/feature/workspaces/services/workspace.service';
 
 @Injectable({ providedIn: 'root' })
 export class IsWorkspaceMemberGuard implements CanActivate {
