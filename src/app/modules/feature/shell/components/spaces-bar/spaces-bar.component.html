@@ -1,5 +1,5 @@
 <div
-  *ngIf="user$ | async as user"
+  *ngIf="ws.workspace$ | async as workspace"
   fxLayout="row"
   fxLayoutAlign="start stretch"
   style="height: 100%;"
@@ -21,7 +21,7 @@
         <div></div>
       </div>
       <a
-        [routerLink]="['/', user.currentWorkspaceId, 'dashboard']"
+        [routerLink]="['/', workspace.uid, 'dashboard']"
         routerLinkActive="active"
         tooltip="Dashboard"
       >
@@ -30,7 +30,7 @@
         </svg>
       </a>
       <a
-        [routerLink]="['/', user.currentWorkspaceId, 'tasks']"
+        [routerLink]="['/', workspace.uid, 'tasks']"
         routerLinkActive="active"
         tooltip="Tasks"
       >
@@ -38,8 +38,8 @@
           <use xlink:href="assets/icons/tasks.svg#tasks" />
         </svg>
       </a>
-      <!-- <a
-        [routerLink]="['/', user.id, 'notifications']"
+      <a
+        [routerLink]="['/', workspace.uid, 'notifications']"
         routerLinkActive="active"
         tooltip="Notifications"
       >
@@ -47,7 +47,7 @@
           <use xlink:href="assets/icons/notifications.svg#notifications" />
         </svg>
         <div routerLinkActive="active"></div>
-      </a> -->
+      </a>
     </div>
 
     <mat-divider></mat-divider>

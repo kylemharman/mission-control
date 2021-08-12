@@ -10,6 +10,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { MomentModule } from 'ngx-moment';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +30,7 @@ import { metaReducers, reducers } from './store/reducers';
     AngularFireStorageModule,
     AngularFireAuthModule,
     SharedModule,
+    MomentModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {

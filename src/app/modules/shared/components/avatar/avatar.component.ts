@@ -7,7 +7,7 @@ import {
 import { first, last } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthService } from 'src/app/modules/feature/auth/services/auth.service';
+import { WorkspaceService } from 'src/app/modules/feature/workspaces/services/workspace.service';
 
 @Component({
   selector: 'mc-avatar',
@@ -20,21 +20,21 @@ export class AvatarComponent {
   userInitials$: Observable<string>;
   userProfileImage$: Observable<string>;
 
-  constructor(private _auth: AuthService) {
-    this.userInitials$ = this._auth.user$.pipe(
-      map((user) => {
-        if (!user) {
+  constructor(private _ws: WorkspaceService) {
+    this.userInitials$ = this._ws.member$.pipe(
+      map((member) => {
+        if (!member) {
           return;
         }
-        return this._getInitials(user.displayName);
+        return this._getInitials(member.displayName);
       })
     );
-    this.userProfileImage$ = this._auth.user$.pipe(
-      map((user) => {
-        if (!user) {
+    this.userProfileImage$ = this._ws.member$.pipe(
+      map((member) => {
+        if (!member) {
           return;
         }
-        return user.photoURL;
+        return member.profileImage;
       })
     );
   }

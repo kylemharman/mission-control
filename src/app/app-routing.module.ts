@@ -18,8 +18,8 @@ const routes: Routes = [
       ),
   },
   {
-    path: ':uid',
-    canActivate: [AuthGuard],
+    path: ':workspaceUid',
+    canActivate: [AuthGuard, IsWorkspaceMemberGuard],
     loadChildren: () =>
       import('./modules/feature/shell/shell.module').then((m) => m.ShellModule),
   },

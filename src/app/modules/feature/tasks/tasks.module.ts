@@ -21,8 +21,21 @@ import * as fromTasks from './store/reducers';
 import { TasksRoutingModule } from './tasks-routing.module';
 import { TasksService } from './services/tasks.service';
 import { MaterialModule } from 'src/app/modules/material/material.module';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
+  imports: [
+    CommonModule,
+    TasksRoutingModule,
+    MaterialModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DragDropModule,
+    MomentModule,
+    StoreModule.forFeature(fromTasks.tasksFeatureKey, fromTasks.tasksReducers),
+    EffectsModule.forFeature([TasksEffects]),
+  ],
   declarations: [
     TasksComponent,
     CreateTaskComponent,
@@ -32,17 +45,6 @@ import { MaterialModule } from 'src/app/modules/material/material.module';
     TaskEntryDialogComponent,
     PrioritySelectorComponent,
     DueDateSelectorComponent,
-  ],
-  imports: [
-    CommonModule,
-    TasksRoutingModule,
-    MaterialModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DragDropModule,
-    StoreModule.forFeature(fromTasks.tasksFeatureKey, fromTasks.tasksReducers),
-    EffectsModule.forFeature([TasksEffects]),
   ],
   providers: [TasksService, TaskFacade, TaskResolver, TasksResolver],
   entryComponents: [TaskDialogComponent, TaskEntryDialogComponent],

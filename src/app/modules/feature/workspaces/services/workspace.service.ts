@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { concatMap, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { IMember, Member } from 'src/app/core/models/member';
 import { RootCollection } from 'src/app/core/models/root-collection';
@@ -33,19 +33,16 @@ export class WorkspaceService {
         this._db.doc$<IWorkspace>(
           `${RootCollection.Workspaces}/${claims.currentWorkspaceUid}`
         )
-      ),
-      tap((workspace) => console.log('workspace: ', workspace))
+      )
     );
-    this.member$ = this._auth.user$.pipe(
-      withLatestFrom(this.workspace$),
+    this.member$ = combineLatest([this._auth.user$, this.workspace$]).pipe(
       switchMap(([user, workspace]) =>
         this._db.col$<IMember>(
           `${RootCollection.Workspaces}/${workspace.uid}/${WorkspaceCollection.Members}`,
           (ref) => ref.where('userUid', '==', user.uid)
         )
       ),
-      map((user) => first(user)),
-      tap((user) => console.log('user: ', user))
+      map((user) => first(user))
     );
   }
 

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AuthService } from '../../../auth/services/auth.service';
+
+import { WorkspaceService } from '../../../workspaces/services/workspace.service';
 
 @Component({
   selector: 'mc-spaces-bar',
@@ -8,7 +9,5 @@ import { AuthService } from '../../../auth/services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpacesBarComponent {
-  user$ = this._auth.user$;
-
-  constructor(private _auth: AuthService) {}
+  constructor(public ws: WorkspaceService) {}
 }
