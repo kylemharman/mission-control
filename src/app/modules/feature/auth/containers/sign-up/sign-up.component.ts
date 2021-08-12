@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
@@ -19,7 +20,11 @@ export class SignUpComponent implements OnInit {
   passwordHidden = true;
   serverErrorMessage$: Observable<string>;
 
-  constructor(private _auth: AuthService, private _fb: FormBuilder) {
+  constructor(
+    private _auth: AuthService,
+    private _fb: FormBuilder,
+    private _router: Router
+  ) {
     this.serverErrorMessage$ = this._auth.serverErrorMessage$;
   }
 
@@ -43,17 +48,21 @@ export class SignUpComponent implements OnInit {
     return this.form.get('password');
   }
 
-  onSubmit() {
+  async onSubmit(): Promise<void> {
     if (this.form.valid) {
-      this._auth.signUp(
+      await this._auth.signUp(
         this.fullname.value,
         this.email.value,
         this.password.value
       );
+      await this._router.navigate(['setup']);
     }
   }
 
-  googleSignUp(authProvider: 'google' | 'facebook' = 'google') {
-    this._auth.authProviderLogin(authProvider);
+  async googleSignUp(
+    authProvider: 'google' | 'facebook' = 'google'
+  ): Promise<void> {
+    await this._auth.authProviderLogin(authProvider);
+    await this._router.navigate(['setup']);
   }
 }

@@ -3,9 +3,6 @@ import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'mc-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  template: `<router-outlet></router-outlet>`,
 })
-export class AppComponent {
-  constructor(public theme: ThemeService) {}
-}
+export class AppComponent {}

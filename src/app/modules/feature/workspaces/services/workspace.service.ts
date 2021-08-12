@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
-import { concatMap, switchMap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { IMember, Member } from 'src/app/core/models/member';
 import { RootCollection } from 'src/app/core/models/root-collection';
 import {
@@ -13,6 +13,7 @@ import {
 import { multiFilter } from 'src/app/core/utils/rxjs';
 import { FirestoreService } from 'src/app/core/services/firestore.service';
 import { AuthService } from '../../auth/services/auth.service';
+import { first } from 'lodash';
 
 @Injectable({
   providedIn: 'root',
@@ -32,15 +33,19 @@ export class WorkspaceService {
         this._db.doc$<IWorkspace>(
           `${RootCollection.Workspaces}/${claims.currentWorkspaceUid}`
         )
-      )
+      ),
+      tap((workspace) => console.log('workspace: ', workspace))
     );
     this.member$ = this._auth.user$.pipe(
       withLatestFrom(this.workspace$),
       switchMap(([user, workspace]) =>
-        this._db.doc$<IMember>(
-          `${RootCollection.Workspaces}/${workspace.uid}/${WorkspaceCollection.Members}/${user.uid}`
+        this._db.col$<IMember>(
+          `${RootCollection.Workspaces}/${workspace.uid}/${WorkspaceCollection.Members}`,
+          (ref) => ref.where('userUid', '==', user.uid)
         )
-      )
+      ),
+      map((user) => first(user)),
+      tap((user) => console.log('user: ', user))
     );
   }
 
@@ -69,8 +74,8 @@ export class WorkspaceService {
     isCreator?: boolean
   ): IMember {
     return Member.init({
-      userUid: user.uid ?? '',
       displayName: user.displayName ?? '',
+      userUid: user.uid ?? '',
       workspaceUid,
       email,
       isAdmin,
@@ -84,8 +89,8 @@ export class WorkspaceService {
     workspaceUid: string,
     member: IMember
   ): Promise<void> {
-    await this._db.set(
-      `${RootCollection.Workspaces}/${workspaceUid}/${WorkspaceCollection.Members}/${member.uid}`,
+    await this._db.add(
+      `${RootCollection.Workspaces}/${workspaceUid}/${WorkspaceCollection.Members}`,
       member
     );
   }
@@ -96,6 +101,9 @@ export class WorkspaceService {
         ref.where('email', '==', email)
       )
       .valueChanges()
-      .pipe(multiFilter((invite) => !invite.isActive));
+      .pipe(
+        multiFilter((invite) => !invite.isActive),
+        tap((invites) => console.log('invites :>> ', invites))
+      );
   }
 }

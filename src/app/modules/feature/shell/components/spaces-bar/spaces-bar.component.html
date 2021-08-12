@@ -21,30 +21,33 @@
         <div></div>
       </div>
       <a
-        [routerLink]="['/', user.id, 'home', 'landing']"
+        [routerLink]="['/', user.currentWorkspaceId, 'dashboard']"
         routerLinkActive="active"
+        tooltip="Dashboard"
       >
         <svg class="home-icon" viewBox="0 0 24 24">
-          <use xlink:href="assets/icons/home-outline.svg#home-outline" />
-        </svg>
-      </a>
-      <a [routerLink]="['/', user.id, 'tasks']" routerLinkActive="active">
-        <svg class="tasks-icon" viewBox="0 0 24 24">
-          <use
-            xlink:href="assets/icons/check-box-outline.svg#check-box-outline"
-          />
+          <use xlink:href="assets/icons/home.svg#home" />
         </svg>
       </a>
       <a
-        [routerLink]="['/', user.id, 'notifications']"
+        [routerLink]="['/', user.currentWorkspaceId, 'tasks']"
         routerLinkActive="active"
+        tooltip="Tasks"
       >
-        <svg class="notifications-icon" viewBox="0 0 24 24">
-          <use
-            xlink:href="assets/icons/notifications-outline.svg#notifications-outline"
-          />
+        <svg class="tasks-icon" viewBox="0 0 24 24">
+          <use xlink:href="assets/icons/tasks.svg#tasks" />
         </svg>
       </a>
+      <!-- <a
+        [routerLink]="['/', user.id, 'notifications']"
+        routerLinkActive="active"
+        tooltip="Notifications"
+      >
+        <svg class="notifications-icon" viewBox="0 0 24 24">
+          <use xlink:href="assets/icons/notifications.svg#notifications" />
+        </svg>
+        <div routerLinkActive="active"></div>
+      </a> -->
     </div>
 
     <mat-divider></mat-divider>

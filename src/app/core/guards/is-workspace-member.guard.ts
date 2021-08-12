@@ -14,13 +14,15 @@ export class IsWorkspaceMemberGuard implements CanActivate {
   constructor(private _workspace: WorkspaceService, private router: Router) {}
 
   canActivate(
-    route: ActivatedRouteSnapshot,
+    _route: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot
   ): Observable<boolean> {
     return this._workspace.member$.pipe(
+      tap((user) => console.log('user: ', user)),
       take(1),
       map((member) => !!member),
       tap((isWorkspaceUser) => {
+        console.log('isWorkspaceUser :>> ', isWorkspaceUser);
         if (!isWorkspaceUser) {
           console.log('access denied');
           this.router.navigate(['/login']);

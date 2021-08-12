@@ -1,7 +1,11 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import * as firebase from 'firebase';
+import { user } from 'firebase-functions/lib/providers/auth';
 import { Observable, Subject } from 'rxjs';
+import { snapshot } from 'src/app/core/utils/rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -60,6 +64,11 @@ export class AuthService {
 
   async forgotPassword(email: string): Promise<void> {
     await this._afAuth.sendPasswordResetEmail(email);
+  }
+
+  async refreshToken(): Promise<void> {
+    const user = await this._afAuth.currentUser;
+    await user.getIdToken(true);
   }
 
   async inviteMember(email: string): Promise<void> {

@@ -8,10 +8,12 @@ import {
   DocumentSnapshotDoesNotExist,
   DocumentSnapshotExists,
 } from '@angular/fire/firestore';
+import { AngularFireFunctions } from '@angular/fire/functions';
 import * as firebase from 'firebase/app';
 import { isString } from 'lodash';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
+import { threadId } from 'worker_threads';
 
 type CollectionPredicate<T> = string | AngularFirestoreCollection<T>;
 type DocPredicate<T> = string | AngularFirestoreDocument<T>;
@@ -20,7 +22,10 @@ type DocPredicate<T> = string | AngularFirestoreDocument<T>;
   providedIn: 'root',
 })
 export class FirestoreService {
-  constructor(private _afs: AngularFirestore) {}
+  constructor(
+    private _afs: AngularFirestore,
+    private _aff: AngularFireFunctions
+  ) {}
 
   col<T>(ref: CollectionPredicate<T>, queryFn?): AngularFirestoreCollection<T> {
     return isString(ref) ? this._afs.collection<T>(ref, queryFn) : ref;
@@ -117,7 +122,7 @@ export class FirestoreService {
       ...data,
       updatedAt: timestamp,
       createdAt: timestamp,
-      id: doc.ref.id,
+      uid: doc.ref.id,
       path: doc.ref.path,
     });
     return doc;
@@ -139,5 +144,10 @@ export class FirestoreService {
 
   generateId(): string {
     return this._afs.createId();
+  }
+
+  httpsCallable(name: string, data?: any) {
+    const callable = this._aff.httpsCallable(name);
+    return callable(data).toPromise();
   }
 }

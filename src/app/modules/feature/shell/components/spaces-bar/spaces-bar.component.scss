@@ -1,0 +1,63 @@
+.mc-left-sidebar-container {
+  height: 100%;
+  width: 55px;
+  border-right: solid 1px #e9ebf0;
+  background-color: var(--background);
+
+  .mc-left-sidebar-user {
+    padding: 10px 0;
+  }
+}
+
+.background-test {
+  background-color: var(--background);
+}
+
+a {
+  width: 46px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-icon,
+.notifications-icon,
+.tasks-icon {
+  width: 20px;
+  height: 20px;
+  fill: #bebebe;
+}
+
+.active {
+  border-right: 2px solid #000;
+
+  .home-icon,
+  .notifications-icon,
+  .tasks-icon {
+    fill: #000;
+    &:hover {
+      fill: #000;
+    }
+  }
+}
+
+.logo {
+  margin: 10px 0;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  background: rgb(0, 140, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(243, 35, 255, 1) 0%,
+    rgba(0, 140, 255, 1) 100%
+  );
+
+  div {
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    background-color: var(--background);
+  }
+}

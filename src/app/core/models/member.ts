@@ -27,8 +27,8 @@ export class Member {
   static init(overrides: AtLeast<IMember, 'email' | 'workspaceUid'>): IMember {
     return {
       displayName: '',
-      uid: '',
       userUid: '',
+      uid: '',
       path: '',
       isCreator: false,
       isAdmin: false,
