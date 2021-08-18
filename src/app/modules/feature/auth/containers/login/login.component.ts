@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
+
 import { AuthService } from '../../services/auth.service';
 
 @Component({

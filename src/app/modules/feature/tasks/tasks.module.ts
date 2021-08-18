@@ -2,7 +2,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgMaterialModule } from 'src/app/modules/ng-material';
+import { NgMaterialModule } from '@misson-control/ng-material';
 import { SharedModule } from '@misson-control/shared';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -18,7 +18,6 @@ import { TaskRowComponent } from './components/task-row/task-row.component';
 import { TasksComponent } from './containers/tasks/tasks.component';
 import { TaskResolver } from './router/task.resolver';
 import { TasksResolver } from './router/tasks.resolver';
-import { TasksService } from './services/tasks.service';
 import { TasksEffects } from './store/effects/tasks.effects';
 import { TaskFacade } from './store/facades/task.facade';
 import * as fromTasks from './store/reducers';
@@ -47,7 +46,7 @@ import { TasksRoutingModule } from './tasks-routing.module';
     PrioritySelectorComponent,
     DueDateSelectorComponent,
   ],
-  providers: [TasksService, TaskFacade, TaskResolver, TasksResolver],
+  providers: [TaskFacade, TaskResolver, TasksResolver],
   entryComponents: [TaskDialogComponent, TaskEntryDialogComponent],
 })
 export class TasksModule {}

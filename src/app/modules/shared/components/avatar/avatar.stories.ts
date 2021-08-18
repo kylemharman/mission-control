@@ -1,10 +1,10 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AuthService } from '@misson-control/auth';
 import { moduleMetadata, Story } from '@storybook/angular';
 import { Meta } from '@storybook/angular/types-6-0';
 import * as firebase from 'firebase';
 import { of } from 'rxjs';
-import { AuthService } from 'src/app/modules/feature/auth/services/auth.service';
 import { AvatarComponent } from './avatar.component';
 
 const user: Partial<firebase.User> = {

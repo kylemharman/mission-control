@@ -4,7 +4,6 @@ import { AuthService } from '@misson-control/auth';
 import { FirestoreService, IMember, snapshot } from '@misson-control/core';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-
 import { WorkspaceService } from '../../services/workspace.service';
 
 @Component({

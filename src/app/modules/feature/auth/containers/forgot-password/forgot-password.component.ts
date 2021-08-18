@@ -18,12 +18,8 @@ export class ForgotPasswordComponent implements OnInit {
   form: FormGroup;
   serverErrorMessage$: Observable<string>;
 
-  constructor(
-    public auth: AuthService,
-    private _fb: FormBuilder,
-    private _auth: AuthService
-  ) {
-    this.serverErrorMessage$ = this.auth.serverErrorMessage$;
+  constructor(private _auth: AuthService, private _fb: FormBuilder) {
+    this.serverErrorMessage$ = this._auth.serverErrorMessage$;
   }
 
   ngOnInit(): void {

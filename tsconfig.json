@@ -23,7 +23,7 @@
       "@misson-control/dashboard": ["src/app/modules/feature/dashboard/index.ts"],
       "@misson-control/settings": ["src/app/modules/feature/settings/index.ts"],
       "@misson-control/shell": ["src/app/modules/feature/shell/index.ts"],
-      "@misson-control/tasks": ["src/app/modules/feature/settings/index.ts"],
+      "@misson-control/tasks": ["src/app/modules/feature/tasks/index.ts"],
       "@misson-control/workspaces": ["src/app/modules/feature/workspaces/index.ts"],
       // shared modules
       "@misson-control/shared": ["src/app/modules/shared/index.ts"],

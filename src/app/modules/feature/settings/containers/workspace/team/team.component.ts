@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { IMember, Roles, IMemberRoles, multiMap } from '@misson-control/core';
+import { IMember, IMemberRoles, multiMap, Roles } from '@misson-control/core';
 import { WorkspaceService } from '@misson-control/workspaces';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

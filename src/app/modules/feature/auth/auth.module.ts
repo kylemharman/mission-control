@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from 'src/app/modules/shared/shared.module';
-import { NgMaterialModule } from 'src/app/modules/ng-material/material.module';
+import { NgMaterialModule } from '@misson-control/ng-material';
+import { SharedModule } from '@misson-control/shared';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthPageContainerComponent } from './components/auth-page-container/auth-page-container.component';

@@ -3,15 +3,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   FirestoreService,
   ITask,
+  RootCollection,
   snapshot,
   Task,
-  RootCollection,
   WorkspaceCollection,
 } from '@misson-control/core';
 import { WorkspaceService } from '@misson-control/workspaces';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+
 import { TaskFacade } from '../store/facades/task.facade';
 
 @Injectable()

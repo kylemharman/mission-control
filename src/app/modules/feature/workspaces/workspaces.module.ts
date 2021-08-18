@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgMaterialModule } from '../../ng-material/material.module';
+import { SharedModule } from '@misson-control/shared';
 
-import { SharedModule } from '../../shared/shared.module';
+import { NgMaterialModule } from '../../ng-material/ng-material.module';
 import { CreateWorkspaceFormComponent } from './components/create-workspace-form/create-workspace-form.component';
-import { WorkspacesRoutingModule } from './workspaces-routing.module';
 import { SetupComponent } from './containers/setup/setup.component';
+import { WorkspacesRoutingModule } from './workspaces-routing.module';
 
 @NgModule({
   imports: [
