@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
+import { first } from 'lodash';
 import { combineLatest, Observable } from 'rxjs';
-import { concatMap, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, map, switchMap, take, tap } from 'rxjs/operators';
 import { IMember, Member } from 'src/app/core/models/member';
 import { RootCollection } from 'src/app/core/models/root-collection';
 import {
@@ -10,10 +11,10 @@ import {
   Workspace,
   WorkspaceCollection,
 } from 'src/app/core/models/workspace';
-import { multiFilter } from 'src/app/core/utils/rxjs';
 import { FirestoreService } from 'src/app/core/services/firestore.service';
+import { multiFilter } from 'src/app/core/utils/rxjs';
+
 import { AuthService } from '../../auth/services/auth.service';
-import { first } from 'lodash';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,7 @@ export class WorkspaceService {
     private _afs: AngularFirestore
   ) {
     this.workspace$ = this._auth.user$.pipe(
+      take(1),
       concatMap((user) => user.getIdTokenResult()),
       switchMap(({ claims }) =>
         this._db.doc$<IWorkspace>(
@@ -62,8 +64,12 @@ export class WorkspaceService {
     );
   }
 
+  getWorkspace$(workspaceUid: string): Observable<IWorkspace> {
+    return this._db.doc$(`${RootCollection.Workspaces}/${workspaceUid}`);
+  }
+
   createWorkspaceMember(
-    workspaceUid: string,
+    workspace: IWorkspace,
     email: string,
     user?: firebase.User,
     isActive?: boolean,
@@ -71,14 +77,15 @@ export class WorkspaceService {
     isCreator?: boolean
   ): IMember {
     return Member.init({
-      displayName: user.displayName ?? '',
-      userUid: user.uid ?? '',
-      workspaceUid,
+      workspaceUid: workspace.uid,
+      workspaceName: workspace.name,
       email,
+      displayName: user ? user.displayName : '',
+      profileImage: user ? user.photoURL : '',
+      userUid: user ? user.uid : '',
       isAdmin,
       isCreator,
       isActive,
-      profileImage: user.photoURL,
     });
   }
 
@@ -89,6 +96,20 @@ export class WorkspaceService {
     await this._db.add(
       `${RootCollection.Workspaces}/${workspaceUid}/${WorkspaceCollection.Members}`,
       member
+    );
+  }
+
+  async updateWorkspaceMember(member: IMember): Promise<void> {
+    await this._db.update<IMember>(member.path, member);
+  }
+
+  getAllWorkspaceMembers$(): Observable<IMember[]> {
+    return this.workspace$.pipe(
+      switchMap((workspace) =>
+        this._db.col$<IMember>(
+          `${RootCollection.Workspaces}/${workspace.uid}/${WorkspaceCollection.Members}`
+        )
+      )
     );
   }
 

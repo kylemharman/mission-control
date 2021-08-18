@@ -5,9 +5,9 @@ import {
   Input,
 } from '@angular/core';
 import { first, last } from 'lodash';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { WorkspaceService } from 'src/app/modules/feature/workspaces/services/workspace.service';
+import { IMember } from 'src/app/core/models/member';
 
 @Component({
   selector: 'mc-avatar',
@@ -16,12 +16,20 @@ import { WorkspaceService } from 'src/app/modules/feature/workspaces/services/wo
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarComponent {
+  member$: ReplaySubject<IMember> = new ReplaySubject(1);
+  memberInitials$: Observable<string>;
+  memberProfileImage$: Observable<string>;
   @Input() diameter = 32;
-  userInitials$: Observable<string>;
-  userProfileImage$: Observable<string>;
 
-  constructor(private _ws: WorkspaceService) {
-    this.userInitials$ = this._ws.member$.pipe(
+  @Input()
+  set member(member: IMember) {
+    if (member) {
+      this.member$.next(member);
+    }
+  }
+
+  constructor() {
+    this.memberInitials$ = this.member$.pipe(
       map((member) => {
         if (!member) {
           return;
@@ -29,7 +37,7 @@ export class AvatarComponent {
         return this._getInitials(member.displayName);
       })
     );
-    this.userProfileImage$ = this._ws.member$.pipe(
+    this.memberProfileImage$ = this.member$.pipe(
       map((member) => {
         if (!member) {
           return;

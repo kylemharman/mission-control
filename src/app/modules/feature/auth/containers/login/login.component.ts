@@ -5,8 +5,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '@auth/services/auth.service';
 
 @Component({
   selector: 'mc-login',
@@ -19,7 +21,11 @@ export class LoginComponent implements OnInit {
   passwordHidden = true;
   serverErrorMessage$: Observable<string>;
 
-  constructor(private _auth: AuthService, private _fb: FormBuilder) {
+  constructor(
+    private _auth: AuthService,
+    private _fb: FormBuilder,
+    private _router: Router
+  ) {
     this.serverErrorMessage$ = this._auth.serverErrorMessage$;
   }
 
@@ -38,13 +44,27 @@ export class LoginComponent implements OnInit {
     return this.form.get('password');
   }
 
-  onSubmit() {
+  async onSubmit(): Promise<void> {
     if (this.form.valid) {
-      this._auth.login(this.email.value, this.password.value);
+      const user = await this._auth.login(
+        this.email.value,
+        this.password.value
+      );
+      await this._loginNavigate(user.user);
     }
   }
 
-  googleSignIn(authProvider: 'google' | 'facebook' = 'google') {
-    this._auth.authProviderLogin(authProvider);
+  async googleSignIn(
+    authProvider: 'google' | 'facebook' = 'google'
+  ): Promise<void> {
+    const user = await this._auth.authProviderLogin(authProvider);
+    await this._loginNavigate(user.user);
+  }
+
+  private async _loginNavigate(user: firebase.User): Promise<void> {
+    const lastWorkspaceUid = await this._auth.getUsersLastWorkspace(user);
+    lastWorkspaceUid
+      ? this._router.navigate([lastWorkspaceUid, 'dashboard'])
+      : this._router.navigateByUrl('setup');
   }
 }

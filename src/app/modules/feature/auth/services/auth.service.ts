@@ -1,18 +1,16 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
-import { user } from 'firebase-functions/lib/providers/auth';
 import { Observable, Subject } from 'rxjs';
-import { snapshot } from 'src/app/core/utils/rxjs';
+import { concatMap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   serverErrorMessage$ = new Subject<string>();
   user$ = this._afAuth.user;
 
-  constructor(private _afAuth: AngularFireAuth) {}
+  constructor(private _afAuth: AngularFireAuth, private _router: Router) {}
 
   async signUp(
     displayName: string,
@@ -25,9 +23,12 @@ export class AuthService {
       .catch((error) => this.serverErrorMessage$.next(error));
   }
 
-  async login(email: string, password: string): Promise<void> {
+  async login(
+    email: string,
+    password: string
+  ): Promise<firebase.auth.UserCredential> {
     try {
-      await this._afAuth.signInWithEmailAndPassword(email, password);
+      return this._afAuth.signInWithEmailAndPassword(email, password);
     } catch (error) {
       this.serverErrorMessage$.next(error);
     }
@@ -36,19 +37,22 @@ export class AuthService {
   async logout(): Promise<void> {
     try {
       await this._afAuth.signOut();
+      await this._router.navigateByUrl('login');
     } catch (error) {
       this.serverErrorMessage$.next(error);
     }
   }
 
-  async authProviderLogin(authProvider: 'google' | 'facebook'): Promise<void> {
+  async authProviderLogin(
+    authProvider: 'google' | 'facebook'
+  ): Promise<firebase.auth.UserCredential> {
     const provider =
       authProvider === 'google'
         ? new firebase.auth.GoogleAuthProvider()
         : new firebase.auth.FacebookAuthProvider();
 
     try {
-      await this._afAuth.signInWithPopup(provider);
+      return this._afAuth.signInWithPopup(provider);
     } catch (error) {
       this.serverErrorMessage$.next(error);
     }
@@ -69,6 +73,10 @@ export class AuthService {
   async refreshToken(): Promise<void> {
     const user = await this._afAuth.currentUser;
     await user.getIdToken(true);
+
+    this.user$
+      .pipe(concatMap((user) => user.getIdTokenResult()))
+      .subscribe((token) => console.log('token :>> ', token));
   }
 
   async inviteMember(email: string): Promise<void> {
@@ -87,5 +95,14 @@ export class AuthService {
     } catch (error) {
       this.serverErrorMessage$.next(error.message);
     }
+  }
+
+  async getUsersLastWorkspace(
+    user: firebase.User
+  ): Promise<string | undefined> {
+    const token = await user.getIdTokenResult();
+    return token.claims.currentWorkspaceUid
+      ? token.claims.currentWorkspaceUid
+      : undefined;
   }
 }

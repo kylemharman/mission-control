@@ -7,7 +7,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { CreateWorkspaceFormComponent } from './components/create-workspace-form/create-workspace-form.component';
 import { WorkspacesRoutingModule } from './workspaces-routing.module';
 import { SetupComponent } from './containers/setup/setup.component';
-import { InviteMemberComponent } from './components/invite-member/invite-member.component';
 
 @NgModule({
   imports: [
@@ -17,11 +16,7 @@ import { InviteMemberComponent } from './components/invite-member/invite-member.
     SharedModule,
     ReactiveFormsModule,
   ],
-  declarations: [
-    CreateWorkspaceFormComponent,
-    InviteMemberComponent,
-    SetupComponent,
-  ],
-  exports: [InviteMemberComponent],
+  declarations: [CreateWorkspaceFormComponent, SetupComponent],
+  exports: [],
 })
 export class WorkspacesModule {}

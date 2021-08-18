@@ -14,6 +14,11 @@ mat-divider {
   }
 }
 
+.mat-form-field {
+  font-size: 14px !important;
+  letter-spacing: normal !important;
+}
+
 .mat-button-toggle-label-content {
   line-height: 30px !important;
   width: 30px !important;
@@ -30,6 +35,14 @@ mat-divider {
 .mat-list-text {
   font-family: 'Poppins' !important;
   padding-right: 0 !important;
+}
+
+.mat-table {
+  font-family: 'Poppins' !important;
+}
+
+.mat-select {
+  font-family: 'Poppins' !important;
 }
 
 .mat-menu-panel {

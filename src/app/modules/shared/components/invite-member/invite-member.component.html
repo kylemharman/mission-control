@@ -1,6 +1,12 @@
-<form fxLayout="row" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="outline">
-    <mat-label>Email</mat-label>
+<form
+  fxLayout="row"
+  fxLayoutAlign="start end"
+  fxLayoutGap="8px"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+>
+  <mat-form-field appearance="standard" class="email">
+    <mat-label>Invite by email</mat-label>
     <input
       matInput
       formControlName="email"
@@ -18,8 +24,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Role</mat-label>
+  <mat-form-field appearance="standard" class="role">
     <mat-select formControlName="role" name="role">
       <mat-option *ngFor="let role of roles" [value]="role.type">
         {{ role.type }}
@@ -27,5 +32,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mc-main-button label="Invite" type="submit"></mc-main-button>
+  <button mat-flat-button color="primary" fxFlexAlign="center" type="submit">
+    Invite
+  </button>
 </form>

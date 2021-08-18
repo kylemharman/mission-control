@@ -19,6 +19,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('../tasks/tasks.module').then((m) => m.TasksModule),
       },
+      {
+        path: 'settings',
+        loadChildren: () =>
+          import('../settings/settings.module').then((m) => m.SettingsModule),
+      },
     ],
   },
 ];

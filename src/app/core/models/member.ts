@@ -2,9 +2,10 @@ import { AtLeast } from 'src/app/core/utils/common';
 
 export interface IMember {
   uid: string;
-  path: string;
   userUid: string;
+  path: string;
   workspaceUid: string;
+  workspaceName: string;
   email: string;
   displayName: string;
   isAdmin: boolean;
@@ -18,17 +19,18 @@ export enum Roles {
   Member = 'Member',
   Owner = 'Owner',
 }
-
 export interface IMemberRoles {
   type: Roles;
 }
 
 export class Member {
-  static init(overrides: AtLeast<IMember, 'email' | 'workspaceUid'>): IMember {
+  static init(
+    overrides: AtLeast<IMember, 'email' | 'workspaceUid' | 'workspaceName'>
+  ): IMember {
     return {
       displayName: '',
-      userUid: '',
       uid: '',
+      userUid: '',
       path: '',
       isCreator: false,
       isAdmin: false,

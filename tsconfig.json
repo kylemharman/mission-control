@@ -2,7 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -15,6 +15,18 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@angular/*": [ "./node_modules/@angular/*" ],
+      "@app/*": ["app/*"],
+      "@core/*": ["app/core/*"],
+      "@auth/*": ["app/modules/feature/auth/*"],
+      "@dashboard/*": ["app/modules/feature/dashboard/*"],
+      "@settings/*": ["app/modules/feature/settings/*"],
+      "@shell/*": ["app/modules/feature/shell/*"],
+      "@tasks/*": ["app/modules/feature/settings/*"],
+      "@workspaces/*": ["app/modules/feature/workspaces/*"],
+      "@shared/*": ["app/modules/feature/shared/*"],
+    }
   }
 }

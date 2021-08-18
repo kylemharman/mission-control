@@ -23,7 +23,7 @@ export class InviteMemberComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _auth: AuthService,
-    private _workspace: WorkspaceService
+    private _ws: WorkspaceService
   ) {}
 
   ngOnInit(): void {
@@ -42,17 +42,18 @@ export class InviteMemberComponent implements OnInit {
 
   async onSubmit(): Promise<void> {
     if (this.form.valid) {
-      const workspace = await snapshot(this._workspace.workspace$);
+      const workspace = await snapshot(this._ws.workspace$);
       const isAdmin = this.role.value === Roles.Admin;
-      const member = this._workspace.createWorkspaceMember(
-        workspace.uid,
+      const member = this._ws.createWorkspaceMember(
+        workspace,
         this.email.value,
         undefined,
-        undefined,
-        isAdmin
+        false,
+        isAdmin,
+        false
       );
       await this._auth.inviteMember(this.email.value);
-      await this._workspace.saveWorkspaceMember(workspace.uid, member);
+      await this._ws.saveWorkspaceMember(workspace.uid, member);
     }
   }
 }

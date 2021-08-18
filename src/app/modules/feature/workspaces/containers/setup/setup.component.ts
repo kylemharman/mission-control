@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { concatMap, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { IMember } from 'src/app/core/models/member';
 import { FirestoreService } from 'src/app/core/services/firestore.service';
 import { snapshot } from 'src/app/core/utils/rxjs';
+
 import { AuthService } from '../../../auth/services/auth.service';
 import { WorkspaceService } from '../../services/workspace.service';
 
@@ -20,32 +21,49 @@ export class SetupComponent {
 
   constructor(
     private _auth: AuthService,
-    private _workspace: WorkspaceService,
+    private _ws: WorkspaceService,
     private _router: Router,
     private _db: FirestoreService
   ) {
     this.workspaceInvites$ = this.user$.pipe(
-      switchMap(({ email }) => this._workspace.getUsersWorkspaceInvites$(email))
+      switchMap(({ email }) => this._ws.getUsersWorkspaceInvites$(email))
     );
   }
 
   async setupWorkspace(name: string): Promise<void> {
     const user = await snapshot(this._auth.user$);
-    const workspace = this._workspace.createWorkspace(name, user.uid);
-    const member = this._workspace.createWorkspaceMember(
-      workspace.uid,
+    const workspace = this._ws.createWorkspace(name, user.uid);
+    const member = this._ws.createWorkspaceMember(
+      workspace,
       user.email,
       user,
       true,
       true,
       true
     );
-    await this._workspace.saveWorkspace(workspace);
-    await this._workspace.saveWorkspaceMember(workspace.uid, member);
+    await this._ws.saveWorkspace(workspace);
+    await this._ws.saveWorkspaceMember(workspace.uid, member);
     await this._db.httpsCallable('setCustomClaims', {
       currentWorkspaceUid: workspace.uid,
     });
     await this._auth.refreshToken();
     await this._router.navigate([workspace.uid, 'dashboard']);
+  }
+
+  async joinWorkspace(invite: IMember): Promise<void> {
+    const user = await snapshot(this._auth.user$);
+
+    await this._ws.updateWorkspaceMember({
+      ...invite,
+      displayName: user.displayName,
+      isActive: true,
+      profileImage: user.photoURL ?? '',
+      userUid: user.uid,
+    });
+    await this._db.httpsCallable('setCustomClaims', {
+      currentWorkspaceUid: invite.workspaceUid,
+    });
+    await this._auth.refreshToken();
+    await this._router.navigate([invite.workspaceUid, 'dashboard']);
   }
 }

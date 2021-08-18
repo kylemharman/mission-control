@@ -9,7 +9,6 @@ import { Update } from '@ngrx/entity';
 import * as moment from 'moment';
 import { ITask, TaskPriority } from 'src/app/core/models/task';
 import { toTimestamp } from 'src/app/core/utils/time';
-import { TaskFacade } from '../../store/facades/task.facade';
 
 @Component({
   selector: 'mc-task-row',

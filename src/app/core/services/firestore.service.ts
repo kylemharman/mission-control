@@ -13,7 +13,6 @@ import * as firebase from 'firebase/app';
 import { isString } from 'lodash';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { threadId } from 'worker_threads';
 
 type CollectionPredicate<T> = string | AngularFirestoreCollection<T>;
 type DocPredicate<T> = string | AngularFirestoreDocument<T>;
