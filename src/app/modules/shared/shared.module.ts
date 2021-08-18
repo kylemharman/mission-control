@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MomentModule } from 'ngx-moment';
 
-import { MaterialModule } from '../material/material.module';
+import { NgMaterialModule } from '../ng-material/material.module';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { CloseButtonComponent } from './components/buttons/close-button/close-button.component';
 import { MainButtonComponent } from './components/buttons/main-button/main-button.component';
@@ -32,7 +32,7 @@ const components = [
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule,
+    NgMaterialModule,
     ReactiveFormsModule,
     RouterModule,
     MomentModule,

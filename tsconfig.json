@@ -2,7 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -17,16 +17,17 @@
       "dom"
     ],
     "paths": {
-      "@angular/*": [ "./node_modules/@angular/*" ],
-      "@app/*": ["app/*"],
-      "@core/*": ["app/core/*"],
-      "@auth/*": ["app/modules/feature/auth/*"],
-      "@dashboard/*": ["app/modules/feature/dashboard/*"],
-      "@settings/*": ["app/modules/feature/settings/*"],
-      "@shell/*": ["app/modules/feature/shell/*"],
-      "@tasks/*": ["app/modules/feature/settings/*"],
-      "@workspaces/*": ["app/modules/feature/workspaces/*"],
-      "@shared/*": ["app/modules/feature/shared/*"],
+      "@misson-control/core": ["src/app/core/index.ts"],
+      // feature modules
+      "@misson-control/auth": ["src/app/modules/feature/auth/index.ts"],
+      "@misson-control/dashboard": ["src/app/modules/feature/dashboard/index.ts"],
+      "@misson-control/settings": ["src/app/modules/feature/settings/index.ts"],
+      "@misson-control/shell": ["src/app/modules/feature/shell/index.ts"],
+      "@misson-control/tasks": ["src/app/modules/feature/settings/index.ts"],
+      "@misson-control/workspaces": ["src/app/modules/feature/workspaces/index.ts"],
+      // shared modules
+      "@misson-control/shared": ["src/app/modules/shared/index.ts"],
+      "@misson-control/ng-material": ["src/app/modules/ng-material/index.ts"],
     }
   }
 }

@@ -7,8 +7,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { ITimestamp } from '@misson-control/core';
 import * as moment from 'moment';
-import { ITimestamp } from 'src/app/core/utils/time';
 
 @Component({
   selector: 'mc-due-date-selector',

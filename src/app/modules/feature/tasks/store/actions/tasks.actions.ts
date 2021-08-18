@@ -1,6 +1,6 @@
+import { ITask } from '@misson-control/core';
 import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
-import { ITask } from 'src/app/core/models/task';
 
 export const loadAllTasksRequested = createAction(
   '[Tasks Resolver] Load All Tasks Requested'

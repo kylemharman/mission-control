@@ -10,9 +10,9 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { getIntervals, ITimestamp, toMoment } from '@misson-control/core';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
-import { getIntervals, ITimestamp, toMoment } from 'src/app/core/utils/time';
 
 @Component({
   selector: 'mc-time-selector',

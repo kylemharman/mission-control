@@ -4,10 +4,10 @@ import {
   HostBinding,
   Input,
 } from '@angular/core';
+import { IMember } from '@misson-control/core';
 import { first, last } from 'lodash';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IMember } from 'src/app/core/models/member';
 
 @Component({
   selector: 'mc-avatar',

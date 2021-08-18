@@ -5,10 +5,10 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ITask, TaskPriority } from '@misson-control/core';
 import { isEqual } from 'lodash';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
-import { ITask, TaskPriority } from 'src/app/core/models/task';
 
 import { TaskFacade } from '../../../store/facades/task.facade';
 

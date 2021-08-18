@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../../material/material.module';
+import { NgMaterialModule } from '../../ng-material/material.module';
 
 import { SharedModule } from '../../shared/shared.module';
 import { CreateWorkspaceFormComponent } from './components/create-workspace-form/create-workspace-form.component';
@@ -12,7 +12,7 @@ import { SetupComponent } from './containers/setup/setup.component';
   imports: [
     CommonModule,
     WorkspacesRoutingModule,
-    MaterialModule,
+    NgMaterialModule,
     SharedModule,
     ReactiveFormsModule,
   ],

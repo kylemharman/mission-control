@@ -5,10 +5,9 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { ITask, TaskPriority, toTimestamp } from '@misson-control/core';
 import { Update } from '@ngrx/entity';
 import * as moment from 'moment';
-import { ITask, TaskPriority } from 'src/app/core/models/task';
-import { toTimestamp } from 'src/app/core/utils/time';
 
 @Component({
   selector: 'mc-task-row',

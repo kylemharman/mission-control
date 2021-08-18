@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ThemeService } from 'src/app/core/services/theme.service';
+import { ThemeService } from '@misson-control/core';
 
 @Component({
   selector: 'mc-shell',

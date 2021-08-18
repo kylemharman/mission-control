@@ -5,8 +5,8 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { TaskPriority } from '@misson-control/core';
 import { capitalize } from 'lodash';
-import { TaskPriority } from 'src/app/core/models/task';
 
 enum FlagIcon {
   Outline = 'outlined_flag',

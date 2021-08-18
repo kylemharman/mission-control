@@ -1,6 +1,6 @@
+import { ITask, Task } from '@misson-control/core';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
-import { ITask, Task } from 'src/app/core/models/task';
 import { TaskActions } from '../actions';
 
 export const tasksFeatureKey = 'tasks';

@@ -5,10 +5,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { IMemberRoles, Roles } from 'src/app/core/models/member';
-import { snapshot } from 'src/app/core/utils/rxjs';
-import { AuthService } from 'src/app/modules/feature/auth/services/auth.service';
-import { WorkspaceService } from 'src/app/modules/feature/workspaces/services/workspace.service';
+import { AuthService } from '@misson-control/auth';
+import { IMemberRoles, Roles, snapshot } from '@misson-control/core';
+import { WorkspaceService } from '@misson-control/workspaces';
 
 @Component({
   selector: 'mc-invite-member',

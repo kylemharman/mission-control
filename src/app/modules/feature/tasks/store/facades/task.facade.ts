@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { ITask } from '@misson-control/core';
 import { Update } from '@ngrx/entity';
 import { select, Store } from '@ngrx/store';
-import { ITask } from 'src/app/core/models/task';
 import { TaskActions } from '../actions';
 import { TasksState } from '../reducers';
 import {

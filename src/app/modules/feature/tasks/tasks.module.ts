@@ -2,9 +2,12 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgMaterialModule } from 'src/app/modules/ng-material';
+import { SharedModule } from '@misson-control/shared';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { MomentModule } from 'ngx-moment';
+
 import { CreateTaskComponent } from './components/create-task/create-task.component';
 import { TaskDialogComponent } from './components/dialogs/task-dialog/task-dialog.component';
 import { TaskEntryDialogComponent } from './components/dialogs/task-entry-dialog/task-entry-dialog.component';
@@ -15,19 +18,17 @@ import { TaskRowComponent } from './components/task-row/task-row.component';
 import { TasksComponent } from './containers/tasks/tasks.component';
 import { TaskResolver } from './router/task.resolver';
 import { TasksResolver } from './router/tasks.resolver';
+import { TasksService } from './services/tasks.service';
 import { TasksEffects } from './store/effects/tasks.effects';
 import { TaskFacade } from './store/facades/task.facade';
 import * as fromTasks from './store/reducers';
 import { TasksRoutingModule } from './tasks-routing.module';
-import { TasksService } from './services/tasks.service';
-import { MaterialModule } from 'src/app/modules/material/material.module';
-import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   imports: [
     CommonModule,
     TasksRoutingModule,
-    MaterialModule,
+    NgMaterialModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule,

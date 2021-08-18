@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@misson-control/auth';
+import { FirestoreService, IMember, snapshot } from '@misson-control/core';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { IMember } from 'src/app/core/models/member';
-import { FirestoreService } from 'src/app/core/services/firestore.service';
-import { snapshot } from 'src/app/core/utils/rxjs';
 
-import { AuthService } from '../../../auth/services/auth.service';
 import { WorkspaceService } from '../../services/workspace.service';
 
 @Component({

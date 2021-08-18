@@ -1,4 +1,4 @@
-import { AtLeast } from 'src/app/core/utils/common';
+import { AtLeast } from '../utils/common';
 
 export interface IMember {
   uid: string;

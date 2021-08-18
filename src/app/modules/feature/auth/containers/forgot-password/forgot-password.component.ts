@@ -6,7 +6,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { AuthService } from '@auth/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'mc-forgot-password',

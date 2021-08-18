@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { ITask } from '@misson-control/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatMap, map } from 'rxjs/operators';
-import { ITask } from 'src/app/core/models/task';
 import { TasksService } from '../../services/tasks.service';
 import { TaskActions } from '../actions';
 

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { ThemeService } from 'src/app/core/services/theme.service';
-import { AuthService } from 'src/app/modules/feature/auth/services/auth.service';
-import { WorkspaceService } from 'src/app/modules/feature/workspaces/services/workspace.service';
+import { AuthService } from '@misson-control/auth';
+import { ThemeService } from '@misson-control/core';
+import { WorkspaceService } from '@misson-control/workspaces';
 
 @Component({
   selector: 'mc-user-settings-menu',

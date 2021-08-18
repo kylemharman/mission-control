@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { snapshot } from '@misson-control/core';
+
 import { AuthService } from '../../services/auth.service';
-import { snapshot } from 'src/app/core/utils/rxjs';
 
 @Component({
   selector: 'mc-verify-email',

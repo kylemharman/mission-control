@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-
-import { WorkspaceService } from '../../../workspaces/services/workspace.service';
+import { WorkspaceService } from '@misson-control/workspaces';
 
 @Component({
   selector: 'mc-spaces-bar',
